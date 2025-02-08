@@ -1,63 +1,92 @@
 package dev.iseal.infinitelibrary.items.item;
 
-import dev.iseal.infinitelibrary.registry.DamageSourceRegistry;
 import dev.iseal.infinitelibrary.registry.ItemRegistry;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.SwordItem;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.world.World;
 
-import java.util.HashMap;
-import java.util.UUID;
+import java.util.function.Supplier;
 
 public class PaleSwordItem extends SwordItem {
-
-    private final HashMap<UUID, Integer> playerHasPaleSword = new HashMap<>();
-    private final int reloadTime = 20;
-    private final int reloadTimeQuarters = reloadTime/4;
-    private int time = 0;
+    public static final int TICKS_PER_UNIT = 20;
+    public static final Supplier<StatusEffectInstance> WITHER = () -> new StatusEffectInstance(
+            StatusEffects.WITHER,
+            60,
+            1
+    );
+    private static final float DRAIN_FACTOR = 10;
+    private static final float DRAIN_CONSTANT = 1f;
+    private static final int STRENGTH_CAP = 50;
+    private static final int STRENGTH_PER_UNIT = 1;
+    private static final String TIME_KEY = "time_held";
 
     public PaleSwordItem() {
-        super(
-                ItemRegistry.IVORY_TOOL_MATERIAL,
-                10,
-                -2.4F,
-                new Item.Settings()
-        );
+        super(ItemRegistry.IVORY_TOOL_MATERIAL, 10, -2.4F, new Item.Settings());
     }
 
     @Override
-    public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
-        super.inventoryTick(stack, world, entity, slot, selected);
-        //TODO: optimize this to run on client and send the ticks to the server.
-        if (world.isClient)
-            return;
-        if (!(entity instanceof PlayerEntity player))
-            return;
+    public void inventoryTick(ItemStack stack, World level, Entity entity, int slot, boolean isHeld) {
+        super.inventoryTick(stack, level, entity, slot, isHeld);
 
-        if (!selected) {
-            playerHasPaleSword.remove(player.getUuid());
-            time = 0;
-            return;
-        }
-        int timeWithSword = playerHasPaleSword.getOrDefault(player.getUuid(), 0)+1;
-        time++;
-        playerHasPaleSword.put(player.getUuid(), timeWithSword);
+        // Get the length of time the item has been held.
 
-        if (time != reloadTimeQuarters) {
-            return;
-        }
-        time = 0;
+        int timeHeld = stack.getOrCreateNbt().getInt(TIME_KEY);
+        System.out.println("Held for: " + timeHeld + " and is holding: " + isHeld);
+        // Potential problems:
+        // Putting the sword into a block inventory from when it was held directly.
+        // Taking it out directly to the hand.
+        // Think about this later.
 
-
-
-        if (player.totalExperience < timeWithSword / 5) {
-            player.damage(DamageSourceRegistry.ABSORB_KNOWLEDGE, (float) timeWithSword / 20 + 1);
+        // If it is not held, zero out the time-held component.
+        if (!isHeld) {
+            timeHeld = 0;
         } else {
-            player.addExperience(-(timeWithSword/6 + 1));
-            System.out.println("Removing experience from player: " + player.getName() + " (exp removed: " + (timeWithSword/6 + 1) + ")");
+            timeHeld++;
         }
+
+        float unitsHeld = timeHeld / ((float) TICKS_PER_UNIT);
+
+        // Set the time held value.
+        stack.getOrCreateNbt().putInt(TIME_KEY, timeHeld);
+
+
+        // Now, drain xp and/or health.
+        if (unitsHeld > 0) {
+            if (entity instanceof LivingEntity livingEntity) {
+                livingEntity.addStatusEffect(new StatusEffectInstance(
+                        StatusEffects.STRENGTH,
+                        Math.min((int) (unitsHeld * STRENGTH_PER_UNIT), STRENGTH_CAP),
+                        21
+                ));
+            }
+            // Drain experience.
+            float xpToDrainRaw = (DRAIN_CONSTANT + unitsHeld / DRAIN_FACTOR);
+            int xpToDrain = ((int) xpToDrainRaw) + ((level.random.nextFloat() < (xpToDrainRaw - (int) xpToDrainRaw)) ? 1 : 0);
+            if (xpToDrain > 0) {
+                int xpDrained = 0;
+                if (entity instanceof PlayerEntity player) {
+                    xpDrained = Math.min(player.totalExperience, xpToDrain);
+                    System.out.println("Total experience = " + player.totalExperience + "; taking = " + xpDrained);
+                    player.addExperience(-xpDrained);
+                    System.out.println("Total experience is now " + player.totalExperience);
+                }
+
+                int xpLacking = xpToDrain - xpDrained;
+                if (xpLacking > 0 && level instanceof ServerWorld && entity.age % TICKS_PER_UNIT == 0 && entity instanceof LivingEntity livingEntity) {
+                    // The entity did not have sufficient investiture to sustain the sword.
+                    // Begin to feed!
+                    livingEntity.damage(livingEntity.getDamageSources().magic(), (int) (1 + Math.sqrt(xpLacking)));
+                    livingEntity.addStatusEffect(WITHER.get());
+                }
+            }
+        }
+
     }
 }
