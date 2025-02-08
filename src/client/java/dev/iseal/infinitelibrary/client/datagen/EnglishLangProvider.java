@@ -19,5 +19,7 @@ public class EnglishLangProvider extends FabricLanguageProvider {
         translationBuilder.add("block.infinitelibrary.old_bookshelf", "Old Bookshelf");
         translationBuilder.add("block.infinitelibrary.old_empty_bookshelf", "Old Empty Bookshelf");
         translationBuilder.add("death.attack.absorb_knowledge", "%1$s's knowledge was absorbed by the Library.");
+        translationBuilder.add("item.infinitelibrary.ivory_ingot", "Ivory Ingot");
+        translationBuilder.add("item.infinitelibrary.pale_sword", "Pale Sword");
     }
 }

@@ -26,36 +26,23 @@ public class BlockRegistry {
         return INSTANCE;
     }
 
-    public static final RegistryKey<Block> QUARTZ_BOOKSHELF_KEY = RegistryKey.of(
-            RegistryKeys.BLOCK,
-            Identifier.of(IL.MOD_ID, "quartz_bookshelf")
+
+    public static final Block QUARTZ_BOOKSHELF = register(new QuartzBookshelfBlock(),
+            RegistryKey.of(RegistryKeys.BLOCK, new Identifier(IL.MOD_ID, "quartz_bookshelf")),
+            true
     );
-    public static final Block QUARTZ_BOOKSHELF = register(new QuartzBookshelfBlock(), QUARTZ_BOOKSHELF_KEY, true);
-    public static final RegistryKey<Block> INACTIVE_CHIESELED_QUARTZ_BLOCK_KEY = RegistryKey.of(
-            RegistryKeys.BLOCK,
-            Identifier.of(IL.MOD_ID, "inactive_chiseled_quartz")
-    );
-    public static final Block INACTIVE_CHIESELED_QUARTZ_BLOCK = register(new InactiveChiseledQuartzBlock(), INACTIVE_CHIESELED_QUARTZ_BLOCK_KEY, true);
-    public static final RegistryKey<Block> ACTIVATED_CHIESELED_QUARTZ_BLOCK_KEY = RegistryKey.of(
-            RegistryKeys.BLOCK,
-            Identifier.of(IL.MOD_ID, "activated_chiseled_quartz")
-    );
-    public static final Block ACTIVATED_CHIESELED_QUARTZ_BLOCK = register(new ActivatedChiseledQuartzBlock(), ACTIVATED_CHIESELED_QUARTZ_BLOCK_KEY, true);
-    public static final RegistryKey<Block> LIBRARY_PORTAL_KEY = RegistryKey.of(
-            RegistryKeys.BLOCK,
-            new Identifier(IL.MOD_ID, "library_portal")
-    );
-    public static final Block LIBRARY_PORTAL = register(new LibraryPortalBlock(), LIBRARY_PORTAL_KEY, false);
-    public static final RegistryKey<Block> OLD_EMPTY_BOOKSHELF_KEY = RegistryKey.of(
-            RegistryKeys.BLOCK,
-            new Identifier(IL.MOD_ID, "old_empty_bookshelf")
-    );
-    public static final Block OLD_EMPTY_BOOKSHELF = register(new OldEmptyBookshelfBlock(), OLD_EMPTY_BOOKSHELF_KEY, true);
-    public static final RegistryKey<Block> OLD_BOOKSHELF_KEY = RegistryKey.of(
-            RegistryKeys.BLOCK,
-            new Identifier(IL.MOD_ID, "old_bookshelf")
-    );
-    public static final Block OLD_BOOKSHELF = register(new OldBookshelfBlock(), OLD_BOOKSHELF_KEY, true);
+    public static final Block INACTIVE_CHIESELED_QUARTZ_BLOCK = register(new InactiveChiseledQuartzBlock(),
+            RegistryKey.of(RegistryKeys.BLOCK, new Identifier(IL.MOD_ID, "inactive_chiseled_quartz")), true);
+    public static final Block ACTIVATED_CHIESELED_QUARTZ_BLOCK = register(new ActivatedChiseledQuartzBlock(),
+            RegistryKey.of(RegistryKeys.BLOCK, new Identifier(IL.MOD_ID, "activated_chiseled_quartz")), true);
+    public static final Block OLD_EMPTY_BOOKSHELF = register(new OldEmptyBookshelfBlock(), 
+            RegistryKey.of(RegistryKeys.BLOCK, new Identifier(IL.MOD_ID, "old_empty_bookshelf")), true);
+    public static final Block OLD_BOOKSHELF = register(new OldBookshelfBlock(), 
+            RegistryKey.of(RegistryKeys.BLOCK, new Identifier(IL.MOD_ID, "old_bookshelf")), true);
+    
+    
+    public static final Block LIBRARY_PORTAL = register(new LibraryPortalBlock(),
+            RegistryKey.of(RegistryKeys.BLOCK, Identifier.of(IL.MOD_ID, "library_portal")), false);
 
     private static Block register(Block block, RegistryKey<Block> key, boolean registerItem) {
         if (registerItem) {
