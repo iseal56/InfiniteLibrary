@@ -1,0 +1,23 @@
+{
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 5,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "infinitelibrary:core_room",
+        "projection": "rigid",
+        "processors": []
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "infinitelibrary:portal_room",
+        "projection": "rigid",
+        "processors": []
+      }
+    }
+  ]
+}

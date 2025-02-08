@@ -1,0 +1,16 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "dev.iseal.infinitelibrary.mixin",
+  "refmap": "infinitelibrary.refmap.json",
+  "compatibilityLevel": "JAVA_17",
+  "mixins": [
+    "MixinChiseledBookshelf",
+    "MixinStructurePoolBasedGenerator"
+  ],
+  "client": [],
+  "server": [],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

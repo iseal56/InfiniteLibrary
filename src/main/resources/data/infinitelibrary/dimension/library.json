@@ -1,0 +1,10 @@
+{
+  "type": "infinitelibrary:library",
+  "generator": {
+    "type": "infinitelibrary:library",
+    "biome_source": {
+      "type": "minecraft:fixed",
+      "biome": "infinitelibrary:library"
+    }
+  }
+}

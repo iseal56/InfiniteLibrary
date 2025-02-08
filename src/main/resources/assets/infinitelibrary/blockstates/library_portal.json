@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "infinitelibrary:block/library_portal_ns"
+    },
+    "axis=z": {
+      "model": "infinitelibrary:block/library_portal_ew"
+    }
+  }
+}

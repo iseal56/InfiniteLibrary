@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "infinitelibrary:block/inactive_chiseled_quartz_top",
+    "side": "infinitelibrary:block/inactive_chiseled_quartz"
+  }
+}

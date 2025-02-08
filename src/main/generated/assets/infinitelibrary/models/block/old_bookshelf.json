@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "infinitelibrary:block/old_bookshelf_top",
+    "side": "infinitelibrary:block/old_bookshelf"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "structures": [
+    {
+      "structure": "infinitelibrary:core_room",
+      "weight": 5
+    },
+    {
+      "structure": "infinitelibrary:portal_room",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "spacing": 7,
+    "separation": 3,
+    "salt": 1646207470
+  }
+}
+
