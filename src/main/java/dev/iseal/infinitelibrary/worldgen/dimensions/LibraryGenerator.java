@@ -161,7 +161,7 @@ public class LibraryGenerator extends ChunkGenerator {
     private BlockPos placeChestOrBlock(Chunk chunk, BlockPos pos, boolean light) {
         //  && activatedChiseledQuartzDRNG.getDistributedRandomNumber() == 1
         if (!activatedChiseledQuartzPlaced.get() && activatedChiseledQuartzAttempts.get() <= MAX_ATTEMPTS && activatedChiseledQuartzDRNG.getDistributedRandomNumber() == 1) {
-            chunk.setBlockState(pos, BlockRegistry.ACTIVATED_CHIESELED_QUARTZ_BLOCK.getDefaultState(), false);
+            chunk.setBlockState(pos, BlockRegistry.GLEAMING_CHISELED_IVORY.getDefaultState(), false);
             activatedChiseledQuartzPlaced.set(true); // Set the flag to true after placing the activated chiseled quartz
         } else {
             BlockState blockState = light && lightDRNG.getDistributedRandomNumber() == 1

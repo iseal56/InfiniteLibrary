@@ -3,7 +3,6 @@ package dev.iseal.infinitelibrary.items.materials;
 import dev.iseal.infinitelibrary.registry.ItemRegistry;
 import net.fabricmc.yarn.constants.MiningLevels;
 import net.minecraft.item.ToolMaterial;
-import net.minecraft.item.ToolMaterials;
 import net.minecraft.recipe.Ingredient;
 
 public class IvoryToolMaterial implements ToolMaterial {
@@ -19,7 +18,7 @@ public class IvoryToolMaterial implements ToolMaterial {
 
     @Override
     public float getAttackDamage() {
-        return 7;
+        return 4;
     }
 
     @Override
@@ -34,6 +33,6 @@ public class IvoryToolMaterial implements ToolMaterial {
 
     @Override
     public Ingredient getRepairIngredient() {
-        return Ingredient.ofItems(ItemRegistry.IVORY_INGOT);
+        return Ingredient.ofItems(ItemRegistry.IVORY_BRICK);
     }
 }

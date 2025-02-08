@@ -9,6 +9,9 @@ import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
 import net.minecraft.block.Block;
 import net.minecraft.block.HorizontalFacingBlock;
 import net.minecraft.data.client.*;
+import net.minecraft.data.family.BlockFamilies;
+import net.minecraft.data.family.BlockFamily;
+import net.minecraft.item.Item;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Direction;
 
@@ -18,32 +21,40 @@ public class BlockModelProvider extends FabricModelProvider {
         super(output);
     }
 
+    private final Block[] simpleCubes = new Block[]{
+            BlockRegistry.QUARTZ_BOOKSHELF,
+            BlockRegistry.GLEAMING_CHISELED_IVORY,
+            BlockRegistry.DULL_CHISELED_IVORY,
+
+            // ivory blocks
+            BlockRegistry.CHISELED_IVORY,
+            BlockRegistry.IVORY_BRICKS,
+            BlockRegistry.POLISHED_IVORY,
+
+            // gilded ivory blocks
+            BlockRegistry.GILDED_CHISELED_IVORY,
+            BlockRegistry.GILDED_IVORY_BRICKS,
+            BlockRegistry.GILDED_POLISHED_IVORY
+    };
 
     @Override
     public void generateBlockStateModels(BlockStateModelGenerator blockStateModelGenerator) {
-        blockStateModelGenerator.registerSimpleCubeAll(BlockRegistry.QUARTZ_BOOKSHELF);
-        blockStateModelGenerator.registerSingleton(BlockRegistry.ACTIVATED_CHIESELED_QUARTZ_BLOCK, TexturedModel.END_FOR_TOP_CUBE_COLUMN);
-        blockStateModelGenerator.registerSingleton(BlockRegistry.INACTIVE_CHIESELED_QUARTZ_BLOCK, TexturedModel.END_FOR_TOP_CUBE_COLUMN);
+        for (Block block : simpleCubes) {
+            blockStateModelGenerator.registerSimpleCubeAll(block);
+        }
+
+        blockStateModelGenerator.registerSingleton(BlockRegistry.IVORY_PILLAR, TexturedModel.END_FOR_TOP_CUBE_COLUMN);
+        blockStateModelGenerator.registerSingleton(BlockRegistry.GILDED_IVORY_PILLAR, TexturedModel.END_FOR_TOP_CUBE_COLUMN);
+
         blockStateModelGenerator.registerSingleton(BlockRegistry.OLD_BOOKSHELF, TexturedModel.END_FOR_TOP_CUBE_COLUMN);
         blockStateModelGenerator.registerSingleton(BlockRegistry.OLD_EMPTY_BOOKSHELF, TexturedModel.END_FOR_TOP_CUBE_COLUMN);
-        // register cool thing
-        /*
-        Block[] blocks = new Block[]{BlockRegistry.OLD_BOOKSHELF, BlockRegistry.OLD_EMPTY_BOOKSHELF};
-        for (Block block : blocks) {
-            registerOrientableBlock(
-                    blockStateModelGenerator,
-                    block,
-                    getRotatableBlockTextureMap(block, "block/chiseled_bookshelf"),
-                    ModelUtils.blockVanilla("orientable", TextureKey.TOP, TextureKey.SIDE, TextureKey.FRONT)
-            );
-        }
-         */
     }
 
 
     @Override
     public void generateItemModels(ItemModelGenerator itemModelGenerator) {
         itemModelGenerator.register(ItemRegistry.PALE_SWORD, ModelUtils.itemVanilla("handheld", TextureKey.LAYER0));
+        itemModelGenerator.register(ItemRegistry.IVORY_BRICK, ModelUtils.itemVanilla("generated", TextureKey.LAYER0));
     }
 
     @Override

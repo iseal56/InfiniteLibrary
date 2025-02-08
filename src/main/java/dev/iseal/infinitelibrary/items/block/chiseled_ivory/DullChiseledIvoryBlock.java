@@ -1,7 +1,10 @@
-package dev.iseal.infinitelibrary.items.block.chiseled_quartz;
+package dev.iseal.infinitelibrary.items.block.chiseled_ivory;
 
 import dev.iseal.infinitelibrary.registry.BlockRegistry;
-import net.minecraft.block.*;
+import net.minecraft.block.AbstractBlock;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.MapColor;
 import net.minecraft.block.enums.Instrument;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.sound.BlockSoundGroup;
@@ -11,11 +14,10 @@ import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class ActivatedChiseledQuartzBlock extends Block {
+public class DullChiseledIvoryBlock extends Block {
 
-    public ActivatedChiseledQuartzBlock() {
+    public DullChiseledIvoryBlock() {
         super(AbstractBlock.Settings.create()
-                .luminance((state) -> 7)
                 .mapColor(MapColor.OAK_TAN)
                 .instrument(Instrument.BASS)
                 .strength(1F)
@@ -31,12 +33,13 @@ public class ActivatedChiseledQuartzBlock extends Block {
         if (world.isClient)
             return ActionResult.PASS;
 
-        if (       player.isSneaking()
+        if (player.isSneaking()
+                && player.totalExperience >= 10
                 && player.getMainHandStack().isEmpty()
                 && hand == Hand.MAIN_HAND
         ) {
-            player.addExperience(10);
-            world.setBlockState(pos, BlockRegistry.INACTIVE_CHIESELED_QUARTZ_BLOCK.getDefaultState());
+            player.addExperience(-10);
+            world.setBlockState(pos, BlockRegistry.GLEAMING_CHISELED_IVORY.getDefaultState());
             return ActionResult.SUCCESS;
         } else {
             return ActionResult.PASS;

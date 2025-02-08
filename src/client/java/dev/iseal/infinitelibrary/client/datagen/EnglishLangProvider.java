@@ -14,12 +14,25 @@ public class EnglishLangProvider extends FabricLanguageProvider {
     public void generateTranslations(TranslationBuilder translationBuilder) {
         translationBuilder.add("itemGroup.infinitelibrary", "Infinite Library");
         translationBuilder.add("block.infinitelibrary.quartz_bookshelf", "Quartz Bookshelf");
-        translationBuilder.add("block.infinitelibrary.activated_chiseled_quartz", "Activated Chiseled Quartz");
-        translationBuilder.add("block.infinitelibrary.inactive_chiseled_quartz", "Inactive Chiseled Quartz");
+        translationBuilder.add("block.infinitelibrary.gleaming_chiseled_ivory", "Gleaming Chiseled Ivory");
+        translationBuilder.add("block.infinitelibrary.dull_chiseled_ivory", "Dull Chiseled Ivory");
         translationBuilder.add("block.infinitelibrary.old_bookshelf", "Old Bookshelf");
         translationBuilder.add("block.infinitelibrary.old_empty_bookshelf", "Old Empty Bookshelf");
+
+        // ivory stuff
+        translationBuilder.add("block.infinitelibrary.chiseled_ivory", "Chiseled Ivory");
+        translationBuilder.add("block.infinitelibrary.ivory_bricks", "Ivory Bricks");
+        translationBuilder.add("block.infinitelibrary.ivory_pillar", "Ivory Pillar");
+        translationBuilder.add("block.infinitelibrary.polished_ivory", "Polished Ivory");
+
+        // gilded ivory stuff
+        translationBuilder.add("block.infinitelibrary.gilded_chiseled_ivory", "Gilded Chiseled Ivory");
+        translationBuilder.add("block.infinitelibrary.gilded_ivory_bricks", "Gilded Ivory Bricks");
+        translationBuilder.add("block.infinitelibrary.gilded_ivory_pillar", "Gilded Ivory Pillar");
+        translationBuilder.add("block.infinitelibrary.gilded_polished_ivory", "Gilded Polished Ivory");
+
         translationBuilder.add("death.attack.absorb_knowledge", "%1$s's knowledge was absorbed by the Library.");
-        translationBuilder.add("item.infinitelibrary.ivory_ingot", "Ivory Ingot");
+        translationBuilder.add("item.infinitelibrary.ivory_brick", "Ivory Brick");
         translationBuilder.add("item.infinitelibrary.pale_sword", "Pale Sword");
     }
 }

@@ -1,12 +1,13 @@
 package dev.iseal.infinitelibrary.registry;
 
 import dev.iseal.infinitelibrary.IL;
-import dev.iseal.infinitelibrary.items.block.chiseled_quartz.ActivatedChiseledQuartzBlock;
-import dev.iseal.infinitelibrary.items.block.chiseled_quartz.InactiveChiseledQuartzBlock;
+import dev.iseal.infinitelibrary.items.block.chiseled_ivory.GleamingChiseledIvoryBlock;
+import dev.iseal.infinitelibrary.items.block.chiseled_ivory.DullChiseledIvoryBlock;
 import dev.iseal.infinitelibrary.items.block.LibraryPortalBlock;
 import dev.iseal.infinitelibrary.items.block.QuartzBookshelfBlock;
 import dev.iseal.infinitelibrary.items.block.old_bookshelves.OldBookshelfBlock;
 import dev.iseal.infinitelibrary.items.block.old_bookshelves.OldEmptyBookshelfBlock;
+import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
@@ -28,19 +29,36 @@ public class BlockRegistry {
 
 
     public static final Block QUARTZ_BOOKSHELF = register(new QuartzBookshelfBlock(),
-            RegistryKey.of(RegistryKeys.BLOCK, new Identifier(IL.MOD_ID, "quartz_bookshelf")),
-            true
-    );
-    public static final Block INACTIVE_CHIESELED_QUARTZ_BLOCK = register(new InactiveChiseledQuartzBlock(),
-            RegistryKey.of(RegistryKeys.BLOCK, new Identifier(IL.MOD_ID, "inactive_chiseled_quartz")), true);
-    public static final Block ACTIVATED_CHIESELED_QUARTZ_BLOCK = register(new ActivatedChiseledQuartzBlock(),
-            RegistryKey.of(RegistryKeys.BLOCK, new Identifier(IL.MOD_ID, "activated_chiseled_quartz")), true);
+            RegistryKey.of(RegistryKeys.BLOCK, new Identifier(IL.MOD_ID, "quartz_bookshelf")), true);
+    public static final Block DULL_CHISELED_IVORY = register(new DullChiseledIvoryBlock(),
+            RegistryKey.of(RegistryKeys.BLOCK, new Identifier(IL.MOD_ID, "dull_chiseled_ivory")), true);
+    public static final Block GLEAMING_CHISELED_IVORY = register(new GleamingChiseledIvoryBlock(),
+            RegistryKey.of(RegistryKeys.BLOCK, new Identifier(IL.MOD_ID, "gleaming_chiseled_ivory")), true);
     public static final Block OLD_EMPTY_BOOKSHELF = register(new OldEmptyBookshelfBlock(), 
             RegistryKey.of(RegistryKeys.BLOCK, new Identifier(IL.MOD_ID, "old_empty_bookshelf")), true);
     public static final Block OLD_BOOKSHELF = register(new OldBookshelfBlock(), 
             RegistryKey.of(RegistryKeys.BLOCK, new Identifier(IL.MOD_ID, "old_bookshelf")), true);
-    
-    
+
+    // ivory blocks
+    public static final Block CHISELED_IVORY = register(new Block(AbstractBlock.Settings.copy(DULL_CHISELED_IVORY)),
+            RegistryKey.of(RegistryKeys.BLOCK, new Identifier(IL.MOD_ID, "chiseled_ivory")), true);
+    public static final Block IVORY_BRICKS = register(new Block(AbstractBlock.Settings.copy(DULL_CHISELED_IVORY)),
+            RegistryKey.of(RegistryKeys.BLOCK, new Identifier(IL.MOD_ID, "ivory_bricks")), true);
+    public static final Block IVORY_PILLAR = register(new Block(AbstractBlock.Settings.copy(DULL_CHISELED_IVORY)),
+            RegistryKey.of(RegistryKeys.BLOCK, new Identifier(IL.MOD_ID, "ivory_pillar")), true);
+    public static final Block POLISHED_IVORY = register(new Block(AbstractBlock.Settings.copy(DULL_CHISELED_IVORY)),
+            RegistryKey.of(RegistryKeys.BLOCK, new Identifier(IL.MOD_ID, "polished_ivory")), true);
+
+    // gilded ivory blocks
+    public static final Block GILDED_CHISELED_IVORY = register(new Block(AbstractBlock.Settings.copy(DULL_CHISELED_IVORY)),
+            RegistryKey.of(RegistryKeys.BLOCK, new Identifier(IL.MOD_ID, "gilded_chiseled_ivory")), true);
+    public static final Block GILDED_IVORY_BRICKS = register(new Block(AbstractBlock.Settings.copy(DULL_CHISELED_IVORY)),
+            RegistryKey.of(RegistryKeys.BLOCK, new Identifier(IL.MOD_ID, "gilded_ivory_bricks")), true);
+    public static final Block GILDED_IVORY_PILLAR = register(new Block(AbstractBlock.Settings.copy(DULL_CHISELED_IVORY)),
+            RegistryKey.of(RegistryKeys.BLOCK, new Identifier(IL.MOD_ID, "gilded_ivory_pillar")), true);
+    public static final Block GILDED_POLISHED_IVORY = register(new Block(AbstractBlock.Settings.copy(DULL_CHISELED_IVORY)),
+            RegistryKey.of(RegistryKeys.BLOCK, new Identifier(IL.MOD_ID, "gilded_polished_ivory")), true);
+
     public static final Block LIBRARY_PORTAL = register(new LibraryPortalBlock(),
             RegistryKey.of(RegistryKeys.BLOCK, Identifier.of(IL.MOD_ID, "library_portal")), false);
 

@@ -6,3 +6,5 @@
 /run/*
 /run/
 /.idea/
+/src/main/generated/
+/src/main/generated/*

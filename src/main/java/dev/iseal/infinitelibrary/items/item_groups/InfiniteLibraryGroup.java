@@ -17,7 +17,7 @@ public class InfiniteLibraryGroup {
 
     public static final RegistryKey<ItemGroup> CUSTOM_ITEM_GROUP_KEY = RegistryKey.of(Registries.ITEM_GROUP.getKey(), Identifier.of(IL.MOD_ID, "item_group"));
     public static final ItemGroup CUSTOM_ITEM_GROUP = FabricItemGroup.builder()
-            .icon(() -> new ItemStack(ItemRegistry.IVORY_INGOT))
+            .icon(() -> new ItemStack(ItemRegistry.IVORY_BRICK))
             .displayName(Text.translatable("itemGroup.infinitelibrary"))
             .build();
 
@@ -29,11 +29,24 @@ public class InfiniteLibraryGroup {
         // Register items to the custom item group.
         ItemGroupEvents.modifyEntriesEvent(CUSTOM_ITEM_GROUP_KEY).register(itemGroup -> {
             itemGroup.add(BlockRegistry.QUARTZ_BOOKSHELF.asItem());
-            itemGroup.add(BlockRegistry.ACTIVATED_CHIESELED_QUARTZ_BLOCK.asItem());
-            itemGroup.add(BlockRegistry.INACTIVE_CHIESELED_QUARTZ_BLOCK.asItem());
+            itemGroup.add(BlockRegistry.GLEAMING_CHISELED_IVORY.asItem());
+            itemGroup.add(BlockRegistry.DULL_CHISELED_IVORY.asItem());
             itemGroup.add(BlockRegistry.OLD_EMPTY_BOOKSHELF.asItem());
             itemGroup.add(BlockRegistry.OLD_BOOKSHELF.asItem());
-            itemGroup.add(ItemRegistry.IVORY_INGOT);
+
+            // ivory blocks
+            itemGroup.add(BlockRegistry.CHISELED_IVORY.asItem());
+            itemGroup.add(BlockRegistry.IVORY_BRICKS.asItem());
+            itemGroup.add(BlockRegistry.IVORY_PILLAR.asItem());
+            itemGroup.add(BlockRegistry.POLISHED_IVORY.asItem());
+
+            // gilded ivory blocks
+            itemGroup.add(BlockRegistry.GILDED_CHISELED_IVORY.asItem());
+            itemGroup.add(BlockRegistry.GILDED_IVORY_BRICKS.asItem());
+            itemGroup.add(BlockRegistry.GILDED_IVORY_PILLAR.asItem());
+            itemGroup.add(BlockRegistry.GILDED_POLISHED_IVORY.asItem());
+
+            itemGroup.add(ItemRegistry.IVORY_BRICK);
             itemGroup.add(ItemRegistry.PALE_SWORD);
         });
     }

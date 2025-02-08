@@ -10,6 +10,7 @@ import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.Rarity;
 
 public class ItemRegistry {
 
@@ -21,8 +22,13 @@ public class ItemRegistry {
         return INSTANCE;
     }
 
-    public static final Item IVORY_INGOT = register(new Item(new Item.Settings()), RegistryKey.of(RegistryKeys.ITEM, new Identifier(IL.MOD_ID, "ivory_ingot")));
+    public static final Item IVORY_BRICK = register(new Item(
+            new Item.Settings()
+                    .maxCount(64)
+                    .rarity(Rarity.RARE)
+    ), RegistryKey.of(RegistryKeys.ITEM, new Identifier(IL.MOD_ID, "ivory_brick")));
     public static final ToolMaterial IVORY_TOOL_MATERIAL = new IvoryToolMaterial();
+
     public static final Item PALE_SWORD = register(new PaleSwordItem(), RegistryKey.of(RegistryKeys.ITEM, new Identifier(IL.MOD_ID, "pale_sword")));
 
     private static Item register(Item item, RegistryKey<Item> key) {
