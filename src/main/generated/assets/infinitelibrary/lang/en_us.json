@@ -1,9 +1,0 @@
-{
-  "block.infinitelibrary.activated_chiseled_quartz": "Activated Chiseled Quartz",
-  "block.infinitelibrary.inactive_chiseled_quartz": "Inactive Chiseled Quartz",
-  "block.infinitelibrary.old_bookshelf": "Old Bookshelf",
-  "block.infinitelibrary.old_empty_bookshelf": "Old Empty Bookshelf",
-  "block.infinitelibrary.quartz_bookshelf": "Quartz Bookshelf",
-  "death.attack.absorb_knowledge": "%1$s's knowledge was absorbed by the Library.",
-  "itemGroup.infinitelibrary": "Infinite Library"
-}
