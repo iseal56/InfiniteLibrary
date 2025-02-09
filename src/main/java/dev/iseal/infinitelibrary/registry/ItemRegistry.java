@@ -5,6 +5,7 @@ import dev.iseal.infinitelibrary.items.item.PaleSwordItem;
 import dev.iseal.infinitelibrary.items.materials.IvoryToolMaterial;
 import net.minecraft.item.Item;
 import net.minecraft.item.ToolMaterial;
+import net.minecraft.item.TridentItem;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
@@ -29,7 +30,7 @@ public class ItemRegistry {
     ), RegistryKey.of(RegistryKeys.ITEM, new Identifier(IL.MOD_ID, "ivory_brick")));
     public static final ToolMaterial IVORY_TOOL_MATERIAL = new IvoryToolMaterial();
 
-    public static final Item PALE_SWORD = register(new PaleSwordItem(), RegistryKey.of(RegistryKeys.ITEM, new Identifier(IL.MOD_ID, "pale_sword")));
+    public static final Item PALE_SWORD = register(new PaleSwordItem(), RegistryKey.of(RegistryKeys.ITEM, new Identifier(IL.MOD_ID, "pale_sword_full")));
 
     private static Item register(Item item, RegistryKey<Item> key) {
         return Registry.register(Registries.ITEM, key, item);
