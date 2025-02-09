@@ -20,26 +20,6 @@ public class OldBookshelfBlock extends Block {
                 .sounds(BlockSoundGroup.CHISELED_BOOKSHELF)
                 .burnable());
 
-        /*
-        setDefaultState(
-                this.stateManager
-                        .getDefaultState()
-                        .with(FACING, Direction.NORTH)
-        );
-
-         */
     }
-/*
-    @Override
-    public BlockState getPlacementState(ItemPlacementContext ctx) {
-        return getDefaultState().with(FACING, ctx.getHorizontalPlayerFacing().getOpposite());
-    }
-
-    @Override
-    protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
-        builder.add(FACING);
-    }
-
- */
 }
 

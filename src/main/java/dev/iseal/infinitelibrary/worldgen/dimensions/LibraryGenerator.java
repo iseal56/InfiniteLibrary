@@ -103,8 +103,8 @@ public class LibraryGenerator extends ChunkGenerator {
             for (int j : accessPoints) {
                 BlockPos pos1 = isFirstZeroMap ? new BlockPos(i, 40, j) : new BlockPos(j, 40, i);
                 BlockPos pos2 = isFirstZeroMap ? new BlockPos(i, 40, j + 1) : new BlockPos(j + 1, 40, i);
-                chunk.setBlockState(pos1, Blocks.QUARTZ_BRICKS.getDefaultState(), false);
-                chunk.setBlockState(pos2, Blocks.QUARTZ_BRICKS.getDefaultState(), false);
+                chunk.setBlockState(pos1, BlockRegistry.IVORY_BRICKS.getDefaultState(), false);
+                chunk.setBlockState(pos2, BlockRegistry.IVORY_BRICKS.getDefaultState(), false);
             }
         }
     }
@@ -141,7 +141,7 @@ public class LibraryGenerator extends ChunkGenerator {
 
     private void checkForPillar(Chunk chunk, BlockPos pos, AtomicBoolean doPillar) {
         Utils.executeForEveryConnectedBlock(pos, (blockPos) -> {
-            if (chunk.getBlockState(blockPos).getBlock().equals(Blocks.QUARTZ_BRICKS)) {
+            if (chunk.getBlockState(blockPos).getBlock().equals(BlockRegistry.IVORY_BRICKS)) {
                 doPillar.set(true);
                 return false;
             }
@@ -151,7 +151,7 @@ public class LibraryGenerator extends ChunkGenerator {
 
     private BlockPos buildPillar(Chunk chunk, BlockPos pos, int heightLimit) {
         while (pos.getY() < heightLimit) {
-            chunk.setBlockState(pos, Blocks.QUARTZ_PILLAR.getDefaultState(), false);
+            chunk.setBlockState(pos, BlockRegistry.IVORY_PILLAR.getDefaultState(), false);
             pos = pos.up();
         }
         pos.up();
@@ -166,7 +166,7 @@ public class LibraryGenerator extends ChunkGenerator {
         } else {
             BlockState blockState = light && lightDRNG.getDistributedRandomNumber() == 1
                     ? Blocks.LANTERN.getDefaultState()
-                    : Blocks.CHISELED_QUARTZ_BLOCK.getDefaultState();
+                    : BlockRegistry.CHISELED_IVORY.getDefaultState();
             chunk.setBlockState(pos, blockState, false);
         }
         activatedChiseledQuartzAttempts.set(activatedChiseledQuartzAttempts.get() + 1);

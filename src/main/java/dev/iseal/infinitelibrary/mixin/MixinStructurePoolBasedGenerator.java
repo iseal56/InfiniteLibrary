@@ -13,7 +13,7 @@ public class MixinStructurePoolBasedGenerator {
     @ModifyReturnValue(method = "random", at = @At("RETURN"))
     private static BlockRotation changeRotationForMyStructures(BlockRotation original) {
         boolean calledFromMyClass = StackWalker.getInstance(StackWalker.Option.RETAIN_CLASS_REFERENCE)
-                .walk(frames -> frames.anyMatch(frame -> frame.getDeclaringClass().getName().contains("dev.iseal.infinitelibrary.structures")));
+                .walk(frames -> frames.anyMatch(frame -> frame.getDeclaringClass().getName().contains("dev.iseal.infinitelibrary.worldgen.structures")));
 
         if (calledFromMyClass) {
             return BlockRotation.COUNTERCLOCKWISE_90;
