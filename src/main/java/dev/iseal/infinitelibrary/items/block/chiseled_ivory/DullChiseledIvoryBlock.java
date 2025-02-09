@@ -18,13 +18,13 @@ public class DullChiseledIvoryBlock extends Block {
 
     public DullChiseledIvoryBlock() {
         super(AbstractBlock.Settings.create()
-                .mapColor(MapColor.OAK_TAN)
-                .instrument(Instrument.BASS)
-                .strength(1F)
-                .hardness(1f)
+                .mapColor(MapColor.WHITE)
+                .instrument(Instrument.XYLOPHONE)
+                .requiresTool()
+                .strength(20F)
+                .hardness(2f)
                 .resistance(6.0f)
-                .sounds(BlockSoundGroup.CHISELED_BOOKSHELF)
-                .burnable()
+                .sounds(BlockSoundGroup.BONE)
         );
     }
 
