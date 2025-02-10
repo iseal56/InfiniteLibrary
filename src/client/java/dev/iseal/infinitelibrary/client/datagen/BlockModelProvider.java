@@ -53,7 +53,7 @@ public class BlockModelProvider extends FabricModelProvider {
 
     @Override
     public void generateItemModels(ItemModelGenerator itemModelGenerator) {
-        itemModelGenerator.register(ItemRegistry.PALE_SWORD, ModelUtils.itemVanilla("handheld", TextureKey.LAYER0));
+        //itemModelGenerator.register(ItemRegistry.PALE_SWORD, ModelUtils.itemVanilla("handheld", TextureKey.LAYER0));
         itemModelGenerator.register(ItemRegistry.IVORY_BRICK, ModelUtils.itemVanilla("generated", TextureKey.LAYER0));
     }
 
