@@ -32,6 +32,12 @@ public class ItemRegistry {
 
     public static final Item PALE_SWORD = register(new PaleSwordItem(), RegistryKey.of(RegistryKeys.ITEM, new Identifier(IL.MOD_ID, "pale_sword_full")));
 
+    public static final Item SPELL_BOOK = register(new Item(
+            new Item.Settings()
+                    .rarity(Rarity.EPIC)
+                    .maxCount(1)
+    ), RegistryKey.of(RegistryKeys.ITEM, new Identifier(IL.MOD_ID, "spell_book")));
+
     private static Item register(Item item, RegistryKey<Item> key) {
         return Registry.register(Registries.ITEM, key, item);
     }
