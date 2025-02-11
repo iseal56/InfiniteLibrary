@@ -29,7 +29,9 @@ public class PaleSwordItem extends SwordItem {
     public static final Supplier<StatusEffectInstance> WITHER = () -> new StatusEffectInstance(
             StatusEffects.WITHER,
             60,
-            1
+            1,
+            true,
+            false
     );
     private static final float DRAIN_FACTOR = 10;
     private static final float DRAIN_CONSTANT = 1f;

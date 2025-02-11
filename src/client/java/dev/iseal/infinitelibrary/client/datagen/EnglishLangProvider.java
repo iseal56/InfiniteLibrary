@@ -13,6 +13,8 @@ public class EnglishLangProvider extends FabricLanguageProvider {
     @Override
     public void generateTranslations(TranslationBuilder translationBuilder) {
         translationBuilder.add("itemGroup.infinitelibrary", "Infinite Library");
+
+        // blocks
         translationBuilder.add("block.infinitelibrary.quartz_bookshelf", "Quartz Bookshelf");
         translationBuilder.add("block.infinitelibrary.gleaming_chiseled_ivory", "Gleaming Chiseled Ivory");
         translationBuilder.add("block.infinitelibrary.dull_chiseled_ivory", "Dull Chiseled Ivory");
@@ -31,8 +33,13 @@ public class EnglishLangProvider extends FabricLanguageProvider {
         translationBuilder.add("block.infinitelibrary.gilded_ivory_pillar", "Gilded Ivory Pillar");
         translationBuilder.add("block.infinitelibrary.gilded_polished_ivory", "Gilded Polished Ivory");
 
+        // death messages
         translationBuilder.add("death.attack.absorb_knowledge", "%1$s's knowledge was absorbed by the Library.");
+
+        // items
         translationBuilder.add("item.infinitelibrary.ivory_brick", "Ivory Brick");
-        translationBuilder.add("item.infinitelibrary.pale_sword", "Pale Sword");
+        translationBuilder.add("item.infinitelibrary.pale_sword", "Inactive Pale Sword");
+        translationBuilder.add("item.infinitelibrary.pale_sword_full", "Active Pale Sword");
+        translationBuilder.add("item.infinitelibrary.spell_book", "Spell Book");
     }
 }
