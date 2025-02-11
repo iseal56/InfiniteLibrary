@@ -113,7 +113,7 @@ public class BookModelRenderer implements BuiltinItemRendererRegistry.DynamicIte
             matrices.translate(0, 0.9, -0.8);
             matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees(130));
         } else {
-            matrices.translate(0, -0.64, 1.3);
+            matrices.translate(0, -0.627, 1.3);
             matrices.multiply(RotationAxis.NEGATIVE_X.rotationDegrees(50));
         }
 //        matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(90));
