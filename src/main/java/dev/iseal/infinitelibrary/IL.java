@@ -5,6 +5,7 @@ import dev.iseal.infinitelibrary.listeners.RemoveExperienceListener;
 import dev.iseal.infinitelibrary.items.item_groups.InfiniteLibraryGroup;
 import dev.iseal.infinitelibrary.listeners.AddCodesToLootTables;
 import dev.iseal.infinitelibrary.registry.*;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
@@ -41,6 +42,8 @@ public class IL implements ModInitializer {
         DamageSourceRegistry.getInstance().initialize();
         LootTableRegistry.getInstance().initialize();
         ItemRegistry.getInstance().initialize();
+        EntityRegistry.getInstance().initialize();
+        EffectRegistry.getInstance().initialize();
         InfiniteLibraryGroup.initialize();
         new RemoveExperienceListener().registerListener();
         new AddCodesToLootTables().initialize();

@@ -1,5 +1,6 @@
-package dev.iseal.infinitelibrary.client;
+package dev.iseal.infinitelibrary.client.renderers.entity;
 
+import dev.iseal.infinitelibrary.IL;
 import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.model.*;
@@ -8,13 +9,12 @@ import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.model.json.ModelTransformationMode;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.RotationAxis;
 
 public class BookModelRenderer implements BuiltinItemRendererRegistry.DynamicItemRenderer {
-    public static final Identifier TEXTURE = Identifier.of("infinitelibrary", "textures/item/spell_book.png");
+    public static final Identifier TEXTURE = new Identifier(IL.MOD_ID, "textures/entity/spell_book.png");
 
     private final ModelPart book;
     private final ModelPart spine;
