@@ -47,7 +47,11 @@ public class InfiniteLibraryGroup {
             itemGroup.add(BlockRegistry.GILDED_POLISHED_IVORY.asItem());
 
             itemGroup.add(ItemRegistry.IVORY_BRICK);
+
+            //Wepons
             itemGroup.add(ItemRegistry.PALE_SWORD);
+            itemGroup.add(ItemRegistry.SPELL_BOOK);
+
         });
     }
 

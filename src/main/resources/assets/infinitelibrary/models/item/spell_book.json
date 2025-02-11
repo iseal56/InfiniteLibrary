@@ -1,6 +1,6 @@
 {
 	"parent": "minecraft:builtin/entity",
-	"credit": "Made with Blockbench",
+	"credit": "Made with Blockbench, Made by TobinOakenshield or Github https://github.com/TobyRue",
 	"elements": [
 		{
 			"from": [7, 2, 10],

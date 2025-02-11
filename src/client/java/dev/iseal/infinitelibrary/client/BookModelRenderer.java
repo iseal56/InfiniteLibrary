@@ -106,10 +106,17 @@ public class BookModelRenderer implements BuiltinItemRendererRegistry.DynamicIte
 //        minecraft.getItemRenderer().renderItem(HANDLE_DRAGON, ModelTransformationMode.FIRST_PERSON_RIGHT_HAND, light, overlay, matrices, vertexConsumers, minecraft.world, 0);
         MinecraftClient.getInstance().getTextureManager().bindTexture(TEXTURE);
         VertexConsumer vertices = vertexConsumers.getBuffer(RenderLayer.getEntityCutout(TEXTURE));
-
-        matrices.translate(0, -0.63,1.3);
+        if (mode == ModelTransformationMode.GUI) {
+            matrices.translate(0, -0.76, 1.3);
+            matrices.multiply(RotationAxis.NEGATIVE_X.rotationDegrees(50));
+        } else if (mode == ModelTransformationMode.FIXED) {
+            matrices.translate(0, 0.9, -0.8);
+            matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees(130));
+        } else {
+            matrices.translate(0, -0.64, 1.3);
+            matrices.multiply(RotationAxis.NEGATIVE_X.rotationDegrees(50));
+        }
 //        matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(90));
-        matrices.multiply(RotationAxis.NEGATIVE_X.rotationDegrees(50));
         renderModel(stack, matrices, vertices, light, overlay, 1.0F, 1.0F, 1.0F, 1.0F);
         matrices.pop();
     }
