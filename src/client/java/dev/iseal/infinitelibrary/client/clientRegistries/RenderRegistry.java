@@ -1,14 +1,8 @@
 package dev.iseal.infinitelibrary.client.clientRegistries;
 
-import dev.iseal.infinitelibrary.IL;
 import dev.iseal.infinitelibrary.client.renderers.SpellBookRenderer;
-import dev.iseal.infinitelibrary.registry.EntityRegistry;
 import dev.iseal.infinitelibrary.registry.ItemRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry;
-import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
-import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
-import net.minecraft.client.render.entity.model.EntityModelLayer;
-import net.minecraft.util.Identifier;
 
 public class RenderRegistry {
 

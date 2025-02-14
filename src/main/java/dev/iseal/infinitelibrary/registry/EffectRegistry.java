@@ -23,8 +23,13 @@ public class EffectRegistry {
         return INSTANCE;
     }
 
-    public static final StatusEffect KNOWLEDGE = register("knowledge", new KnowledgeEffect());
-    public static final StatusEffect HUBRIS = register("hubris", new HubrisEffect());
+    public static final StatusEffect HUBRIS;
+    public static final StatusEffect KNOWLEDGE;
+
+    static {
+        HUBRIS = Registry.register(Registries.STATUS_EFFECT, Identifier.of(IL.MOD_ID, "hubris"), new HubrisEffect());
+        KNOWLEDGE = Registry.register(Registries.STATUS_EFFECT, Identifier.of(IL.MOD_ID, "knowledge"), new KnowledgeEffect());
+    }
 
     private static StatusEffect register(String id, StatusEffect entry) {
         return Registry.register(Registries.STATUS_EFFECT, new Identifier(IL.MOD_ID, id), entry);

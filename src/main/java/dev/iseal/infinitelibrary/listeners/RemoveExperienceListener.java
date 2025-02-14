@@ -1,6 +1,7 @@
 package dev.iseal.infinitelibrary.listeners;
 
 import com.sun.jna.platform.win32.OaIdl;
+import dev.iseal.infinitelibrary.IL;
 import dev.iseal.infinitelibrary.registry.DamageSourceRegistry;
 import dev.iseal.infinitelibrary.registry.DimensionRegistry;
 import dev.iseal.infinitelibrary.registry.EffectRegistry;

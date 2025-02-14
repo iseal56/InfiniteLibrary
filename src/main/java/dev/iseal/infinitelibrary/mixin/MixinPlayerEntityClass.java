@@ -1,5 +1,6 @@
 package dev.iseal.infinitelibrary.mixin;
 
+import dev.iseal.infinitelibrary.IL;
 import dev.iseal.infinitelibrary.registry.EffectRegistry;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffect;

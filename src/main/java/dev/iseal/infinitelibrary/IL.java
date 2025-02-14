@@ -1,11 +1,13 @@
 package dev.iseal.infinitelibrary;
 
+import dev.iseal.infinitelibrary.effects.HubrisEffect;
+import dev.iseal.infinitelibrary.effects.KnowledgeEffect;
 import dev.iseal.infinitelibrary.worldgen.dimensions.LibraryGenerator;
 import dev.iseal.infinitelibrary.listeners.RemoveExperienceListener;
 import dev.iseal.infinitelibrary.items.item_groups.InfiniteLibraryGroup;
 import dev.iseal.infinitelibrary.listeners.AddCodesToLootTables;
 import dev.iseal.infinitelibrary.registry.*;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
@@ -27,6 +29,7 @@ public class IL implements ModInitializer {
     public static final RegistryKey<Biome> BIOME_KEY = RegistryKey.of(RegistryKeys.BIOME, new Identifier(MOD_ID, "library"));
     public static MinecraftServer server;
 
+
     @Override
     public void onInitialize() {
         Registry.register(Registries.CHUNK_GENERATOR, new Identifier(MOD_ID, "library"), LibraryGenerator.CODEC);
@@ -36,14 +39,13 @@ public class IL implements ModInitializer {
             StructureRegistry.getInstance().serverRegister();
             DamageSourceRegistry.getInstance().initializeServer();
         });
+        EffectRegistry.getInstance().initialize();
         StructureRegistry.getInstance().register();
         BlockRegistry.getInstance().initialize();
         DimensionRegistry.getInstance().initialize();
         DamageSourceRegistry.getInstance().initialize();
         LootTableRegistry.getInstance().initialize();
         ItemRegistry.getInstance().initialize();
-        EntityRegistry.getInstance().initialize();
-        EffectRegistry.getInstance().initialize();
         InfiniteLibraryGroup.initialize();
         new RemoveExperienceListener().registerListener();
         new AddCodesToLootTables().initialize();
