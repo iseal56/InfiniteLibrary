@@ -28,13 +28,7 @@ public class IL implements ModInitializer {
     private static RegistryKey<World> WORLD_KEY = RegistryKey.of(RegistryKeys.WORLD, DIMENSION_KEY.getValue());
     public static final RegistryKey<Biome> BIOME_KEY = RegistryKey.of(RegistryKeys.BIOME, new Identifier(MOD_ID, "library"));
     public static MinecraftServer server;
-    public static final StatusEffect HUBRIS;
-    public static final StatusEffect KNOWLEDGE;
 
-    static {
-        HUBRIS = Registry.register(Registries.STATUS_EFFECT, Identifier.of(MOD_ID, "hubris"), new HubrisEffect());
-        KNOWLEDGE = Registry.register(Registries.STATUS_EFFECT, Identifier.of(MOD_ID, "knowledge"), new KnowledgeEffect());
-    }
 
     @Override
     public void onInitialize() {
@@ -45,6 +39,7 @@ public class IL implements ModInitializer {
             StructureRegistry.getInstance().serverRegister();
             DamageSourceRegistry.getInstance().initializeServer();
         });
+        EffectRegistry.getInstance().initialize();
         StructureRegistry.getInstance().register();
         BlockRegistry.getInstance().initialize();
         DimensionRegistry.getInstance().initialize();

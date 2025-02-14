@@ -4,6 +4,7 @@ import com.sun.jna.platform.win32.OaIdl;
 import dev.iseal.infinitelibrary.IL;
 import dev.iseal.infinitelibrary.registry.DamageSourceRegistry;
 import dev.iseal.infinitelibrary.registry.DimensionRegistry;
+import dev.iseal.infinitelibrary.registry.EffectRegistry;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.minecraft.nbt.NbtCompound;
 
@@ -25,7 +26,7 @@ public class RemoveExperienceListener {
                     return;
                 }
                 // if the player has the knowledge effect, don't remove experience
-                if (player.hasStatusEffect(IL.KNOWLEDGE)) {
+                if (player.hasStatusEffect(EffectRegistry.KNOWLEDGE)) {
                     return;
                 }
 
