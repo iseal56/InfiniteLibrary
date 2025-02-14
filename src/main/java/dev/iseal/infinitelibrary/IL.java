@@ -1,12 +1,10 @@
 package dev.iseal.infinitelibrary;
 
-import dev.iseal.infinitelibrary.mixin.ItemRendererAccessor;
 import dev.iseal.infinitelibrary.worldgen.dimensions.LibraryGenerator;
 import dev.iseal.infinitelibrary.listeners.RemoveExperienceListener;
 import dev.iseal.infinitelibrary.items.item_groups.InfiniteLibraryGroup;
 import dev.iseal.infinitelibrary.listeners.AddCodesToLootTables;
 import dev.iseal.infinitelibrary.registry.*;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
