@@ -23,16 +23,19 @@ public class EntityRegistry {
 
     public static final EntityType<SpellBookEntity> SPELL_BOOK = (EntityType<SpellBookEntity>) register(
             new Identifier(IL.MOD_ID, "spell_book"),
-            EntityType.Builder.create(SpellBookEntity::new, SpawnGroup.MISC)
+            EntityType.Builder.create(
+                    (type, world) -> new SpellBookEntity(world),
+                            SpawnGroup.MISC)
                     .setDimensions(0.3f, 0.3f)
                     .build("spell_book"),
             SpellBookEntity.createMobAttributes()
     );
 
-    public static EntityType<? extends LivingEntity> register(Identifier id, EntityType<? extends LivingEntity> type, DefaultAttributeContainer.Builder attributes) {
-        EntityType<? extends LivingEntity> entityType = Registry.register(Registries.ENTITY_TYPE, id, type);
+    public static EntityType<?> register(Identifier id, EntityType<?> type, DefaultAttributeContainer.Builder attributes) {
+        EntityType<? extends LivingEntity> entityType = (EntityType<? extends LivingEntity>) Registry.register(Registries.ENTITY_TYPE, id, type);
         FabricDefaultAttributeRegistry.register(entityType, attributes);
         return entityType;
+
     }
 
     public void initialize() {

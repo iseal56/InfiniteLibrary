@@ -1,14 +1,12 @@
-package dev.iseal.infinitelibrary.client.renderers;
+package dev.iseal.infinitelibrary.client.clientRegistries;
 
 import dev.iseal.infinitelibrary.IL;
-import dev.iseal.infinitelibrary.client.renderers.entity.BookModelRenderer;
+import dev.iseal.infinitelibrary.client.renderers.SpellBookRenderer;
 import dev.iseal.infinitelibrary.registry.EntityRegistry;
 import dev.iseal.infinitelibrary.registry.ItemRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.render.entity.model.EntityModelLayer;
 import net.minecraft.util.Identifier;
 
@@ -22,17 +20,14 @@ public class RenderRegistry {
         return INSTANCE;
     }
 
-    public static final EntityModelLayer BOOK_LAYER = new EntityModelLayer(new Identifier(IL.MOD_ID, "spell_book"), "main");
-
     public void initialize() {
-
+        registerSpellBook();
     }
 
     private void registerSpellBook() {
-        EntityModelLayerRegistry.registerModelLayer(BOOK_LAYER, BookModelRenderer::getTexturedModelData);
-        EntityRendererRegistry.register(EntityRegistry.SPELL_BOOK, (context) -> {
-            ModelPart root = MinecraftClient.getInstance().getEntityModelLoader().getModelPart(BOOK_LAYER);
-            new BookModelRenderer(root).render(stack, mode, matrices, vertexConsumers, light, overlay);
-        });
+        BuiltinItemRendererRegistry.INSTANCE.register(
+                ItemRegistry.SPELL_BOOK,
+                new SpellBookRenderer(SpellBookRenderer.getTexturedModelData().createModel())
+        );
     }
 }

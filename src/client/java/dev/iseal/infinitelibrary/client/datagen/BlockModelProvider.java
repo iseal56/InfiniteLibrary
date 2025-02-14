@@ -1,5 +1,7 @@
 package dev.iseal.infinitelibrary.client.datagen;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import dev.iseal.infinitelibrary.IL;
 import dev.iseal.infinitelibrary.client.datagen.datagenUtils.ModelUtils;
 import dev.iseal.infinitelibrary.registry.BlockRegistry;
@@ -8,6 +10,9 @@ import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
 import net.minecraft.block.Block;
 import net.minecraft.block.HorizontalFacingBlock;
+import net.minecraft.data.DataOutput;
+import net.minecraft.data.DataProvider;
+import net.minecraft.data.DataWriter;
 import net.minecraft.data.client.*;
 import net.minecraft.data.family.BlockFamilies;
 import net.minecraft.data.family.BlockFamily;
@@ -15,10 +20,16 @@ import net.minecraft.item.Item;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Direction;
 
+import java.io.IOException;
+import java.nio.file.Path;
+
 public class BlockModelProvider extends FabricModelProvider {
+
+    private final FabricDataOutput output;
 
     public BlockModelProvider(FabricDataOutput output) {
         super(output);
+        this.output = output;
     }
 
     private final Block[] simpleCubes = new Block[]{
@@ -52,38 +63,57 @@ public class BlockModelProvider extends FabricModelProvider {
 
 
     @Override
-    public void generateItemModels(ItemModelGenerator itemModelGenerator) {
-        //itemModelGenerator.register(ItemRegistry.PALE_SWORD, ModelUtils.itemVanilla("handheld", TextureKey.LAYER0));
-        itemModelGenerator.register(ItemRegistry.IVORY_BRICK, ModelUtils.itemVanilla("generated", TextureKey.LAYER0));
+    public void generateItemModels(ItemModelGenerator generator) {
+        // Existing registrations
+        generator.register(ItemRegistry.IVORY_BRICK, Models.GENERATED);
+        Models.GENERATED.upload(
+                new Identifier(IL.MOD_ID, "item/spell_book_2d"),
+                TextureMap.layer0(new Identifier(IL.MOD_ID, "item/spell_book_item")),
+                generator.writer
+        );
+        // Spell book registration
+        //registerSpellBookModels(generator);
     }
 
-    @Override
-    public String getName() {
-        return "Infinite Library Block Model Provider";
-    }
+    private void registerSpellBookModels(ItemModelGenerator generator) {
+        Identifier mainModelId = ModelIds.getItemModelId(ItemRegistry.SPELL_BOOK);
+        System.out.println(mainModelId.toString());
 
-    public static TextureMap getRotatableBlockTextureMap(Block block, String sideTexture) {
-        return new TextureMap()
-                .put(TextureKey.TOP, new Identifier(IL.MOD_ID, sideTexture+"_top"))
-                .put(TextureKey.SIDE, new Identifier(IL.MOD_ID, sideTexture))
-                .put(TextureKey.FRONT, ModelIds.getBlockModelId(block));
-    }
+        // 1. Create main model with overrides
+        JsonObject mainModel = new JsonObject();
+        mainModel.addProperty("parent", "item/handheld"); // 3D parent
+        JsonArray overrides = new JsonArray();
+        overrides.add(createOverride("gui", 1.0f, mainModelId.withSuffixedPath("_2d")));
+        overrides.add(createOverride("ground", 1.0f, mainModelId.withSuffixedPath("_2d")));
+        mainModel.add("overrides", overrides);
 
-    private static BlockStateSupplier createRotSupplier(Block rotatableBlock, Identifier rotatableBlockId) {
-        VariantSetting<Boolean> uvlock = VariantSettings.UVLOCK;
-        VariantSetting<VariantSettings.Rotation> yRot = VariantSettings.Y;
-        return VariantsBlockStateSupplier.create(rotatableBlock).coordinate(BlockStateVariantMap.create(HorizontalFacingBlock.FACING)
-                .register(Direction.NORTH, BlockStateVariant.create().put(VariantSettings.MODEL, rotatableBlockId).put(uvlock, true))
-                .register(Direction.EAST, BlockStateVariant.create().put(VariantSettings.MODEL, rotatableBlockId).put(uvlock, true).put(yRot, VariantSettings.Rotation.R90))
-                .register(Direction.SOUTH, BlockStateVariant.create().put(VariantSettings.MODEL, rotatableBlockId).put(uvlock, true).put(yRot, VariantSettings.Rotation.R180))
-                .register(Direction.WEST, BlockStateVariant.create().put(VariantSettings.MODEL, rotatableBlockId).put(uvlock, true).put(yRot, VariantSettings.Rotation.R270))
+        // Write to models/item directory
+        DataOutput.PathResolver itemResolver = output.getResolver(
+                DataOutput.OutputType.RESOURCE_PACK,
+                "models/item" // Correct directory
+        );
+
+        DataProvider.writeToPath(
+                DataWriter.UNCACHED,
+                mainModel,
+                itemResolver.resolve(mainModelId, ".json")
+        );
+
+        // 2. Create 2D variant in models/item
+        Models.GENERATED.upload(
+                mainModelId.withSuffixedPath("_2d"),
+                TextureMap.layer0(new Identifier(IL.MOD_ID, "item/spell_book_item")),
+                generator.writer
         );
     }
 
-    public static void registerOrientableBlock(BlockStateModelGenerator generator, Block vertSlabBlock, TextureMap textures, Model model) {
-        Identifier slabModel = model.upload(vertSlabBlock, textures, generator.modelCollector);
-        generator.blockStateCollector.accept(createRotSupplier(vertSlabBlock, slabModel));
-        generator.registerParentedItemModel(vertSlabBlock, slabModel);
+    private JsonObject createOverride(String predicate, float value, Identifier model) {
+        JsonObject override = new JsonObject();
+        JsonObject predicateObj = new JsonObject();
+        predicateObj.addProperty(predicate, value);
+        override.add("predicate", predicateObj);
+        override.addProperty("model", model.toString());
+        return override;
     }
 
 }

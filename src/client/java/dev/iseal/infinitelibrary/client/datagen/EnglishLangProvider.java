@@ -40,7 +40,7 @@ public class EnglishLangProvider extends FabricLanguageProvider {
         translationBuilder.add("item.infinitelibrary.ivory_brick", "Ivory Brick");
         translationBuilder.add("item.infinitelibrary.pale_sword", "Inactive Pale Sword");
         translationBuilder.add("item.infinitelibrary.pale_sword_full", "Active Pale Sword");
-        translationBuilder.add("item.infinitelibrary.spell_book", "Spell Book");
+        translationBuilder.add("item.infinitelibrary.spell_book_item", "Spell Book");
 
         // effects
         translationBuilder.add("effect.infinitelibrary.hubris", "Hubris");

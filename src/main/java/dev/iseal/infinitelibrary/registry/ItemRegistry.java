@@ -2,10 +2,10 @@ package dev.iseal.infinitelibrary.registry;
 
 import dev.iseal.infinitelibrary.IL;
 import dev.iseal.infinitelibrary.items.item.PaleSwordItem;
+import dev.iseal.infinitelibrary.items.item.SpellBookItem;
 import dev.iseal.infinitelibrary.items.materials.IvoryToolMaterial;
 import net.minecraft.item.Item;
 import net.minecraft.item.ToolMaterial;
-import net.minecraft.item.TridentItem;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
@@ -31,12 +31,13 @@ public class ItemRegistry {
     public static final ToolMaterial IVORY_TOOL_MATERIAL = new IvoryToolMaterial();
 
     public static final Item PALE_SWORD = register(new PaleSwordItem(), RegistryKey.of(RegistryKeys.ITEM, new Identifier(IL.MOD_ID, "pale_sword_full")));
+    public static final Item SPELL_BOOK = register(new SpellBookItem(), RegistryKey.of(RegistryKeys.ITEM, new Identifier(IL.MOD_ID, "spell_book")));
 
-    public static final Item SPELL_BOOK = register(new Item(
+    public static final Item SCRAPS_OF_WISDOM = register(new Item(
             new Item.Settings()
-                    .rarity(Rarity.EPIC)
-                    .maxCount(1)
-    ), RegistryKey.of(RegistryKeys.ITEM, new Identifier(IL.MOD_ID, "spell_book")));
+                    .maxCount(64)
+                    .rarity(Rarity.UNCOMMON)
+    ), RegistryKey.of(RegistryKeys.ITEM, new Identifier(IL.MOD_ID, "scraps_of_wisdom")));
 
     private static Item register(Item item, RegistryKey<Item> key) {
         return Registry.register(Registries.ITEM, key, item);

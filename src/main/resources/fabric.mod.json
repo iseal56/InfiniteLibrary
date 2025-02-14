@@ -4,7 +4,9 @@
   "version": "${version}",
   "name": "InfiniteLibrary",
   "description": "",
-  "authors": [],
+  "authors": [
+    "ISeal"
+  ],
   "contact": {},
   "license": "All-Rights-Reserved",
   "icon": "assets/infinitelibrary/icon.png",

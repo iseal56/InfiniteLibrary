@@ -1,4 +1,4 @@
-package dev.iseal.infinitelibrary.client.renderers.entity;
+package dev.iseal.infinitelibrary.client.renderers;
 
 import dev.iseal.infinitelibrary.IL;
 import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry;
@@ -8,13 +8,17 @@ import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.model.json.ModelTransformationMode;
+import net.minecraft.client.texture.Sprite;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemStack;
+import net.minecraft.screen.PlayerScreenHandler;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.RotationAxis;
+import org.joml.Matrix4f;
 
-public class BookModelRenderer implements BuiltinItemRendererRegistry.DynamicItemRenderer {
-    public static final Identifier TEXTURE = new Identifier(IL.MOD_ID, "textures/entity/spell_book.png");
+public class SpellBookRenderer implements BuiltinItemRendererRegistry.DynamicItemRenderer {
+    public static final Identifier TEXTURE_2D = new Identifier(IL.MOD_ID, "textures/item/spell_book_item.png");
+    public static final Identifier TEXTURE_3D = new Identifier(IL.MOD_ID, "textures/item/spell_book.png");
 
     private final ModelPart book;
     private final ModelPart spine;
@@ -32,7 +36,7 @@ public class BookModelRenderer implements BuiltinItemRendererRegistry.DynamicIte
     private final ModelPart topright;
 
 
-    public BookModelRenderer(ModelPart book) {
+    public SpellBookRenderer(ModelPart book) {
         this.book = book.getChild("book");
         this.spine = this.book.getChild("spine");
         this.left = this.book.getChild("left");
@@ -90,34 +94,75 @@ public class BookModelRenderer implements BuiltinItemRendererRegistry.DynamicIte
 
         return TexturedModelData.of(modelData, 32, 32);
     }
-    public void renderModel(ItemStack stack, MatrixStack matrices, VertexConsumer vertices, int light, int overlay, float red, float green, float blue, float alpha) {
-        this.book.render(matrices, vertices, light, overlay);
-        MinecraftClient.getInstance().getTextureManager().bindTexture(TEXTURE);
-    }
+
     @Override
-    public void render(ItemStack stack, ModelTransformationMode mode, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
+    public void render(ItemStack stack, ModelTransformationMode mode, MatrixStack matrices,
+                       VertexConsumerProvider vertexConsumers, int light, int overlay) {
+
         matrices.push();
-        var minecraft = MinecraftClient.getInstance();
-
-
-
-        matrices.translate(0.5, 0.5, 0.20);
-
-//        minecraft.getItemRenderer().renderItem(HANDLE_DRAGON, ModelTransformationMode.FIRST_PERSON_RIGHT_HAND, light, overlay, matrices, vertexConsumers, minecraft.world, 0);
-        MinecraftClient.getInstance().getTextureManager().bindTexture(TEXTURE);
-        VertexConsumer vertices = vertexConsumers.getBuffer(RenderLayer.getEntityCutout(TEXTURE));
-        if (mode == ModelTransformationMode.GUI) {
-            matrices.translate(0, -0.76, 1.3);
-            matrices.multiply(RotationAxis.NEGATIVE_X.rotationDegrees(50));
-        } else if (mode == ModelTransformationMode.FIXED) {
-            matrices.translate(0, 0.9, -0.8);
-            matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees(130));
+        System.out.println("Rendering spell book");
+        if (mode == ModelTransformationMode.GUI || mode == ModelTransformationMode.GROUND) {
+            // Simple 2D rendering
+            render2DSprite(matrices, vertexConsumers, light, overlay);
         } else {
-            matrices.translate(0, -0.627, 1.3);
-            matrices.multiply(RotationAxis.NEGATIVE_X.rotationDegrees(50));
+            // Full 3D rendering
+            render3DModel(matrices, vertexConsumers, light, overlay);
         }
-//        matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(90));
-        renderModel(stack, matrices, vertices, light, overlay, 1.0F, 1.0F, 1.0F, 1.0F);
+
         matrices.pop();
+    }
+
+    private void render2DSprite(MatrixStack matrices, VertexConsumerProvider vertexConsumers,
+                                int light, int overlay) {
+        // Get the sprite from texture atlas
+        Sprite sprite = MinecraftClient.getInstance()
+                .getSpriteAtlas(PlayerScreenHandler.BLOCK_ATLAS_TEXTURE)
+                .apply(TEXTURE_2D);
+
+        // Get vertex consumer
+        VertexConsumer consumer = vertexConsumers.getBuffer(RenderLayer.getEntityTranslucentCull(TEXTURE_2D));
+
+        // Standard item rendering transform
+        matrices.translate(0.5, 0.5, 0);
+        matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(180));
+        matrices.scale(0.5f, 0.5f, 0.5f);
+
+        // Build quad
+        Matrix4f matrix = matrices.peek().getPositionMatrix();
+        consumer.vertex(matrix, -1, -1, 0)
+                .color(1f, 1f, 1f, 1f)
+                .texture(sprite.getMinU(), sprite.getMinV())
+                .overlay(overlay)
+                .light(light)
+                .normal(0, 0, 1)
+                .next();
+        consumer.vertex(matrix, -1, 1, 0)
+                .color(1f, 1f, 1f, 1f)
+                .texture(sprite.getMinU(), sprite.getMaxV())
+                .overlay(overlay)
+                .light(light)
+                .normal(0, 0, 1)
+                .next();
+        consumer.vertex(matrix, 1, 1, 0)
+                .color(1f, 1f, 1f, 1f)
+                .texture(sprite.getMaxU(), sprite.getMaxV())
+                .overlay(overlay)
+                .light(light)
+                .normal(0, 0, 1)
+                .next();
+        consumer.vertex(matrix, 1, -1, 0)
+                .color(1f, 1f, 1f, 1f)
+                .texture(sprite.getMaxU(), sprite.getMinV())
+                .overlay(overlay)
+                .light(light)
+                .normal(0, 0, 1)
+                .next();
+    }
+
+    private void render3DModel(MatrixStack matrices, VertexConsumerProvider vertexConsumers,
+                               int light, int overlay) {
+        // Your existing 3D rendering logic
+        VertexConsumer consumer = vertexConsumers.getBuffer(RenderLayer.getEntityCutout(TEXTURE_3D));
+        this.book.render(matrices, consumer, light, overlay, 1f, 1f, 1f, 1f);
     }
 }
