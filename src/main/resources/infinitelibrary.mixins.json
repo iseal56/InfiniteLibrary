@@ -8,7 +8,11 @@
     "MixinChiseledBookshelf",
     "MixinStructurePoolBasedGenerator"
   ],
-  "client": [],
+  "client": [
+    "ItemRendererAccessor",
+    "ItemRendererMixin",
+    "ModelLoaderMixin"
+  ],
   "server": [],
   "injectors": {
     "defaultRequire": 1

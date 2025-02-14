@@ -1,5 +1,6 @@
 package dev.iseal.infinitelibrary.client;
 
+import dev.iseal.infinitelibrary.registry.ItemRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.model.*;
@@ -7,14 +8,19 @@ import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.model.json.ModelTransformationMode;
+import net.minecraft.client.util.ModelIdentifier;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
+import net.minecraft.item.TridentItem;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.RotationAxis;
 
 public class BookModelRenderer implements BuiltinItemRendererRegistry.DynamicItemRenderer {
     public static final Identifier TEXTURE = Identifier.of("infinitelibrary", "textures/item/spell_book.png");
+    public static final Identifier ITEM_TEXTURE = Identifier.of("infinitelibrary", "textures/item/spell_book_gui.png");
+    public static final ItemStack BOOKTEMP = new ItemStack(Items.KNOWLEDGE_BOOK, 1);
 
     private final ModelPart book;
     private final ModelPart spine;
@@ -92,6 +98,12 @@ public class BookModelRenderer implements BuiltinItemRendererRegistry.DynamicIte
     }
     public void renderModel(ItemStack stack, MatrixStack matrices, VertexConsumer vertices, int light, int overlay, float red, float green, float blue, float alpha) {
         this.book.render(matrices, vertices, light, overlay);
+        MinecraftClient.getInstance().getTextureManager().bindTexture(ITEM_TEXTURE);
+    }
+    public void renderItem(ItemStack stack, MatrixStack matrices, VertexConsumer vertices, int light, int overlay, float red, float green, float blue, float alpha) {
+//        this.book.render(matrices, vertices, light, overlay);
+        var minecraft = MinecraftClient.getInstance();
+
         MinecraftClient.getInstance().getTextureManager().bindTexture(TEXTURE);
     }
     @Override
@@ -100,24 +112,25 @@ public class BookModelRenderer implements BuiltinItemRendererRegistry.DynamicIte
         var minecraft = MinecraftClient.getInstance();
 
 
-
         matrices.translate(0.5, 0.5, 0.20);
 
-//        minecraft.getItemRenderer().renderItem(HANDLE_DRAGON, ModelTransformationMode.FIRST_PERSON_RIGHT_HAND, light, overlay, matrices, vertexConsumers, minecraft.world, 0);
         MinecraftClient.getInstance().getTextureManager().bindTexture(TEXTURE);
         VertexConsumer vertices = vertexConsumers.getBuffer(RenderLayer.getEntityCutout(TEXTURE));
         if (mode == ModelTransformationMode.GUI) {
             matrices.translate(0, -0.76, 1.3);
             matrices.multiply(RotationAxis.NEGATIVE_X.rotationDegrees(50));
+            renderItem(stack, matrices, vertices, light, overlay, 1.0F, 1.0F, 1.0F, 1.0F);
+
         } else if (mode == ModelTransformationMode.FIXED) {
             matrices.translate(0, 0.9, -0.8);
             matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees(130));
+            renderModel(stack, matrices, vertices, light, overlay, 1.0F, 1.0F, 1.0F, 1.0F);
         } else {
             matrices.translate(0, -0.627, 1.3);
             matrices.multiply(RotationAxis.NEGATIVE_X.rotationDegrees(50));
+            renderModel(stack, matrices, vertices, light, overlay, 1.0F, 1.0F, 1.0F, 1.0F);
         }
 //        matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(90));
-        renderModel(stack, matrices, vertices, light, overlay, 1.0F, 1.0F, 1.0F, 1.0F);
         matrices.pop();
     }
 }

@@ -36,7 +36,7 @@ public class ItemRegistry {
             new Item.Settings()
                     .rarity(Rarity.EPIC)
                     .maxCount(1)
-    ), RegistryKey.of(RegistryKeys.ITEM, new Identifier(IL.MOD_ID, "spell_book")));
+    ), RegistryKey.of(RegistryKeys.ITEM, new Identifier(IL.MOD_ID, "spell_book_gui")));
 
     private static Item register(Item item, RegistryKey<Item> key) {
         return Registry.register(Registries.ITEM, key, item);

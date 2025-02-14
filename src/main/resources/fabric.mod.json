@@ -12,6 +12,7 @@
   "entrypoints": {
     "client": [
       "dev.iseal.infinitelibrary.client.ILClient"
+
     ],
     "main": [
       "dev.iseal.infinitelibrary.IL"
@@ -25,8 +26,7 @@
     {
       "config": "infinitelibrary.client.mixins.json",
       "environment": "client"
-    }
-  ],
+    }  ],
   "depends": {
     "fabricloader": ">=${loader_version}",
     "fabric": "*",
