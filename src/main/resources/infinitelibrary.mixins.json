@@ -10,9 +10,6 @@
     "MixinStructurePoolBasedGenerator"
   ],
   "client": [
-    "ItemRendererAccessor",
-    "ItemRendererMixin",
-    "ModelLoaderMixin"
   ],
   "server": [],
   "injectors": {

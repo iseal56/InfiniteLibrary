@@ -1,10 +1,13 @@
 package dev.iseal.infinitelibrary;
 
+import dev.iseal.infinitelibrary.effects.HubrisEffect;
+import dev.iseal.infinitelibrary.effects.KnowledgeEffect;
 import dev.iseal.infinitelibrary.worldgen.dimensions.LibraryGenerator;
 import dev.iseal.infinitelibrary.listeners.RemoveExperienceListener;
 import dev.iseal.infinitelibrary.items.item_groups.InfiniteLibraryGroup;
 import dev.iseal.infinitelibrary.listeners.AddCodesToLootTables;
 import dev.iseal.infinitelibrary.registry.*;
+import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
@@ -25,6 +28,13 @@ public class IL implements ModInitializer {
     private static RegistryKey<World> WORLD_KEY = RegistryKey.of(RegistryKeys.WORLD, DIMENSION_KEY.getValue());
     public static final RegistryKey<Biome> BIOME_KEY = RegistryKey.of(RegistryKeys.BIOME, new Identifier(MOD_ID, "library"));
     public static MinecraftServer server;
+    public static final StatusEffect HUBRIS;
+    public static final StatusEffect KNOWLEDGE;
+
+    static {
+        HUBRIS = Registry.register(Registries.STATUS_EFFECT, Identifier.of(MOD_ID, "hubris"), new HubrisEffect());
+        KNOWLEDGE = Registry.register(Registries.STATUS_EFFECT, Identifier.of(MOD_ID, "knowledge"), new KnowledgeEffect());
+    }
 
     @Override
     public void onInitialize() {

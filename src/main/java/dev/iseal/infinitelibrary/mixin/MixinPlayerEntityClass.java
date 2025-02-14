@@ -1,6 +1,6 @@
 package dev.iseal.infinitelibrary.mixin;
 
-import dev.iseal.infinitelibrary.registry.EffectRegistry;
+import dev.iseal.infinitelibrary.IL;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.player.PlayerEntity;
@@ -32,9 +32,9 @@ public class MixinPlayerEntityClass {
         // Cast to the superclass - why is this necessary? sifhsdlguhsdasd
         LivingEntity livingEntity = (LivingEntity) (Object) this;
         float experienceFloat = experience;
-        if (livingEntity.hasStatusEffect(EffectRegistry.KNOWLEDGE))
+        if (livingEntity.hasStatusEffect(IL.KNOWLEDGE))
             experienceFloat*=KNOWLEDGE_EXPERIENCE_MULTIPLIER;
-        if (livingEntity.hasStatusEffect(EffectRegistry.HUBRIS))
+        if (livingEntity.hasStatusEffect(IL.HUBRIS))
             experienceFloat*=HUBRIS_EXPERIENCE_MULTIPLIER;
 
         return (int) experienceFloat;

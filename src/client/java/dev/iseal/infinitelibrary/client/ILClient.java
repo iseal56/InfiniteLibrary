@@ -1,7 +1,6 @@
 package dev.iseal.infinitelibrary.client;
 
 import dev.iseal.infinitelibrary.IL;
-import dev.iseal.infinitelibrary.client.renderers.entity.BookModelRenderer;
 import dev.iseal.infinitelibrary.registry.ItemRegistry;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry;
