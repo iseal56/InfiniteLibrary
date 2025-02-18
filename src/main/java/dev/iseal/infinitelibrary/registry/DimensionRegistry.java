@@ -13,7 +13,7 @@ public class DimensionRegistry {
         return INSTANCE;
     }
 
-    public static final Identifier LIBRARY_ID = new Identifier(IL.MOD_ID, "library");
+    public static final Identifier LIBRARY_ID = Identifier.of(IL.MOD_ID, "library");
 
     public void initialize() {
 

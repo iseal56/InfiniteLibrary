@@ -12,7 +12,7 @@ public class LootTableRegistry {
         return instance;
     }
 
-    public static final Identifier LIBRARY_LOOT_KEY = new Identifier(IL.MOD_ID, "chests/library_loot");
+    public static final Identifier LIBRARY_LOOT_KEY = Identifier.of(IL.MOD_ID, "chests/library_loot");
 
     public void initialize() {
 

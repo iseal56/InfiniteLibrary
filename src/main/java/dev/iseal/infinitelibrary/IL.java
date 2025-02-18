@@ -24,16 +24,16 @@ import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 public class IL implements ModInitializer {
 
     public static final String MOD_ID = "infinitelibrary";
-    private static final RegistryKey<DimensionOptions> DIMENSION_KEY = RegistryKey.of(RegistryKeys.DIMENSION, new Identifier(MOD_ID, "library"));
+    private static final RegistryKey<DimensionOptions> DIMENSION_KEY = RegistryKey.of(RegistryKeys.DIMENSION, Identifier.of(MOD_ID, "library"));
     private static RegistryKey<World> WORLD_KEY = RegistryKey.of(RegistryKeys.WORLD, DIMENSION_KEY.getValue());
-    public static final RegistryKey<Biome> BIOME_KEY = RegistryKey.of(RegistryKeys.BIOME, new Identifier(MOD_ID, "library"));
+    public static final RegistryKey<Biome> BIOME_KEY = RegistryKey.of(RegistryKeys.BIOME, Identifier.of(MOD_ID, "library"));
     public static MinecraftServer server;
 
 
     @Override
     public void onInitialize() {
-        Registry.register(Registries.CHUNK_GENERATOR, new Identifier(MOD_ID, "library"), LibraryGenerator.CODEC);
-        WORLD_KEY = RegistryKey.of(RegistryKeys.WORLD, new Identifier(MOD_ID, "library"));
+        Registry.register(Registries.CHUNK_GENERATOR, Identifier.of(MOD_ID, "library"), LibraryGenerator.CODEC);
+        WORLD_KEY = RegistryKey.of(RegistryKeys.WORLD, Identifier.of(MOD_ID, "library"));
         ServerLifecycleEvents.SERVER_STARTED.register(server -> {
             IL.server = server;
             StructureRegistry.getInstance().serverRegister();
@@ -45,6 +45,7 @@ public class IL implements ModInitializer {
         DimensionRegistry.getInstance().initialize();
         DamageSourceRegistry.getInstance().initialize();
         LootTableRegistry.getInstance().initialize();
+        DataComponentTypeRegistry.getInstance().initialize();
         ItemRegistry.getInstance().initialize();
         InfiniteLibraryGroup.initialize();
         new RemoveExperienceListener().registerListener();

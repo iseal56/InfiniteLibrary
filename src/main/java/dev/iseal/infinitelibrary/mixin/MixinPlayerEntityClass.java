@@ -5,6 +5,7 @@ import dev.iseal.infinitelibrary.registry.EffectRegistry;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.util.math.MathHelper;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -33,9 +34,9 @@ public class MixinPlayerEntityClass {
         // Cast to the superclass - why is this necessary? sifhsdlguhsdasd
         LivingEntity livingEntity = (LivingEntity) (Object) this;
         float experienceFloat = experience;
-        if (livingEntity.hasStatusEffect(EffectRegistry.KNOWLEDGE))
+        if (livingEntity.hasStatusEffect(RegistryEntry.of(EffectRegistry.KNOWLEDGE)))
             experienceFloat*=KNOWLEDGE_EXPERIENCE_MULTIPLIER;
-        if (livingEntity.hasStatusEffect(EffectRegistry.HUBRIS))
+        if (livingEntity.hasStatusEffect(RegistryEntry.of(EffectRegistry.HUBRIS)))
             experienceFloat*=HUBRIS_EXPERIENCE_MULTIPLIER;
 
         return (int) experienceFloat;

@@ -1,8 +1,7 @@
 package dev.iseal.infinitelibrary.client.clientRegistries;
 
-import dev.iseal.infinitelibrary.client.renderers.SpellBookRenderer;
 import dev.iseal.infinitelibrary.registry.ItemRegistry;
-import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry;
+import net.minecraft.screen.PlayerScreenHandler;
 
 public class RenderRegistry {
 
@@ -15,13 +14,16 @@ public class RenderRegistry {
     }
 
     public void initialize() {
-        registerSpellBook();
+
     }
 
+    /*
     private void registerSpellBook() {
         BuiltinItemRendererRegistry.INSTANCE.register(
                 ItemRegistry.SPELL_BOOK,
                 new SpellBookRenderer(SpellBookRenderer.getTexturedModelData().createModel())
         );
     }
+
+     */
 }

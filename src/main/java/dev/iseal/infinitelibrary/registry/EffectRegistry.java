@@ -32,7 +32,7 @@ public class EffectRegistry {
     }
 
     private static StatusEffect register(String id, StatusEffect entry) {
-        return Registry.register(Registries.STATUS_EFFECT, new Identifier(IL.MOD_ID, id), entry);
+        return Registry.register(Registries.STATUS_EFFECT, Identifier.of(IL.MOD_ID, id), entry);
     }
 
     public void initialize() {

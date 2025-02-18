@@ -1,8 +1,8 @@
 package dev.iseal.infinitelibrary.client.datagen.datagenUtils;
 
 import dev.iseal.infinitelibrary.IL;
-import net.minecraft.data.client.Model;
-import net.minecraft.data.client.TextureKey;
+import net.minecraft.client.data.Model;
+import net.minecraft.client.data.TextureKey;
 import net.minecraft.util.Identifier;
 
 import java.util.Optional;

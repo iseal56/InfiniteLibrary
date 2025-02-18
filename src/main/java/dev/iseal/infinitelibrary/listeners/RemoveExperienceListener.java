@@ -7,6 +7,7 @@ import dev.iseal.infinitelibrary.registry.DimensionRegistry;
 import dev.iseal.infinitelibrary.registry.EffectRegistry;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.registry.entry.RegistryEntry;
 
 public class RemoveExperienceListener {
 
@@ -26,13 +27,13 @@ public class RemoveExperienceListener {
                     return;
                 }
                 // if the player has the knowledge effect, don't remove experience
-                if (player.hasStatusEffect(EffectRegistry.KNOWLEDGE)) {
+                if (player.hasStatusEffect(RegistryEntry.of(EffectRegistry.KNOWLEDGE))) {
                     return;
                 }
 
                 // start removing experience
                 if (player.totalExperience == 0) {
-                    player.damage(DamageSourceRegistry.ABSORB_KNOWLEDGE, 4f);
+                    player.damage(player.getServerWorld(), DamageSourceRegistry.ABSORB_KNOWLEDGE, 4f);
                 } else {
                     player.addExperience(-1);
                 }

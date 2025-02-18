@@ -1,10 +1,13 @@
 package dev.iseal.infinitelibrary.utils;
 
 import net.minecraft.block.Block;
+import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.WrittenBookContentComponent;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtList;
 import net.minecraft.nbt.NbtString;
+import net.minecraft.text.RawFilteredPair;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
 
@@ -60,9 +63,8 @@ public class Utils {
             List<String> testLines = new ArrayList<>(currentPageLines);
             testLines.add(line);
             Text testPage = Text.literal(String.join("\n", testLines));
-            String testPageJson = Text.Serializer.toJson(testPage);
 
-            if (testPageJson.length() > 256) {
+            if (testPage.getString().length() > 256) {
                 // Finalize the current page
                 if (!currentPageLines.isEmpty()) {
                     pages.add(Text.literal(String.join("\n", currentPageLines)));
@@ -78,16 +80,13 @@ public class Utils {
         }
 
         // 3. Write NBT data to the book
-        NbtCompound nbt = bookStack.getOrCreateNbt();
-        nbt.putString("title", title); // Max 32 chars
-        nbt.putString("author", author);  // Max 16 chars
+        List<RawFilteredPair<Text>> pageList = new ArrayList<>();
 
-        NbtList pageNbtList = new NbtList();
         for (Text page : pages) {
-            String pageJson = Text.Serializer.toJson(page);
-            pageNbtList.add(NbtString.of(pageJson));
+            pageList.add(RawFilteredPair.of(page));
         }
-        nbt.put("pages", pageNbtList);
+
+        bookStack.set(DataComponentTypes.WRITTEN_BOOK_CONTENT, new WrittenBookContentComponent(RawFilteredPair.of(title), author, 0, pageList, true));
 
         return bookStack;
     }

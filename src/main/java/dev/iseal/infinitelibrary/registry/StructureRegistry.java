@@ -26,9 +26,9 @@ public class StructureRegistry {
     private StructureRegistry(){
     }
 
-    public final static Identifier CORE_ROOM_ID = new Identifier(IL.MOD_ID, "core_room");
+    public final static Identifier CORE_ROOM_ID = Identifier.of(IL.MOD_ID, "core_room");
     public final static StructureType<CoreRoomStructure> CORE_ROOM = Registry.register(Registries.STRUCTURE_TYPE, CORE_ROOM_ID, () -> CoreRoomStructure.CODEC);
-    public final static StructureType<PortalRoomStructure> PORTAL_ROOM = Registry.register(Registries.STRUCTURE_TYPE, new Identifier(IL.MOD_ID, "portal_room"), () -> PortalRoomStructure.CODEC);
+    public final static StructureType<PortalRoomStructure> PORTAL_ROOM = Registry.register(Registries.STRUCTURE_TYPE, Identifier.of(IL.MOD_ID, "portal_room"), () -> PortalRoomStructure.CODEC);
     public static StructurePool LIBRARY_STRUCTURES_POOL;
     private MinecraftServer server;
 
@@ -39,8 +39,8 @@ public class StructureRegistry {
     public void serverRegister() {
         this.server = IL.server;
         var poolGetter = server.getRegistryManager()
-                .get(RegistryKeys.TEMPLATE_POOL)
-                .getOrEmpty(new Identifier(IL.MOD_ID, "library_structures"));
+                .getOrThrow(RegistryKeys.TEMPLATE_POOL)
+                .getOptionalValue(Identifier.of(IL.MOD_ID, "library_structures"));
         if (poolGetter.isEmpty()) {
             System.out.println("Pool getter is empty!!");
             throw new CrashException(new CrashReport("Pool getter is empty!!", new IllegalArgumentException()));

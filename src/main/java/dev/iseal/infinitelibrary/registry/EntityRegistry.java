@@ -1,7 +1,6 @@
 package dev.iseal.infinitelibrary.registry;
 
 import dev.iseal.infinitelibrary.IL;
-import dev.iseal.infinitelibrary.items.entity.SpellBookEntity;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -21,15 +20,6 @@ public class EntityRegistry {
         return INSTANCE;
     }
 
-    public static final EntityType<SpellBookEntity> SPELL_BOOK = (EntityType<SpellBookEntity>) register(
-            new Identifier(IL.MOD_ID, "spell_book"),
-            EntityType.Builder.create(
-                    (type, world) -> new SpellBookEntity(world),
-                            SpawnGroup.MISC)
-                    .setDimensions(0.3f, 0.3f)
-                    .build("spell_book"),
-            SpellBookEntity.createMobAttributes()
-    );
 
     public static EntityType<?> register(Identifier id, EntityType<?> type, DefaultAttributeContainer.Builder attributes) {
         EntityType<? extends LivingEntity> entityType = (EntityType<? extends LivingEntity>) Registry.register(Registries.ENTITY_TYPE, id, type);

@@ -6,14 +6,14 @@ import dev.iseal.infinitelibrary.IL;
 import dev.iseal.infinitelibrary.client.datagen.datagenUtils.ModelUtils;
 import dev.iseal.infinitelibrary.registry.BlockRegistry;
 import dev.iseal.infinitelibrary.registry.ItemRegistry;
+import net.fabricmc.fabric.api.client.datagen.v1.provider.FabricModelProvider;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
-import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
 import net.minecraft.block.Block;
 import net.minecraft.block.HorizontalFacingBlock;
 import net.minecraft.data.DataOutput;
 import net.minecraft.data.DataProvider;
 import net.minecraft.data.DataWriter;
-import net.minecraft.data.client.*;
+import net.minecraft.client.data.*;
 import net.minecraft.data.family.BlockFamilies;
 import net.minecraft.data.family.BlockFamily;
 import net.minecraft.item.Item;
@@ -66,15 +66,19 @@ public class BlockModelProvider extends FabricModelProvider {
     public void generateItemModels(ItemModelGenerator generator) {
         // Existing registrations
         generator.register(ItemRegistry.IVORY_BRICK, Models.GENERATED);
+        /*
         Models.GENERATED.upload(
-                new Identifier(IL.MOD_ID, "item/spell_book_2d"),
-                TextureMap.layer0(new Identifier(IL.MOD_ID, "item/spell_book_item")),
+                Identifier.of(IL.MOD_ID, "item/spell_book_2d"),
+                TextureMap.layer0(Identifier.of(IL.MOD_ID, "item/spell_book_item")),
                 generator.writer
         );
+
+         */
         // Spell book registration
         //registerSpellBookModels(generator);
     }
 
+    /*
     private void registerSpellBookModels(ItemModelGenerator generator) {
         Identifier mainModelId = ModelIds.getItemModelId(ItemRegistry.SPELL_BOOK);
         System.out.println(mainModelId.toString());
@@ -102,10 +106,12 @@ public class BlockModelProvider extends FabricModelProvider {
         // 2. Create 2D variant in models/item
         Models.GENERATED.upload(
                 mainModelId.withSuffixedPath("_2d"),
-                TextureMap.layer0(new Identifier(IL.MOD_ID, "item/spell_book_item")),
+                TextureMap.layer0(Identifier.of(IL.MOD_ID, "item/spell_book_item")),
                 generator.writer
         );
     }
+
+     */
 
     private JsonObject createOverride(String predicate, float value, Identifier model) {
         JsonObject override = new JsonObject();

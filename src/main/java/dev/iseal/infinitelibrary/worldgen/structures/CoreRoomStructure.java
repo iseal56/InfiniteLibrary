@@ -1,18 +1,22 @@
 package dev.iseal.infinitelibrary.worldgen.structures;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import dev.iseal.infinitelibrary.registry.StructureRegistry;
 import net.minecraft.registry.entry.RegistryEntry;
+import net.minecraft.structure.StructureLiquidSettings;
 import net.minecraft.structure.pool.StructurePoolBasedGenerator;
+import net.minecraft.structure.pool.alias.StructurePoolAliasLookup;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
+import net.minecraft.world.gen.structure.DimensionPadding;
 import net.minecraft.world.gen.structure.Structure;
 import net.minecraft.world.gen.structure.StructureType;
 
 import java.util.Optional;
 
 public class CoreRoomStructure extends Structure {
-    public static final Codec<CoreRoomStructure> CODEC = CoreRoomStructure.createCodec(CoreRoomStructure::new);
+    public static final MapCodec<CoreRoomStructure> CODEC = CoreRoomStructure.createCodec(CoreRoomStructure::new);
 
     protected CoreRoomStructure(Config config) {
         super(config);
@@ -26,7 +30,15 @@ public class CoreRoomStructure extends Structure {
                 context, RegistryEntry.of(StructureRegistry.LIBRARY_STRUCTURES_POOL),
                 Optional.empty(), 1,
                 blockPos, false,
-                Optional.empty(), 16);
+                Optional.empty(), 16,
+                StructurePoolAliasLookup.EMPTY, DimensionPadding.NONE,
+                StructureLiquidSettings.IGNORE_WATERLOGGING
+
+        );
+
+        // StructurePoolAliasLookup aliasLookup,
+        //    DimensionPadding dimensionPadding,
+        //    StructureLiquidSettings liquidSettings
     }
 
     @Override

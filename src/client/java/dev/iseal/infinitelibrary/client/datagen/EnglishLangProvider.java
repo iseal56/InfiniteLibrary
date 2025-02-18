@@ -3,15 +3,18 @@ package dev.iseal.infinitelibrary.client.datagen;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 import net.minecraft.block.NetherPortalBlock;
+import net.minecraft.registry.RegistryWrapper;
+
+import java.util.concurrent.CompletableFuture;
 
 public class EnglishLangProvider extends FabricLanguageProvider {
 
-    protected EnglishLangProvider(FabricDataOutput dataOutput) {
-        super(dataOutput);
+    protected EnglishLangProvider(FabricDataOutput dataOutput, CompletableFuture<RegistryWrapper.WrapperLookup> future) {
+        super(dataOutput, future);
     }
 
     @Override
-    public void generateTranslations(TranslationBuilder translationBuilder) {
+    public void generateTranslations(RegistryWrapper.WrapperLookup registryLookup, TranslationBuilder translationBuilder) {
         translationBuilder.add("itemGroup.infinitelibrary", "Infinite Library");
 
         // blocks
@@ -40,7 +43,7 @@ public class EnglishLangProvider extends FabricLanguageProvider {
         translationBuilder.add("item.infinitelibrary.ivory_brick", "Ivory Brick");
         translationBuilder.add("item.infinitelibrary.pale_sword", "Inactive Pale Sword");
         translationBuilder.add("item.infinitelibrary.pale_sword_full", "Active Pale Sword");
-        translationBuilder.add("item.infinitelibrary.spell_book_item", "Spell Book");
+        translationBuilder.add("item.infinitelibrary.spell_book", "Spell Book");
 
         // effects
         translationBuilder.add("effect.infinitelibrary.hubris", "Hubris");

@@ -18,7 +18,7 @@ public class DamageSourceRegistry {
         return INSTANCE;
     }
 
-    public static final RegistryKey<DamageType> ABSORB_KNOWLEDGE_KEY = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, new Identifier(IL.MOD_ID, "absorb_knowledge"));
+    public static final RegistryKey<DamageType> ABSORB_KNOWLEDGE_KEY = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, Identifier.of(IL.MOD_ID, "absorb_knowledge"));
     public static DamageSource ABSORB_KNOWLEDGE = null;
 
     public void initialize() {
@@ -26,7 +26,7 @@ public class DamageSourceRegistry {
     }
 
     public void initializeServer() {
-        ABSORB_KNOWLEDGE = new DamageSource(IL.server.getRegistryManager().get(RegistryKeys.DAMAGE_TYPE).entryOf(ABSORB_KNOWLEDGE_KEY));
+        ABSORB_KNOWLEDGE = new DamageSource(IL.server.getRegistryManager().getOrThrow(RegistryKeys.DAMAGE_TYPE).getEntry(ABSORB_KNOWLEDGE_KEY.getValue()).get());
     }
 
 }

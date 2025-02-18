@@ -6,12 +6,14 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import dev.iseal.infinitelibrary.IL;
 import dev.iseal.infinitelibrary.registry.BlockRegistry;
 import dev.iseal.infinitelibrary.utils.DistributedRandomNumberGenerator;
 import dev.iseal.infinitelibrary.utils.Utils;
+import net.fabricmc.fabric.impl.biome.TheEndBiomeData;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.registry.*;
@@ -20,8 +22,10 @@ import net.minecraft.world.ChunkRegion;
 import net.minecraft.world.HeightLimitView;
 import net.minecraft.world.Heightmap;
 import net.minecraft.world.biome.Biome;
+import net.minecraft.world.biome.BiomeKeys;
 import net.minecraft.world.biome.source.BiomeAccess;
 import net.minecraft.world.biome.source.FixedBiomeSource;
+import net.minecraft.world.biome.source.TheEndBiomeSource;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.gen.GenerationStep;
 import net.minecraft.world.gen.StructureAccessor;
@@ -31,7 +35,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class LibraryGenerator extends ChunkGenerator {
-    public static final Codec<LibraryGenerator> CODEC = RecordCodecBuilder.create((instance) ->
+    public static final MapCodec<LibraryGenerator> CODEC = RecordCodecBuilder.mapCodec((instance) ->
             instance.group(RegistryOps.getEntryLookupCodec(RegistryKeys.BIOME))
                     .apply(instance, instance.stable(LibraryGenerator::new)));
 
@@ -39,14 +43,18 @@ public class LibraryGenerator extends ChunkGenerator {
 
     private static final ThreadLocal<Boolean> activatedChiseledQuartzPlaced = ThreadLocal.withInitial(() -> false);
     private static final ThreadLocal<Integer> activatedChiseledQuartzAttempts = ThreadLocal.withInitial(() -> 0);
+    public static final ThreadLocal<RegistryEntryLookup<Biome>> biomeRegistry = new ThreadLocal<>();
     private static final Logger log = LoggerFactory.getLogger(LibraryGenerator.class);
 
     private final Random random = new Random();
-    private final DistributedRandomNumberGenerator zeroMapDRNG = new DistributedRandomNumberGenerator();
-    private final DistributedRandomNumberGenerator lightDRNG = new DistributedRandomNumberGenerator();
-    private final DistributedRandomNumberGenerator activatedChiseledQuartzDRNG = new DistributedRandomNumberGenerator();
-    private final DistributedRandomNumberGenerator oldBookshelfDRNG = new DistributedRandomNumberGenerator();
+    private DistributedRandomNumberGenerator zeroMapDRNG = new DistributedRandomNumberGenerator();
+    private DistributedRandomNumberGenerator lightDRNG = new DistributedRandomNumberGenerator();
+    private DistributedRandomNumberGenerator activatedChiseledQuartzDRNG = new DistributedRandomNumberGenerator();
+    private DistributedRandomNumberGenerator oldBookshelfDRNG = new DistributedRandomNumberGenerator();
     private final int[] firstZeroMap = {2, 7, 12};
+
+    private boolean isSeedSet = false;
+    private long seed;
 
     public LibraryGenerator(RegistryEntryLookup<Biome> biomeRegistry) {
         super(new FixedBiomeSource(biomeRegistry.getOrThrow(IL.BIOME_KEY)));
@@ -54,6 +62,15 @@ public class LibraryGenerator extends ChunkGenerator {
     }
 
     private void initializeRandomGenerator() {
+        if (isSeedSet) {
+            zeroMapDRNG = new DistributedRandomNumberGenerator(seed);
+            lightDRNG = new DistributedRandomNumberGenerator(seed);
+            activatedChiseledQuartzDRNG = new DistributedRandomNumberGenerator(seed);
+            oldBookshelfDRNG = new DistributedRandomNumberGenerator(seed);
+        } else if (zeroMapDRNG != null) {
+            return;
+        }
+
         zeroMapDRNG.addNumber(1, 0.4d);
         zeroMapDRNG.addNumber(2, 0.5d);
         zeroMapDRNG.addNumber(3, 0.1d);
@@ -70,17 +87,21 @@ public class LibraryGenerator extends ChunkGenerator {
     }
 
     @Override
-    protected Codec<? extends ChunkGenerator> getCodec() {
+    protected MapCodec<? extends ChunkGenerator> getCodec() {
         return CODEC;
     }
 
     @Override
-    public void carve(ChunkRegion chunkRegion, long l, NoiseConfig noiseConfig, BiomeAccess biomeAccess, StructureAccessor structureAccessor, Chunk chunk, GenerationStep.Carver carver) {
-        // No carving needed
+    public void carve(ChunkRegion chunkRegion, long seed, NoiseConfig noiseConfig, BiomeAccess biomeAccess, StructureAccessor structureAccessor, Chunk chunk) {
     }
 
     @Override
     public void buildSurface(ChunkRegion region, StructureAccessor structureAccessor, NoiseConfig noiseConfig, Chunk chunk) {
+        if (!isSeedSet) {
+            seed = IL.server.getWorld(region.toServerWorld().getRegistryKey()).getSeed();
+            isSeedSet = true;
+            initializeRandomGenerator();
+        }
         if (chunk.hasStructureReferences()) {
             return;
         }
@@ -203,7 +224,7 @@ public class LibraryGenerator extends ChunkGenerator {
     }
 
     @Override
-    public CompletableFuture<Chunk> populateNoise(Executor executor, Blender blender, NoiseConfig noiseConfig, StructureAccessor structureAccessor, Chunk chunk) {
+    public CompletableFuture<Chunk> populateNoise(Blender blender, NoiseConfig noiseConfig, StructureAccessor structureAccessor, Chunk chunk) {
         return CompletableFuture.completedFuture(chunk);
     }
 
@@ -228,8 +249,8 @@ public class LibraryGenerator extends ChunkGenerator {
     }
 
     @Override
-    public void getDebugHudText(List<String> list, NoiseConfig noiseConfig, BlockPos blockPos) {
-        // No debug text needed
+    public void appendDebugHudText(List<String> text, NoiseConfig noiseConfig, BlockPos pos) {
+        text.add("Access Points: "+Arrays.toString(generateAccessPoints(zeroMapDRNG, firstZeroMap)));
     }
 
     private int[] generateAccessPoints(DistributedRandomNumberGenerator randomGenerator, int[] zeroMap) {

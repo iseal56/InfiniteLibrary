@@ -3,6 +3,8 @@ package dev.iseal.infinitelibrary.loot_functions;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import dev.iseal.infinitelibrary.registry.LootFunctionTypeRegistry;
 import dev.iseal.infinitelibrary.utils.DistributedRandomNumberGenerator;
 import dev.iseal.infinitelibrary.utils.PortalHelper;
@@ -13,33 +15,41 @@ import net.minecraft.item.Items;
 import net.minecraft.loot.condition.LootCondition;
 import net.minecraft.loot.context.LootContext;
 import net.minecraft.loot.function.ConditionalLootFunction;
+import net.minecraft.loot.function.FurnaceSmeltLootFunction;
 import net.minecraft.loot.function.LootFunctionType;
+import net.minecraft.loot.function.LootFunctionTypes;
 import net.minecraft.text.Text;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
 public class ObfuscateBookLootFunction extends ConditionalLootFunction {
 
     private static ObfuscateBookLootFunction INSTANCE;
     public static ObfuscateBookLootFunction getInstance() {
         if (INSTANCE == null) {
-            INSTANCE = new ObfuscateBookLootFunction(new LootCondition[0]);
+            INSTANCE = new ObfuscateBookLootFunction(new ArrayList<>(0));
         }
         return INSTANCE;
     }
 
+    public static final MapCodec<ObfuscateBookLootFunction> CODEC = RecordCodecBuilder.mapCodec(
+            instance -> addConditionsField(instance).apply(instance, ObfuscateBookLootFunction::new)
+    );
+
     private final HashMap<String, boolean[]> portalBookLocs = new HashMap<>();
     private final DistributedRandomNumberGenerator random = new DistributedRandomNumberGenerator();
 
-    public ObfuscateBookLootFunction(LootCondition[] conditions) {
+    public ObfuscateBookLootFunction(List<LootCondition> conditions) {
         super(conditions);
         random.addNumber(1, 20);
         random.addNumber(2, 80);
     }
 
     @Override
-    public LootFunctionType getType() {
+    public LootFunctionType<ObfuscateBookLootFunction> getType() {
         return LootFunctionTypeRegistry.OBFUSCATE_BOOK;
     }
 
@@ -47,7 +57,6 @@ public class ObfuscateBookLootFunction extends ConditionalLootFunction {
     public ItemStack process(ItemStack stack, LootContext context) {
         if (!stack.isOf(Items.WRITTEN_BOOK))
             return stack;
-
         int height = 5;
         int width = 4;
 
@@ -105,19 +114,5 @@ public class ObfuscateBookLootFunction extends ConditionalLootFunction {
 
         Utils.addTextToBook(stack, portalLocs, "Portal Locations", "Infinite Library");
         return stack;
-    }
-
-    public static ConditionalLootFunction.Builder<?> builder() {
-        return builder(ObfuscateBookLootFunction::new);
-    }
-
-    public static class Serializer extends ConditionalLootFunction.Serializer<ObfuscateBookLootFunction> {
-        public void toJson(JsonObject jsonObject, ObfuscateBookLootFunction obfuscateBookLootFunction, JsonSerializationContext jsonSerializationContext) {
-            super.toJson(jsonObject, obfuscateBookLootFunction, jsonSerializationContext);
-        }
-
-        public ObfuscateBookLootFunction fromJson(JsonObject jsonObject, JsonDeserializationContext jsonDeserializationContext, LootCondition[] lootConditions) {
-            return new ObfuscateBookLootFunction(lootConditions);
-        }
     }
 }

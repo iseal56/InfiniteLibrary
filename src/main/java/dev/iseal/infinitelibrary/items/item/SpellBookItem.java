@@ -1,12 +1,12 @@
 package dev.iseal.infinitelibrary.items.item;
 
-import dev.iseal.infinitelibrary.items.entity.SpellBookEntity;
-import dev.iseal.infinitelibrary.registry.ItemRegistry;
+import dev.iseal.infinitelibrary.IL;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemUsageContext;
-import net.minecraft.item.PickaxeItem;
-import net.minecraft.item.ToolItem;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.util.ActionResult;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.Rarity;
 
 public class SpellBookItem extends Item {
@@ -15,9 +15,10 @@ public class SpellBookItem extends Item {
         // set material to limit durability
         super(
                 new Item.Settings()
-                .rarity(Rarity.EPIC)
-                .maxCount(1)
-                .maxDamage(100)
+                    .registryKey(RegistryKey.of(RegistryKeys.ITEM, Identifier.of(IL.MOD_ID, "spell_book")))
+                    .rarity(Rarity.EPIC)
+                    .maxCount(1)
+                    .maxDamage(100)
         );
     }
 
@@ -25,9 +26,6 @@ public class SpellBookItem extends Item {
     public ActionResult useOnBlock(ItemUsageContext context) {
         if (context.getWorld().isClient)
             return ActionResult.SUCCESS;
-
-        // create the book entity
-        context.getWorld().spawnEntity(new SpellBookEntity(context.getWorld()));
 
         // and remove the item
         context.getStack().decrement(1);

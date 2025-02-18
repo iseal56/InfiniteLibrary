@@ -2,14 +2,22 @@ package dev.iseal.infinitelibrary.utils;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 public class DistributedRandomNumberGenerator {
 
     private final Map<Integer, Double> distribution;
+    private final Random random;
     private double distSum;
 
     public DistributedRandomNumberGenerator() {
         distribution = new HashMap<>();
+        random = new Random();
+    }
+
+    public DistributedRandomNumberGenerator(long seed) {
+        distribution = new HashMap<>();
+        random = new Random(seed);
     }
 
     public void addNumber(int value, double distribution) {
@@ -21,7 +29,7 @@ public class DistributedRandomNumberGenerator {
     }
 
     public int getDistributedRandomNumber() {
-        double rand = Math.random();
+        double rand = random.nextDouble(0, 1);
         double ratio = 1.0f / distSum;
         double tempDist = 0;
         for (Integer i : distribution.keySet()) {

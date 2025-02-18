@@ -3,11 +3,11 @@
   "overrides": [
     {
       "predicate": {"gui": 1.0},
-      "model": "infinitelibrary:item/spell_book_2d"
+      "model": "infinitelibrary:item/spell_book_item"
     },
     {
       "predicate": {"ground": 1.0},
-      "model": "infinitelibrary:item/spell_book_2d"
+      "model": "infinitelibrary:item/spell_book_item"
     }
   ]
 }

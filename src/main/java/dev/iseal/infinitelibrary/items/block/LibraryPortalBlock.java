@@ -1,6 +1,7 @@
 package dev.iseal.infinitelibrary.items.block;
 
 import com.mojang.datafixers.util.Pair;
+import dev.iseal.infinitelibrary.IL;
 import dev.iseal.infinitelibrary.registry.DimensionRegistry;
 import dev.iseal.infinitelibrary.registry.StructureRegistry;
 import net.minecraft.block.*;
@@ -21,12 +22,14 @@ import net.minecraft.state.StateManager;
 import net.minecraft.state.property.EnumProperty;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.BlockRotation;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldView;
 import net.minecraft.world.gen.structure.Structure;
 
 import java.util.Collections;
@@ -40,6 +43,7 @@ public class LibraryPortalBlock extends Block {
 
     public LibraryPortalBlock() {
         super(AbstractBlock.Settings.create()
+                .registryKey(RegistryKey.of(RegistryKeys.BLOCK, Identifier.of(IL.MOD_ID, "library_portal")))
                 .noCollision()
                 .ticksRandomly()
                 .strength(-1.0F)
@@ -62,13 +66,13 @@ public class LibraryPortalBlock extends Block {
 
     @Override
     public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
-        if (world.isClient || !entity.canUsePortals()) {
+        if (world.isClient || !entity.canUsePortals(false)) {
             return;
         }
         if (world instanceof ServerWorld && !entity.hasVehicle() && !entity.hasPassengers()) {
             ServerWorld library = world.getServer().getWorld(LIBRARY_WORLD_KEY);
             if (coreRoomStructure == null) {
-                coreRoomStructure = world.getRegistryManager().get(RegistryKeys.STRUCTURE).get(StructureRegistry.CORE_ROOM_ID);
+                coreRoomStructure = world.getRegistryManager().getOrThrow(RegistryKeys.STRUCTURE).get(StructureRegistry.CORE_ROOM_ID);
             }
             // litterally just here to not crash the game
             library.getChunk(pos);
@@ -80,10 +84,10 @@ public class LibraryPortalBlock extends Block {
             int z = target.getZ();
             x+=8;
             z-=8;
-            if (entity instanceof PlayerEntity)
-                entity.teleport(world.getServer().getWorld(LIBRARY_WORLD_KEY), x, 41, z, Collections.emptySet(), ((PlayerEntity) entity).headYaw, entity.getPitch());
+            if (entity instanceof PlayerEntity plr)
+                plr.teleport(world.getServer().getWorld(LIBRARY_WORLD_KEY), x, 41, z, Collections.emptySet(), ((PlayerEntity) entity).headYaw, entity.getPitch(), true);
             else
-                entity.moveToWorld(world.getServer().getWorld(LIBRARY_WORLD_KEY));
+                entity.teleport(world.getServer().getWorld(LIBRARY_WORLD_KEY), x, 41, z, Collections.emptySet(), entity.getYaw(), entity.getPitch(), true);
         }
     }
 
@@ -123,7 +127,7 @@ public class LibraryPortalBlock extends Block {
     }
 
     @Override
-    public ItemStack getPickStack(BlockView world, BlockPos pos, BlockState state) {
+    protected ItemStack getPickStack(WorldView world, BlockPos pos, BlockState state, boolean includeData) {
         return ItemStack.EMPTY;
     }
 
