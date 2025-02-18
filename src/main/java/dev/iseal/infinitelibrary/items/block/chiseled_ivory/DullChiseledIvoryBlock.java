@@ -33,7 +33,7 @@ public class DullChiseledIvoryBlock extends Block {
 
     protected ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
         if (world.isClient)
-            return ActionResult.PASS;
+            return ActionResult.SUCCESS;
 
         if (player.isSneaking()
                 && player.totalExperience >= 10
@@ -42,9 +42,9 @@ public class DullChiseledIvoryBlock extends Block {
         ) {
             player.addExperience(-10);
             world.setBlockState(pos, BlockRegistry.GLEAMING_CHISELED_IVORY.getDefaultState());
-            return ActionResult.SUCCESS;
+            return ActionResult.SUCCESS_SERVER;
         } else {
-            return ActionResult.PASS;
+            return ActionResult.CONSUME;
         }
     }
 }
