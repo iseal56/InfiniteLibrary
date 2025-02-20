@@ -10,10 +10,10 @@ import net.minecraft.registry.RegistryKeys;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.Identifier;
 
-public class QuartzBookshelfBlock extends Block {
-    public QuartzBookshelfBlock() {
+public class IvoryBookshelfBlock extends Block {
+    public IvoryBookshelfBlock() {
         super(AbstractBlock.Settings.create()
-                .registryKey(RegistryKey.of(RegistryKeys.BLOCK, Identifier.of(IL.MOD_ID, "quartz_bookshelf")))
+                .registryKey(RegistryKey.of(RegistryKeys.BLOCK, Identifier.of(IL.MOD_ID, "ivory_bookshelf")))
                 .emissiveLighting((state, world, pos) -> true)
                 .luminance((state) -> 15)
                 .dropsNothing()

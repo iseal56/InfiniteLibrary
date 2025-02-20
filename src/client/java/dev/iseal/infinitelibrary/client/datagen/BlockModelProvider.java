@@ -1,27 +1,13 @@
 package dev.iseal.infinitelibrary.client.datagen;
 
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import dev.iseal.infinitelibrary.IL;
-import dev.iseal.infinitelibrary.client.datagen.datagenUtils.ModelUtils;
 import dev.iseal.infinitelibrary.registry.BlockRegistry;
 import dev.iseal.infinitelibrary.registry.ItemRegistry;
 import net.fabricmc.fabric.api.client.datagen.v1.provider.FabricModelProvider;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.minecraft.block.Block;
-import net.minecraft.block.HorizontalFacingBlock;
-import net.minecraft.data.DataOutput;
-import net.minecraft.data.DataProvider;
-import net.minecraft.data.DataWriter;
 import net.minecraft.client.data.*;
-import net.minecraft.data.family.BlockFamilies;
-import net.minecraft.data.family.BlockFamily;
-import net.minecraft.item.Item;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.math.Direction;
-
-import java.io.IOException;
-import java.nio.file.Path;
 
 public class BlockModelProvider extends FabricModelProvider {
 
@@ -33,19 +19,15 @@ public class BlockModelProvider extends FabricModelProvider {
     }
 
     private final Block[] simpleCubes = new Block[]{
-            BlockRegistry.QUARTZ_BOOKSHELF,
+            BlockRegistry.IVORY_BOOKSHELF,
             BlockRegistry.GLEAMING_CHISELED_IVORY,
             BlockRegistry.DULL_CHISELED_IVORY,
 
             // ivory blocks
             BlockRegistry.CHISELED_IVORY,
-            BlockRegistry.IVORY_BRICKS,
-            BlockRegistry.POLISHED_IVORY,
 
             // gilded ivory blocks
             BlockRegistry.GILDED_CHISELED_IVORY,
-            BlockRegistry.GILDED_IVORY_BRICKS,
-            BlockRegistry.GILDED_POLISHED_IVORY
     };
 
     @Override
@@ -59,6 +41,30 @@ public class BlockModelProvider extends FabricModelProvider {
 
         blockStateModelGenerator.registerSingleton(BlockRegistry.OLD_BOOKSHELF, TexturedModel.END_FOR_TOP_CUBE_COLUMN);
         blockStateModelGenerator.registerSingleton(BlockRegistry.OLD_EMPTY_BOOKSHELF, TexturedModel.END_FOR_TOP_CUBE_COLUMN);
+
+
+        BlockStateModelGenerator.BlockTexturePool ivoryBrickPool = blockStateModelGenerator.registerCubeAllModelTexturePool(BlockRegistry.IVORY_BRICKS);
+        ivoryBrickPool.stairs(BlockRegistry.IVORY_BRICK_STAIRS);
+        ivoryBrickPool.slab(BlockRegistry.IVORY_BRICK_SLAB);
+        ivoryBrickPool.wall(BlockRegistry.IVORY_BRICK_WALL);
+        // ivoryBrickPool.wall(ModBlocks.IVORY_BRICK_WALL);
+
+        BlockStateModelGenerator.BlockTexturePool polishedIvoryPool = blockStateModelGenerator.registerCubeAllModelTexturePool(BlockRegistry.POLISHED_IVORY);
+        polishedIvoryPool.stairs(BlockRegistry.POLISHED_IVORY_STAIRS);
+        polishedIvoryPool.slab(BlockRegistry.POLISHED_IVORY_SLAB);
+        polishedIvoryPool.wall(BlockRegistry.POLISHED_IVORY_WALL);
+
+        BlockStateModelGenerator.BlockTexturePool gildedIvoryBrickPool = blockStateModelGenerator.registerCubeAllModelTexturePool(BlockRegistry.GILDED_IVORY_BRICKS);
+        gildedIvoryBrickPool.stairs(BlockRegistry.GILDED_IVORY_BRICK_STAIRS);
+        gildedIvoryBrickPool.slab(BlockRegistry.GILDED_IVORY_BRICK_SLAB);
+        gildedIvoryBrickPool.wall(BlockRegistry.GILDED_IVORY_BRICK_WALL);
+
+        BlockStateModelGenerator.BlockTexturePool gildedPolishedIvoryPool = blockStateModelGenerator.registerCubeAllModelTexturePool(BlockRegistry.GILDED_POLISHED_IVORY);
+        gildedPolishedIvoryPool.stairs(BlockRegistry.GILDED_POLISHED_IVORY_STAIRS);
+        gildedPolishedIvoryPool.slab(BlockRegistry.GILDED_POLISHED_IVORY_SLAB);
+        gildedPolishedIvoryPool.wall(BlockRegistry.GILDED_POLISHED_IVORY_WALL);
+
+
     }
 
 

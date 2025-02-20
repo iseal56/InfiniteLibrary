@@ -1,13 +1,12 @@
 package dev.iseal.infinitelibrary;
 
-import dev.iseal.infinitelibrary.effects.HubrisEffect;
-import dev.iseal.infinitelibrary.effects.KnowledgeEffect;
-import dev.iseal.infinitelibrary.worldgen.dimensions.LibraryGenerator;
-import dev.iseal.infinitelibrary.listeners.RemoveExperienceListener;
 import dev.iseal.infinitelibrary.items.item_groups.InfiniteLibraryGroup;
 import dev.iseal.infinitelibrary.listeners.AddCodesToLootTables;
+import dev.iseal.infinitelibrary.listeners.RemoveExperienceListener;
 import dev.iseal.infinitelibrary.registry.*;
-import net.minecraft.entity.effect.StatusEffect;
+import dev.iseal.infinitelibrary.worldgen.dimensions.LibraryGenerator;
+import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
@@ -18,17 +17,23 @@ import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.dimension.DimensionOptions;
 
-import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
-
 public class IL implements ModInitializer {
 
     public static final String MOD_ID = "infinitelibrary";
-    private static final RegistryKey<DimensionOptions> DIMENSION_KEY = RegistryKey.of(RegistryKeys.DIMENSION, Identifier.of(MOD_ID, "library"));
+    public static final RegistryKey<Biome> BIOME_KEY = RegistryKey.of(
+            RegistryKeys.BIOME,
+            Identifier.of(MOD_ID, "library")
+    );
+    private static final RegistryKey<DimensionOptions> DIMENSION_KEY = RegistryKey.of(
+            RegistryKeys.DIMENSION,
+            Identifier.of(MOD_ID, "library")
+    );
     private static RegistryKey<World> WORLD_KEY = RegistryKey.of(RegistryKeys.WORLD, DIMENSION_KEY.getValue());
-    public static final RegistryKey<Biome> BIOME_KEY = RegistryKey.of(RegistryKeys.BIOME, Identifier.of(MOD_ID, "library"));
     public static MinecraftServer server;
 
+    public static Identifier identifier(String path) {
+        return Identifier.of(MOD_ID, path);
+    }
 
     @Override
     public void onInitialize() {
@@ -45,7 +50,7 @@ public class IL implements ModInitializer {
         DimensionRegistry.getInstance().initialize();
         DamageSourceRegistry.getInstance().initialize();
         LootTableRegistry.getInstance().initialize();
-        DataComponentTypeRegistry.getInstance().initialize();
+        ComponentTypeRegistry.getInstance().initialize();
         ItemRegistry.getInstance().initialize();
         InfiniteLibraryGroup.initialize();
         new RemoveExperienceListener().registerListener();
