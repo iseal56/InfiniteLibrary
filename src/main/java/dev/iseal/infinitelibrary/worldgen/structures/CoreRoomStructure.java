@@ -1,6 +1,5 @@
 package dev.iseal.infinitelibrary.worldgen.structures;
 
-import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import dev.iseal.infinitelibrary.registry.StructureRegistry;
 import net.minecraft.registry.entry.RegistryEntry;
@@ -12,7 +11,9 @@ import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.gen.structure.DimensionPadding;
 import net.minecraft.world.gen.structure.Structure;
 import net.minecraft.world.gen.structure.StructureType;
+import net.minecraft.world.gen.structure.WoodlandMansionStructure;
 
+import java.util.List;
 import java.util.Optional;
 
 public class CoreRoomStructure extends Structure {
@@ -31,14 +32,10 @@ public class CoreRoomStructure extends Structure {
                 Optional.empty(), 1,
                 blockPos, false,
                 Optional.empty(), 16,
-                StructurePoolAliasLookup.EMPTY, DimensionPadding.NONE,
+                StructurePoolAliasLookup.create(List.of(), blockPos, context.seed()),
+                DimensionPadding.NONE,
                 StructureLiquidSettings.IGNORE_WATERLOGGING
-
         );
-
-        // StructurePoolAliasLookup aliasLookup,
-        //    DimensionPadding dimensionPadding,
-        //    StructureLiquidSettings liquidSettings
     }
 
     @Override
