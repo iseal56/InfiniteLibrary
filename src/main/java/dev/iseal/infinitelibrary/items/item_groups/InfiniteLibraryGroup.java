@@ -28,7 +28,7 @@ public class InfiniteLibraryGroup {
 
         // Register items to the custom item group.
         ItemGroupEvents.modifyEntriesEvent(CUSTOM_ITEM_GROUP_KEY).register(itemGroup -> {
-            itemGroup.add(BlockRegistry.QUARTZ_BOOKSHELF.asItem());
+            itemGroup.add(BlockRegistry.IVORY_BOOKSHELF.asItem());
             itemGroup.add(BlockRegistry.GLEAMING_CHISELED_IVORY.asItem());
             itemGroup.add(BlockRegistry.DULL_CHISELED_IVORY.asItem());
             itemGroup.add(BlockRegistry.OLD_EMPTY_BOOKSHELF.asItem());
