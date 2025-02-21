@@ -72,52 +72,7 @@ public class BlockModelProvider extends FabricModelProvider {
     public void generateItemModels(ItemModelGenerator generator) {
         // Existing registrations
         generator.register(ItemRegistry.IVORY_BRICK, Models.GENERATED);
-        /*
-        Models.GENERATED.upload(
-                Identifier.of(IL.MOD_ID, "item/spell_book_2d"),
-                TextureMap.layer0(Identifier.of(IL.MOD_ID, "item/spell_book_item")),
-                generator.writer
-        );
-
-         */
-        // Spell book registration
-        //registerSpellBookModels(generator);
     }
-
-    /*
-    private void registerSpellBookModels(ItemModelGenerator generator) {
-        Identifier mainModelId = ModelIds.getItemModelId(ItemRegistry.SPELL_BOOK);
-        System.out.println(mainModelId.toString());
-
-        // 1. Create main model with overrides
-        JsonObject mainModel = new JsonObject();
-        mainModel.addProperty("parent", "item/handheld"); // 3D parent
-        JsonArray overrides = new JsonArray();
-        overrides.add(createOverride("gui", 1.0f, mainModelId.withSuffixedPath("_2d")));
-        overrides.add(createOverride("ground", 1.0f, mainModelId.withSuffixedPath("_2d")));
-        mainModel.add("overrides", overrides);
-
-        // Write to models/item directory
-        DataOutput.PathResolver itemResolver = output.getResolver(
-                DataOutput.OutputType.RESOURCE_PACK,
-                "models/item" // Correct directory
-        );
-
-        DataProvider.writeToPath(
-                DataWriter.UNCACHED,
-                mainModel,
-                itemResolver.resolve(mainModelId, ".json")
-        );
-
-        // 2. Create 2D variant in models/item
-        Models.GENERATED.upload(
-                mainModelId.withSuffixedPath("_2d"),
-                TextureMap.layer0(Identifier.of(IL.MOD_ID, "item/spell_book_item")),
-                generator.writer
-        );
-    }
-
-     */
 
     private JsonObject createOverride(String predicate, float value, Identifier model) {
         JsonObject override = new JsonObject();

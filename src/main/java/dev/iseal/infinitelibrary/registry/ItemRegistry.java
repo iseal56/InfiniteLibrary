@@ -26,13 +26,13 @@ public class ItemRegistry {
     public static final ToolMaterial IVORY_TOOL_MATERIAL = new ToolMaterial(
             BlockTags.INCORRECT_FOR_NETHERITE_TOOL,
             1024,
-            9.0f,
+            4.0f,
             4,
             1,
             ItemTags.GOLD_TOOL_MATERIALS
     );
     public static final Item PALE_SWORD = register(
-            settings -> new PaleSwordItem(ItemRegistry.IVORY_TOOL_MATERIAL, 10, -2.4F, settings),
+            settings -> new PaleSwordItem(ItemRegistry.IVORY_TOOL_MATERIAL, 2, -2.4F, settings),
             new Item.Settings().registryKey(key("pale_sword")),
             IL.identifier("pale_sword")
     );
@@ -43,10 +43,6 @@ public class ItemRegistry {
                     .maxCount(1)
                     .maxDamage(100),
             IL.identifier("spell_book")
-    );
-    public static final Item SPELL_BOOK_ITEM = register(
-            new Item.Settings().maxCount(1).rarity(Rarity.UNCOMMON),
-            Identifier.of(IL.MOD_ID, "spell_book_item")
     );
     public static final Item SCRAPS_OF_WISDOM = register(
             new Item.Settings().maxCount(64).rarity(Rarity.UNCOMMON),
