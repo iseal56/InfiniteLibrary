@@ -1,6 +1,6 @@
 package dev.iseal.infinitelibrary;
 
-import dev.iseal.infinitelibrary.items.item_groups.InfiniteLibraryGroup;
+import dev.iseal.infinitelibrary.items.item_groups.InfiniteLibraryGroups;
 import dev.iseal.infinitelibrary.listeners.AddCodesToLootTables;
 import dev.iseal.infinitelibrary.listeners.RemoveExperienceListener;
 import dev.iseal.infinitelibrary.registry.*;
@@ -52,7 +52,7 @@ public class IL implements ModInitializer {
         LootTableRegistry.getInstance().initialize();
         ComponentTypeRegistry.getInstance().initialize();
         ItemRegistry.getInstance().initialize();
-        InfiniteLibraryGroup.initialize();
+        InfiniteLibraryGroups.initialize();
         new RemoveExperienceListener().registerListener();
         new AddCodesToLootTables().initialize();
         //new BlockBreakListener().init();
