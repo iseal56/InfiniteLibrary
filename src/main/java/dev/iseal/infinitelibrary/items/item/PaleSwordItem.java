@@ -17,6 +17,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.SwordItem;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 
@@ -42,6 +43,10 @@ public class PaleSwordItem extends SwordItem {
         super(toolMaterial, attackDamageBonus, attackCooldownBonus, properties);
     }
 
+    @Override
+    public boolean allowComponentsUpdateAnimation(PlayerEntity player, Hand hand, ItemStack oldStack, ItemStack newStack) {
+        return false;
+    }
 
     @Override
     public void inventoryTick(ItemStack stack, World level, Entity entity, int slot, boolean isHeld) {
