@@ -23,6 +23,6 @@
     }
   },
   "textures": {
-    "layer0": "infinitelibrary:item/pale_sword_full"
+    "layer0": "infinitelibrary:item/spell_book_item"
   }
 }

@@ -34,8 +34,9 @@ public class PaleSwordItem extends SwordItem {
     );
     private static final float DRAIN_FACTOR = 20;
     private static final float DRAIN_CONSTANT = 1f;
-    private static final int DAMAGE_CAP = 100;
+    private static final int DAMAGE_CAP = 50;
     private static final int DAMAGE_PER_UNIT = 5;
+    private static final int DAMAGE_TAKEN_XP_MULTIPLIER = 1;
 
 
     public PaleSwordItem(ToolMaterial toolMaterial, float attackDamageBonus, float attackCooldownBonus, Settings properties) {
@@ -120,7 +121,7 @@ public class PaleSwordItem extends SwordItem {
                     livingEntity.damage(
                             serverLevel,
                             livingEntity.getDamageSources().magic(),
-                            (int) (1 + Math.sqrt(xpLacking))
+                            (int) (1 + DAMAGE_TAKEN_XP_MULTIPLIER * Math.sqrt(xpLacking))
                     );
                     livingEntity.addStatusEffect(WITHER.get());
                 }
