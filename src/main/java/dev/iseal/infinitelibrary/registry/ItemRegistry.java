@@ -56,8 +56,15 @@ public class ItemRegistry {
     );
 
     public static final Item SCRAPS_OF_WISDOM = register(
-            new Item.Settings().maxCount(64).rarity(Rarity.UNCOMMON),
+            new Item.Settings().maxCount(64).rarity(Rarity.COMMON),
             Identifier.of(IL.MOD_ID, "scraps_of_wisdom"),
+            true,
+            InfiniteLibraryGroups.ITEMS_GROUP_KEY
+    );
+
+    public static final Item TOME_OF_RETURN = register(
+            new Item.Settings().maxCount(1).rarity(Rarity.RARE),
+            Identifier.of(IL.MOD_ID, "tome_of_return"),
             true,
             InfiniteLibraryGroups.ITEMS_GROUP_KEY
     );
