@@ -1,4 +1,4 @@
-package dev.iseal.infinitelibrary.effects;
+package dev.iseal.infinitelibrary.statusEffects;
 
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
