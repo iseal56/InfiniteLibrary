@@ -17,7 +17,6 @@ public class EnglishLangProvider extends FabricLanguageProvider {
     private final HashMap<String, Boolean> generateSetNames = new HashMap<>();
 
     {
-
         generateSetNames.put("polished_ivory", true);
         generateSetNames.put("ivory_brick", false);
         generateSetNames.put("gilded_ivory_brick", false);
