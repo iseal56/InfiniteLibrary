@@ -23,6 +23,7 @@
       "dev.iseal.infinitelibrary.client.datagen.ILDatagen"
     ]
   },
+  "accessWidener": "infinitelibrary.accesswidener",
   "mixins": [
     "infinitelibrary.mixins.json",
     {
