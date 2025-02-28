@@ -1,0 +1,4 @@
+accessWidener v2 named
+accessible class net/minecraft/enchantment/EnchantmentHelper$Consumer
+accessible class net/minecraft/enchantment/EnchantmentHelper$ContextAwareConsumer
+accessible method net/minecraft/enchantment/EnchantmentHelper forEachEnchantment (Lnet/minecraft/item/ItemStack;Lnet/minecraft/enchantment/EnchantmentHelper$Consumer;)V

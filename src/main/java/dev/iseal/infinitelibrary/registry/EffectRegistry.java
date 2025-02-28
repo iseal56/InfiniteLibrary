@@ -1,14 +1,9 @@
 package dev.iseal.infinitelibrary.registry;
 
 import dev.iseal.infinitelibrary.IL;
-import dev.iseal.infinitelibrary.effects.HubrisEffect;
-import dev.iseal.infinitelibrary.effects.KnowledgeEffect;
-import net.minecraft.entity.attribute.EntityAttributeModifier;
-import net.minecraft.entity.attribute.EntityAttributes;
+import dev.iseal.infinitelibrary.statusEffects.HubrisEffect;
+import dev.iseal.infinitelibrary.statusEffects.KnowledgeEffect;
 import net.minecraft.entity.effect.StatusEffect;
-import net.minecraft.entity.effect.StatusEffectCategory;
-import net.minecraft.entity.effect.StatusEffects;
-import net.minecraft.item.SplashPotionItem;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
