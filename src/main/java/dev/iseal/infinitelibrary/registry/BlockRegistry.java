@@ -1,8 +1,8 @@
 package dev.iseal.infinitelibrary.registry;
 
 import dev.iseal.infinitelibrary.IL;
-import dev.iseal.infinitelibrary.items.block.LibraryPortalBlock;
 import dev.iseal.infinitelibrary.items.block.IvoryBookshelfBlock;
+import dev.iseal.infinitelibrary.items.block.LibraryPortalBlock;
 import dev.iseal.infinitelibrary.items.block.chiseled_ivory.DullChiseledIvoryBlock;
 import dev.iseal.infinitelibrary.items.block.chiseled_ivory.GleamingChiseledIvoryBlock;
 import dev.iseal.infinitelibrary.items.block.old_bookshelves.OldBookshelfBlock;
@@ -21,6 +21,12 @@ import java.util.function.Function;
 
 public class BlockRegistry {
 
+    public static final Block IVORY_ALTAR = register(
+            new Block(AbstractBlock.Settings.create().registryKey(blockKey("ivory_altar"))),
+            blockKey("ivory_altar"),
+            true,
+            InfiniteLibraryGroups.BLOCKS_GROUP_KEY
+    );
     public static final Block IVORY_BOOKSHELF = register(
             new IvoryBookshelfBlock(),
             blockKey("ivory_bookshelf"),
@@ -45,7 +51,12 @@ public class BlockRegistry {
             true,
             InfiniteLibraryGroups.BLOCKS_GROUP_KEY
     );
-    public static final Block OLD_BOOKSHELF = register(new OldBookshelfBlock(), blockKey("old_bookshelf"), true, InfiniteLibraryGroups.BLOCKS_GROUP_KEY);
+    public static final Block OLD_BOOKSHELF = register(
+            new OldBookshelfBlock(),
+            blockKey("old_bookshelf"),
+            true,
+            InfiniteLibraryGroups.BLOCKS_GROUP_KEY
+    );
     // ivory blocks
     public static final Block CHISELED_IVORY = register(
             AbstractBlock.Settings.copy(DULL_CHISELED_IVORY),
@@ -180,7 +191,12 @@ public class BlockRegistry {
             true,
             InfiniteLibraryGroups.BLOCKS_GROUP_KEY
     );
-    public static final Block LIBRARY_PORTAL = register(new LibraryPortalBlock(), blockKey("library_portal"), false, null);
+    public static final Block LIBRARY_PORTAL = register(
+            new LibraryPortalBlock(),
+            blockKey("library_portal"),
+            false,
+            null
+    );
     private static BlockRegistry INSTANCE;
 
     public static BlockRegistry getInstance() {
