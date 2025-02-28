@@ -3,10 +3,13 @@ package dev.iseal.infinitelibrary;
 import dev.iseal.infinitelibrary.items.item_groups.InfiniteLibraryGroups;
 import dev.iseal.infinitelibrary.listeners.AddCodesToLootTables;
 import dev.iseal.infinitelibrary.listeners.RemoveExperienceListener;
+import dev.iseal.infinitelibrary.listeners.SwordEnchantListener;
 import dev.iseal.infinitelibrary.registry.*;
 import dev.iseal.infinitelibrary.worldgen.dimensions.LibraryGenerator;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.entity.event.v1.ServerEntityCombatEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
+import net.fabricmc.fabric.api.event.player.UseItemCallback;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
@@ -44,6 +47,12 @@ public class IL implements ModInitializer {
             StructureRegistry.getInstance().serverRegister();
             DamageSourceRegistry.getInstance().initializeServer();
         });
+        registerRegistries();
+        registerListeners();
+        InfiniteLibraryGroups.initialize();
+    }
+
+    private void registerRegistries() {
         EffectRegistry.getInstance().initialize();
         StructureRegistry.getInstance().register();
         BlockRegistry.getInstance().initialize();
@@ -52,9 +61,14 @@ public class IL implements ModInitializer {
         LootTableRegistry.getInstance().initialize();
         ComponentTypeRegistry.getInstance().initialize();
         ItemRegistry.getInstance().initialize();
-        InfiniteLibraryGroups.initialize();
+    }
+
+    private void registerListeners() {
         new RemoveExperienceListener().registerListener();
         new AddCodesToLootTables().initialize();
+        ServerEntityCombatEvents.AFTER_KILLED_OTHER_ENTITY.register(new SwordEnchantListener.AddCharge());
+        UseItemCallback.EVENT.register(new SwordEnchantListener.ReleaseCharges());
+        // TODO: rework this.
         //new BlockBreakListener().init();
     }
 }

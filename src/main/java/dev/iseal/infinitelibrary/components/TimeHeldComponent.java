@@ -1,4 +1,4 @@
-package dev.iseal.infinitelibrary.items.item.component;
+package dev.iseal.infinitelibrary.components;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;

@@ -2,8 +2,8 @@ package dev.iseal.infinitelibrary.registry;
 
 import com.mojang.serialization.Codec;
 import dev.iseal.infinitelibrary.IL;
-import dev.iseal.infinitelibrary.enchantmentEffects.ChargesEffect;
-import dev.iseal.infinitelibrary.items.item.component.TimeHeldComponent;
+import dev.iseal.infinitelibrary.enchantment.effect.ChargesEffect;
+import dev.iseal.infinitelibrary.components.TimeHeldComponent;
 import net.minecraft.component.ComponentType;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
@@ -11,7 +11,6 @@ import net.minecraft.registry.Registry;
 public class ComponentTypeRegistry {
 
     public static ComponentType<TimeHeldComponent> TIME_HELD = register(TimeHeldComponent.CODEC, "time_held");
-    public static ComponentType<ChargesEffect> CHARGES_EFFECT = register(ChargesEffect.CODEC, "charges_effect");
 
     private static ComponentTypeRegistry INSTANCE;
 

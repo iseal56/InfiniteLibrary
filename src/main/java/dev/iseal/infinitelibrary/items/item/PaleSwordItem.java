@@ -1,7 +1,7 @@
 package dev.iseal.infinitelibrary.items.item;
 
 import dev.iseal.infinitelibrary.IL;
-import dev.iseal.infinitelibrary.items.item.component.TimeHeldComponent;
+import dev.iseal.infinitelibrary.components.TimeHeldComponent;
 import dev.iseal.infinitelibrary.registry.ComponentTypeRegistry;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.AttributeModifierSlot;
