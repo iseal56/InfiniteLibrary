@@ -54,6 +54,7 @@ public class IL implements ModInitializer {
 
     private void registerRegistries() {
         EffectRegistry.getInstance().initialize();
+        EnchantmentEffectRegistry.getInstance().initialize();
         StructureRegistry.getInstance().register();
         BlockRegistry.getInstance().initialize();
         DimensionRegistry.getInstance().initialize();
@@ -66,7 +67,6 @@ public class IL implements ModInitializer {
     private void registerListeners() {
         new RemoveExperienceListener().registerListener();
         new AddCodesToLootTables().initialize();
-        ServerEntityCombatEvents.AFTER_KILLED_OTHER_ENTITY.register(new SwordEnchantListener.AddCharge());
         UseItemCallback.EVENT.register(new SwordEnchantListener.ReleaseCharges());
         // TODO: rework this.
         //new BlockBreakListener().init();

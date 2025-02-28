@@ -1,9 +1,8 @@
 package dev.iseal.infinitelibrary.registry;
 
 import com.mojang.serialization.MapCodec;
-import com.nimbusds.oauth2.sdk.id.Identifier;
 import dev.iseal.infinitelibrary.IL;
-import dev.iseal.infinitelibrary.enchantment.effect.ChargesEffect;
+import dev.iseal.infinitelibrary.enchantment.effect.AddChargesEnchantmentEffect;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.effect.EnchantmentEntityEffect;
 import net.minecraft.registry.Registries;
@@ -12,8 +11,18 @@ import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 
 public class EnchantmentEffectRegistry {
-    public static final RegistryKey<Enchantment> THUNDERING = of("thundering");
-    public static MapCodec<ChargesEffect> CHARGES_EFFECT = register("charges_effect", ChargesEffect.CODEC);
+
+    private static EnchantmentEffectRegistry INSTANCE;
+    public static EnchantmentEffectRegistry getInstance() {
+        if (INSTANCE == null) {
+            INSTANCE = new EnchantmentEffectRegistry();
+        }
+        return INSTANCE;
+    }
+
+    public static MapCodec<AddChargesEnchantmentEffect> CHARGES_EFFECT = register("charges_effect", AddChargesEnchantmentEffect.CODEC);
+    //TODO: please for the love of anything find a better name
+    public static final RegistryKey<Enchantment> SWORD_ENCHANT = of("sword_enchant");
 
     private static RegistryKey<Enchantment> of(String path) {
         return RegistryKey.of(RegistryKeys.ENCHANTMENT, IL.identifier(path));
@@ -21,5 +30,9 @@ public class EnchantmentEffectRegistry {
 
     private static <T extends EnchantmentEntityEffect> MapCodec<T> register(String id, MapCodec<T> codec) {
         return Registry.register(Registries.ENCHANTMENT_ENTITY_EFFECT_TYPE, IL.identifier(id), codec);
+    }
+
+    public void initialize() {
+        // This method is empty.
     }
 }

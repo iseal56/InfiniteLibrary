@@ -1,6 +1,6 @@
 package dev.iseal.infinitelibrary.client.datagen;
 
-import dev.iseal.infinitelibrary.enchantment.effect.ChargesEffect;
+import dev.iseal.infinitelibrary.enchantment.effect.AddChargesEnchantmentEffect;
 import dev.iseal.infinitelibrary.registry.EnchantmentEffectRegistry;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricDynamicRegistryProvider;
@@ -26,7 +26,7 @@ public class EnchantmentGenerator extends FabricDynamicRegistryProvider {
     @Override
     protected void configure(RegistryWrapper.WrapperLookup registries, Entries entries) {
         // Our new enchantment, "Thundering."
-        register(entries, EnchantmentEffectRegistry.THUNDERING, Enchantment.builder(
+        register(entries, EnchantmentEffectRegistry.SWORD_ENCHANT, Enchantment.builder(
                                 Enchantment.definition(
                                         registries.getOrThrow(RegistryKeys.ITEM).getOrThrow(ItemTags.WEAPON_ENCHANTABLE),
                                         // this is the "weight" or probability of our enchantment showing up in the table
@@ -48,7 +48,7 @@ public class EnchantmentGenerator extends FabricDynamicRegistryProvider {
                                 EnchantmentEffectComponentTypes.POST_ATTACK,
                                 EnchantmentEffectTarget.ATTACKER,
                                 EnchantmentEffectTarget.VICTIM,
-                                new ChargesEffect(EnchantmentLevelBasedValue.linear(0.4f, 0.2f)) // scale the enchantment linearly.
+                                new AddChargesEnchantmentEffect(EnchantmentLevelBasedValue.linear(0.4f, 0.2f)) // scale the enchantment linearly.
                         )
         );
     }
