@@ -1,12 +1,19 @@
 package dev.iseal.infinitelibrary.utils;
 
+import dev.iseal.infinitelibrary.enchantment.effect.AddChargesEnchantmentEffect;
 import net.minecraft.block.Block;
+import net.minecraft.component.Component;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.WrittenBookContentComponent;
+import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.enchantment.effect.EnchantmentEntityEffect;
+import net.minecraft.enchantment.effect.TargetedEnchantmentEffect;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtList;
 import net.minecraft.nbt.NbtString;
+import net.minecraft.registry.DynamicRegistryManager;
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.text.RawFilteredPair;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
@@ -14,6 +21,7 @@ import net.minecraft.util.math.BlockPos;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
@@ -89,6 +97,26 @@ public class Utils {
         bookStack.set(DataComponentTypes.WRITTEN_BOOK_CONTENT, new WrittenBookContentComponent(RawFilteredPair.of(title), author, 0, pageList, true));
 
         return bookStack;
+    }
+
+    public static boolean hasEnchantmentEffect(ItemStack stack, Class<? extends EnchantmentEntityEffect> effectToCheck, DynamicRegistryManager manager) {
+        AtomicBoolean hasEffect = new AtomicBoolean(false);
+        EnchantmentHelper.forEachEnchantment(stack, (enchantment, level) -> {
+            for (Component<?> effect : manager.getOrThrow(RegistryKeys.ENCHANTMENT).get(enchantment.getKey().get()).effects()) {
+                System.out.println("Effect: " + effect.value().toString());
+                System.out.println("Effect class: " + effect.value().getClass());
+                for (Object value : (ArrayList<?>) effect.value()) {
+                    if (value instanceof TargetedEnchantmentEffect<?> tef) {
+                        System.out.println("Effect value: " + tef.effect().toString());
+                        if (effectToCheck.isAssignableFrom(tef.effect().getClass())) {
+                            hasEffect.set(true);
+                            break;
+                        }
+                    }
+                }
+            }
+        });
+        return hasEffect.get();
     }
 
 }

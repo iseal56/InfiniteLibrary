@@ -13,7 +13,6 @@ public class RenderRegistry {
     }
 
     public void initialize() {
-
     }
 
 

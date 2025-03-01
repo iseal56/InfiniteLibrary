@@ -62,6 +62,7 @@ public class IL implements ModInitializer {
         LootTableRegistry.getInstance().initialize();
         ComponentTypeRegistry.getInstance().initialize();
         ItemRegistry.getInstance().initialize();
+        ParticleRegistry.getInstance().serverInit();
     }
 
     private void registerListeners() {
