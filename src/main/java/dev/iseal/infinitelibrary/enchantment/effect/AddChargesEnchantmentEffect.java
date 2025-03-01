@@ -21,6 +21,8 @@ public record AddChargesEnchantmentEffect(EnchantmentLevelBasedValue multiplier)
             ).apply(instance, AddChargesEnchantmentEffect::new)
     );
 
+    private static final Float EXPERIENCE_MULTIPLIER = 0.2f;
+
     @Override
     public void apply(ServerWorld world, int level, EnchantmentEffectContext context, Entity target, Vec3d pos) {
         if (!(target instanceof LivingEntity entity)) {
@@ -35,14 +37,15 @@ public record AddChargesEnchantmentEffect(EnchantmentLevelBasedValue multiplier)
         // check if entity dies
         // if so, add charges to the item
         ItemStack item = context.stack();
+        LivingEntity owner = context.owner();
         if (entity.getHealth() <= 0) {
             if (item.get(ComponentTypeRegistry.CHARGES_AMOUNT) == null) {
                 item.set(ComponentTypeRegistry.CHARGES_AMOUNT, new ChargesAmountComponent(0));
             }
-            item.set(ComponentTypeRegistry.CHARGES_AMOUNT, new ChargesAmountComponent(item.get(ComponentTypeRegistry.CHARGES_AMOUNT).amount() + multiplier.getValue(level)));
-            System.out.println("DIED");
-        } else {
-            System.out.println("ALIVE");
+            float charges = entity.getExperienceToDrop(world, owner) * EXPERIENCE_MULTIPLIER * multiplier.getValue(level);
+            System.out.println("Adding " + charges + " charges");
+            item.set(ComponentTypeRegistry.CHARGES_AMOUNT, new ChargesAmountComponent(item.get(ComponentTypeRegistry.CHARGES_AMOUNT).amount() + charges));
+            System.out.println("Charges now " + item.get(ComponentTypeRegistry.CHARGES_AMOUNT));
         }
     }
 

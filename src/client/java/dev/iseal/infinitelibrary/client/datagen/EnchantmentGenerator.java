@@ -25,7 +25,6 @@ public class EnchantmentGenerator extends FabricDynamicRegistryProvider {
 
     @Override
     protected void configure(RegistryWrapper.WrapperLookup registries, Entries entries) {
-        // Our new enchantment, "Thundering."
         register(entries, EnchantmentEffectRegistry.SWORD_ENCHANT, Enchantment.builder(
                                 Enchantment.definition(
                                         registries.getOrThrow(RegistryKeys.ITEM).getOrThrow(ItemTags.WEAPON_ENCHANTABLE),

@@ -5,8 +5,14 @@ import dev.iseal.infinitelibrary.IL;
 import dev.iseal.infinitelibrary.components.ChargesAmountComponent;
 import dev.iseal.infinitelibrary.components.TimeHeldComponent;
 import net.minecraft.component.ComponentType;
+import net.minecraft.enchantment.effect.EnchantmentEffectEntry;
+import net.minecraft.enchantment.effect.EnchantmentValueEffect;
+import net.minecraft.loot.context.LootContextTypes;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
+
+import java.util.List;
+import java.util.function.UnaryOperator;
 
 public class ComponentTypeRegistry {
 
