@@ -7,7 +7,6 @@ import dev.iseal.infinitelibrary.listeners.SwordEnchantListener;
 import dev.iseal.infinitelibrary.registry.*;
 import dev.iseal.infinitelibrary.worldgen.dimensions.LibraryGenerator;
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.entity.event.v1.ServerEntityCombatEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.event.player.UseItemCallback;
 import net.minecraft.registry.Registries;
@@ -44,7 +43,7 @@ public class IL implements ModInitializer {
         WORLD_KEY = RegistryKey.of(RegistryKeys.WORLD, Identifier.of(MOD_ID, "library"));
         ServerLifecycleEvents.SERVER_STARTED.register(server -> {
             IL.server = server;
-            StructureRegistry.getInstance().serverRegister();
+            StructureRegistry.getInstance().serverInitialize();
             DamageSourceRegistry.getInstance().initializeServer();
         });
         registerRegistries();
@@ -55,7 +54,7 @@ public class IL implements ModInitializer {
     private void registerRegistries() {
         EffectRegistry.getInstance().initialize();
         EnchantmentEffectRegistry.getInstance().initialize();
-        StructureRegistry.getInstance().register();
+        StructureRegistry.getInstance().initialize();
         BlockRegistry.getInstance().initialize();
         DimensionRegistry.getInstance().initialize();
         DamageSourceRegistry.getInstance().initialize();

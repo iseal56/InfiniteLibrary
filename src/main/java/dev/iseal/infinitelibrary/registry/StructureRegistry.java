@@ -1,5 +1,6 @@
 package dev.iseal.infinitelibrary.registry;
 
+import com.mojang.serialization.MapCodec;
 import dev.iseal.infinitelibrary.IL;
 import dev.iseal.infinitelibrary.worldgen.structures.CoreRoomStructure;
 import dev.iseal.infinitelibrary.worldgen.structures.PortalRoomStructure;
@@ -11,6 +12,7 @@ import net.minecraft.structure.pool.StructurePool;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.crash.CrashException;
 import net.minecraft.util.crash.CrashReport;
+import net.minecraft.world.gen.structure.Structure;
 import net.minecraft.world.gen.structure.StructureType;
 
 public class StructureRegistry {
@@ -26,17 +28,26 @@ public class StructureRegistry {
     private StructureRegistry(){
     }
 
-    public final static Identifier CORE_ROOM_ID = Identifier.of(IL.MOD_ID, "core_room");
-    public final static StructureType<CoreRoomStructure> CORE_ROOM = Registry.register(Registries.STRUCTURE_TYPE, CORE_ROOM_ID, () -> CoreRoomStructure.CODEC);
-    public final static StructureType<PortalRoomStructure> PORTAL_ROOM = Registry.register(Registries.STRUCTURE_TYPE, Identifier.of(IL.MOD_ID, "portal_room"), () -> PortalRoomStructure.CODEC);
+    public final static Identifier CORE_ROOM_ID = IL.identifier("core_room");
+    public final static StructureType<CoreRoomStructure> CORE_ROOM = register(CORE_ROOM_ID, CoreRoomStructure.CODEC);
+    public final static StructureType<PortalRoomStructure> PORTAL_ROOM = register("portal_room", PortalRoomStructure.CODEC);
     public static StructurePool LIBRARY_STRUCTURES_POOL;
     private MinecraftServer server;
 
-    public void register() {
+    public void initialize() {
 
     }
 
-    public void serverRegister() {
+    private static <T extends Structure> StructureType<T> register(Identifier identifier, MapCodec<T> codec) {
+        return Registry.register(Registries.STRUCTURE_TYPE, identifier, () -> codec);
+    }
+
+    private static <T extends Structure> StructureType<T> register(String identifier, MapCodec<T> codec) {
+        return register(IL.identifier(identifier), codec);
+    }
+
+
+    public void serverInitialize() {
         this.server = IL.server;
         var poolGetter = server.getRegistryManager()
                 .getOrThrow(RegistryKeys.TEMPLATE_POOL)

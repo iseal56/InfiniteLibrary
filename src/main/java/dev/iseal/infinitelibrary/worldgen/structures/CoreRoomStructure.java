@@ -1,6 +1,7 @@
 package dev.iseal.infinitelibrary.worldgen.structures;
 
 import com.mojang.serialization.MapCodec;
+import dev.iseal.infinitelibrary.IL;
 import dev.iseal.infinitelibrary.registry.StructureRegistry;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.structure.StructureLiquidSettings;
@@ -25,8 +26,11 @@ public class CoreRoomStructure extends Structure {
 
     @Override
     public Optional<Structure.StructurePosition> getStructurePosition(Structure.Context context) {
+        System.out.println(context.biomePredicate().toString());
+        System.out.println(StructureRegistry.LIBRARY_STRUCTURES_POOL.toString());
         ChunkPos chunkPos = context.chunkPos();
         BlockPos blockPos = new BlockPos(chunkPos.getStartX(), 41, chunkPos.getStartZ()-1);
+        System.out.println("running");
         return StructurePoolBasedGenerator.generate(
                 context, RegistryEntry.of(StructureRegistry.LIBRARY_STRUCTURES_POOL),
                 Optional.empty(), 1,
