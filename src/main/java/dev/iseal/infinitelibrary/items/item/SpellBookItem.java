@@ -8,9 +8,7 @@ public class SpellBookItem extends Item {
 
     public SpellBookItem(Item.Settings settings) {
         // set material to limit durability
-        super(
-                settings
-        );
+        super(settings);
     }
 
     @Override
@@ -18,9 +16,6 @@ public class SpellBookItem extends Item {
         if (context.getWorld().isClient) {
             return ActionResult.SUCCESS;
         }
-
-        // and remove the item
-        context.getStack().decrement(1);
 
         return ActionResult.PASS;
     }

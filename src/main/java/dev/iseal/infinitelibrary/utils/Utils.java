@@ -17,10 +17,10 @@ import net.minecraft.registry.RegistryKeys;
 import net.minecraft.text.RawFilteredPair;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.random.Random;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -117,6 +117,47 @@ public class Utils {
             }
         });
         return hasEffect.get();
+    }
+
+    /**
+     * Gets locations on the perimeter of a cylinder and executes a consumer for each point.
+     * @param center The center of the cylinder.
+     * @param height The height of the cylinder.
+     * @param numberOfPoints The number of points to generate.
+     * @param radius The radius of the cylinder.
+     * @param rand The random object to use for randomization.
+     *
+     * @param consumer The consumer to execute for each generated point.
+     */
+    public static void getCylinderLocations(Vec3d center, int height, int numberOfPoints, double radius, Optional<Random> rand, Consumer<Vec3d> consumer) {
+        double angleStep = 2 * Math.PI / numberOfPoints;
+        Random random = rand.orElseGet(Random::create);
+
+        for (int i = 0; i < numberOfPoints; i++) {
+            double angle = i * angleStep;
+            double xOffset = radius * Math.cos(angle);
+            double zOffset = radius * Math.sin(angle);
+            double yOffset = random.nextDouble() * height;
+
+            Vec3d point = center.add(xOffset, yOffset, zOffset);
+            consumer.accept(point);
+        }
+    }
+
+    /**
+    * Gets locations on the perimeter of a cylinder and return them as a list
+     * @param center The center of the cylinder.
+     * @param height The height of the cylinder.
+     * @param numberOfPoints The number of points to generate.
+     * @param radius The radius of the cylinder.
+     * @param rand The random object to use for randomization.
+     *
+     * @return A list of points on the perimeter of the cylinder.
+     */
+    public static ArrayList<Vec3d> getCylinderLocations(Vec3d center, int height, int numberOfPoints, double radius, Optional<Random> rand) {
+        ArrayList<Vec3d> points = new ArrayList<>();
+        getCylinderLocations(center, height, numberOfPoints, radius, rand, points::add);
+        return points;
     }
 
 }
