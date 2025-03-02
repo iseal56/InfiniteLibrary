@@ -7,6 +7,7 @@ import net.fabricmc.fabric.api.client.datagen.v1.provider.FabricModelProvider;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.minecraft.block.Block;
 import net.minecraft.client.data.*;
+import net.minecraft.data.family.BlockFamily;
 import net.minecraft.util.Identifier;
 
 public class BlockModelProvider extends FabricModelProvider {
@@ -26,6 +27,34 @@ public class BlockModelProvider extends FabricModelProvider {
         this.output = output;
     }
 
+    public static final BlockFamily IVORY_BRICK_FAMILY =
+            new BlockFamily.Builder(BlockRegistry.IVORY_BRICKS)
+                    .stairs(BlockRegistry.IVORY_BRICK_STAIRS)
+                    .slab(BlockRegistry.IVORY_BRICK_SLAB)
+                    .wall(BlockRegistry.IVORY_BRICK_WALL)
+                    .build();
+
+    public static final BlockFamily POLISHED_IVORY_FAMILY =
+            new BlockFamily.Builder(BlockRegistry.POLISHED_IVORY)
+                    .stairs(BlockRegistry.POLISHED_IVORY_STAIRS)
+                    .slab(BlockRegistry.POLISHED_IVORY_SLAB)
+                    .wall(BlockRegistry.POLISHED_IVORY_WALL)
+                    .build();
+
+    public static final BlockFamily GILDED_IVORY_BRICK_FAMILY =
+            new BlockFamily.Builder(BlockRegistry.GILDED_IVORY_BRICKS)
+                    .stairs(BlockRegistry.GILDED_IVORY_BRICK_STAIRS)
+                    .slab(BlockRegistry.GILDED_IVORY_BRICK_SLAB)
+                    .wall(BlockRegistry.GILDED_IVORY_BRICK_WALL)
+                    .build();
+
+    public static final BlockFamily GILDED_POLISHED_IVORY_FAMILY =
+            new BlockFamily.Builder(BlockRegistry.GILDED_POLISHED_IVORY)
+                    .stairs(BlockRegistry.GILDED_POLISHED_IVORY_STAIRS)
+                    .slab(BlockRegistry.GILDED_POLISHED_IVORY_SLAB)
+                    .wall(BlockRegistry.GILDED_POLISHED_IVORY_WALL)
+                    .build();
+
     @Override
     public void generateBlockStateModels(BlockStateModelGenerator blockStateModelGenerator) {
         for (Block block : simpleCubes) {
@@ -44,30 +73,25 @@ public class BlockModelProvider extends FabricModelProvider {
                 TexturedModel.END_FOR_TOP_CUBE_COLUMN
         );
 
+        // Register the ivory bricks family
+        blockStateModelGenerator.registerCubeAllModelTexturePool(
+                BlockRegistry.IVORY_BRICKS)
+                .family(IVORY_BRICK_FAMILY);
 
-        BlockStateModelGenerator.BlockTexturePool ivoryBrickPool = blockStateModelGenerator.registerCubeAllModelTexturePool(
-                BlockRegistry.IVORY_BRICKS);
-        ivoryBrickPool.stairs(BlockRegistry.IVORY_BRICK_STAIRS);
-        ivoryBrickPool.slab(BlockRegistry.IVORY_BRICK_SLAB);
-        ivoryBrickPool.wall(BlockRegistry.IVORY_BRICK_WALL);
+        // register the polished ivory family
+        blockStateModelGenerator.registerCubeAllModelTexturePool(
+                BlockRegistry.POLISHED_IVORY)
+                .family(POLISHED_IVORY_FAMILY);
 
-        BlockStateModelGenerator.BlockTexturePool polishedIvoryPool = blockStateModelGenerator.registerCubeAllModelTexturePool(
-                BlockRegistry.POLISHED_IVORY);
-        polishedIvoryPool.stairs(BlockRegistry.POLISHED_IVORY_STAIRS);
-        polishedIvoryPool.slab(BlockRegistry.POLISHED_IVORY_SLAB);
-        polishedIvoryPool.wall(BlockRegistry.POLISHED_IVORY_WALL);
+        // Register the gilded ivory bricks family
+        blockStateModelGenerator.registerCubeAllModelTexturePool(
+                BlockRegistry.GILDED_IVORY_BRICKS)
+                .family(GILDED_IVORY_BRICK_FAMILY);
 
-        BlockStateModelGenerator.BlockTexturePool gildedIvoryBrickPool = blockStateModelGenerator.registerCubeAllModelTexturePool(
-                BlockRegistry.GILDED_IVORY_BRICKS);
-        gildedIvoryBrickPool.stairs(BlockRegistry.GILDED_IVORY_BRICK_STAIRS);
-        gildedIvoryBrickPool.slab(BlockRegistry.GILDED_IVORY_BRICK_SLAB);
-        gildedIvoryBrickPool.wall(BlockRegistry.GILDED_IVORY_BRICK_WALL);
-
-        BlockStateModelGenerator.BlockTexturePool gildedPolishedIvoryPool = blockStateModelGenerator.registerCubeAllModelTexturePool(
-                BlockRegistry.GILDED_POLISHED_IVORY);
-        gildedPolishedIvoryPool.stairs(BlockRegistry.GILDED_POLISHED_IVORY_STAIRS);
-        gildedPolishedIvoryPool.slab(BlockRegistry.GILDED_POLISHED_IVORY_SLAB);
-        gildedPolishedIvoryPool.wall(BlockRegistry.GILDED_POLISHED_IVORY_WALL);
+        // Register the gilded polished ivory family
+        blockStateModelGenerator.registerCubeAllModelTexturePool(
+                BlockRegistry.GILDED_POLISHED_IVORY)
+                .family(GILDED_POLISHED_IVORY_FAMILY);
 
         registerSidedBlock(BlockRegistry.IVORY_BOOKSHELF, BlockRegistry.POLISHED_IVORY, blockStateModelGenerator);
         registerSidedBlock(BlockRegistry.IVORY_ALTAR, "_top", blockStateModelGenerator);
