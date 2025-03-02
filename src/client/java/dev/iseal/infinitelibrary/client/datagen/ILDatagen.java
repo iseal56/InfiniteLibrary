@@ -2,8 +2,6 @@ package dev.iseal.infinitelibrary.client.datagen;
 
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
-import net.minecraft.registry.RegistryBuilder;
-import net.minecraft.registry.RegistryKeys;
 
 public class ILDatagen implements DataGeneratorEntrypoint {
     @Override
@@ -13,5 +11,6 @@ public class ILDatagen implements DataGeneratorEntrypoint {
         pack.addProvider(EnglishLangProvider::new);
         pack.addProvider(BlockModelProvider::new);
         pack.addProvider(RecipeProvider::new);
+        pack.addProvider(ILBlockTagProvider::new);
     }
 }
