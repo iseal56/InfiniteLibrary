@@ -12,5 +12,6 @@ public class ILDatagen implements DataGeneratorEntrypoint {
         pack.addProvider(EnchantmentGenerator::new);
         pack.addProvider(EnglishLangProvider::new);
         pack.addProvider(BlockModelProvider::new);
+        pack.addProvider(RecipeProvider::new);
     }
 }
