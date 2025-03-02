@@ -13,6 +13,7 @@ import net.minecraft.world.gen.structure.DimensionPadding;
 import net.minecraft.world.gen.structure.Structure;
 import net.minecraft.world.gen.structure.StructureType;
 
+import java.util.List;
 import java.util.Optional;
 
 public class PortalRoomStructure extends Structure {
@@ -28,10 +29,11 @@ public class PortalRoomStructure extends Structure {
         BlockPos blockPos = new BlockPos(chunkPos.getStartX(), 40, chunkPos.getStartZ()-1);
         return StructurePoolBasedGenerator.generate(
                 context, RegistryEntry.of(StructureRegistry.LIBRARY_STRUCTURES_POOL),
-                Optional.empty(), 1,
+                Optional.of(StructureRegistry.CORE_ROOM_ID), 1,
                 blockPos, false,
                 Optional.empty(), 16,
-                StructurePoolAliasLookup.EMPTY, DimensionPadding.NONE,
+                StructurePoolAliasLookup.create(List.of(), blockPos, context.seed()),
+                DimensionPadding.NONE,
                 StructureLiquidSettings.IGNORE_WATERLOGGING
         );
     }
@@ -39,5 +41,6 @@ public class PortalRoomStructure extends Structure {
     @Override
     public StructureType<?> getType() {
         return StructureRegistry.PORTAL_ROOM;
+        //return null;
     }
 }

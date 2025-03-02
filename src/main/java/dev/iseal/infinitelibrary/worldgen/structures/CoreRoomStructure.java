@@ -30,10 +30,9 @@ public class CoreRoomStructure extends Structure {
         System.out.println(StructureRegistry.LIBRARY_STRUCTURES_POOL.toString());
         ChunkPos chunkPos = context.chunkPos();
         BlockPos blockPos = new BlockPos(chunkPos.getStartX(), 41, chunkPos.getStartZ()-1);
-        System.out.println("running");
         return StructurePoolBasedGenerator.generate(
                 context, RegistryEntry.of(StructureRegistry.LIBRARY_STRUCTURES_POOL),
-                Optional.empty(), 1,
+                Optional.of(StructureRegistry.CORE_ROOM_ID), 1,
                 blockPos, false,
                 Optional.empty(), 16,
                 StructurePoolAliasLookup.create(List.of(), blockPos, context.seed()),
@@ -45,5 +44,6 @@ public class CoreRoomStructure extends Structure {
     @Override
     public StructureType<?> getType() {
         return StructureRegistry.CORE_ROOM;
+        //return null;
     }
 }

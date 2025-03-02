@@ -2,18 +2,16 @@ package dev.iseal.infinitelibrary.worldgen.dimensions;
 
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.Executor;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import dev.iseal.infinitelibrary.IL;
+import dev.iseal.infinitelibrary.registry.BiomeRegistry;
 import dev.iseal.infinitelibrary.registry.BlockRegistry;
 import dev.iseal.infinitelibrary.utils.DistributedRandomNumberGenerator;
 import dev.iseal.infinitelibrary.utils.Utils;
-import net.fabricmc.fabric.impl.biome.TheEndBiomeData;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.registry.*;
@@ -22,12 +20,9 @@ import net.minecraft.world.ChunkRegion;
 import net.minecraft.world.HeightLimitView;
 import net.minecraft.world.Heightmap;
 import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.BiomeKeys;
 import net.minecraft.world.biome.source.BiomeAccess;
 import net.minecraft.world.biome.source.FixedBiomeSource;
-import net.minecraft.world.biome.source.TheEndBiomeSource;
 import net.minecraft.world.chunk.Chunk;
-import net.minecraft.world.gen.GenerationStep;
 import net.minecraft.world.gen.StructureAccessor;
 import net.minecraft.world.gen.chunk.*;
 import net.minecraft.world.gen.noise.NoiseConfig;
@@ -57,7 +52,7 @@ public class LibraryGenerator extends ChunkGenerator {
     private long seed;
 
     public LibraryGenerator(RegistryEntryLookup<Biome> biomeRegistry) {
-        super(new FixedBiomeSource(biomeRegistry.getOrThrow(IL.BIOME_KEY)));
+        super(new FixedBiomeSource(biomeRegistry.getOrThrow(BiomeRegistry.BIOME_KEY)));
         initializeRandomGenerator();
     }
 
