@@ -1,6 +1,5 @@
 package dev.iseal.infinitelibrary.statusEffects;
 
-import dev.iseal.infinitelibrary.registry.EffectRegistry;
 import dev.iseal.infinitelibrary.utils.Utils;
 import net.minecraft.block.Portal;
 import net.minecraft.entity.Entity;
@@ -11,7 +10,6 @@ import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.network.packet.s2c.play.PositionFlag;
 import net.minecraft.particle.EntityEffectParticleEffect;
 import net.minecraft.particle.ParticleTypes;
-import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
@@ -106,16 +104,6 @@ public class RecallEffect extends StatusEffect implements Portal {
     @Override
     public boolean canApplyUpdateEffect(int duration, int amplifier) {
         return true;
-    }
-
-    @Override
-    public void onApplied(LivingEntity entity, int amplifier) {
-        if (!entity.getWorld().isClient) {
-            return;
-        }
-        if (!(entity instanceof ServerPlayerEntity)) {
-            entity.removeStatusEffect(RegistryEntry.of(EffectRegistry.RECALL));
-        }
     }
 
     @Override
