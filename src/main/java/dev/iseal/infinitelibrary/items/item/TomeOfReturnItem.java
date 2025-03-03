@@ -8,6 +8,7 @@ import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemUsageContext;
 import net.minecraft.item.Items;
+import net.minecraft.registry.Registries;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.ActionResult;
@@ -34,12 +35,16 @@ public class TomeOfReturnItem extends Item {
             return ActionResult.SUCCESS;
         }
 
+        System.out.println(context.getPlayer() instanceof ServerPlayerEntity ? "Client" : "Server");
+
+        if (!(context.getPlayer() instanceof ServerPlayerEntity serverPlayerEntity))
+            return ActionResult.PASS;
+
         // remove the item
         context.getPlayer().setStackInHand(context.getHand(), Items.AIR.getDefaultStack());
 
         // add the status effect that will teleport the player later - 5 seconds
-        ServerPlayerEntity serverPlayerEntity = (ServerPlayerEntity) context.getPlayer();
-        serverPlayerEntity.addStatusEffect(new StatusEffectInstance(RegistryEntry.of(EffectRegistry.RECALL), 5*20));
+        serverPlayerEntity.addStatusEffect(new StatusEffectInstance(Registries.STATUS_EFFECT.getEntry(EffectRegistry.RECALL), 5*20));
         return ActionResult.SUCCESS;
     }
 }

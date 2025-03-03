@@ -30,6 +30,7 @@ import java.util.Optional;
 import java.util.Set;
 
 public class RecallEffect extends StatusEffect implements Portal {
+
     public RecallEffect() {
         super(StatusEffectCategory.NEUTRAL, 0x00FF00);
     }
@@ -72,7 +73,7 @@ public class RecallEffect extends StatusEffect implements Portal {
             if (exponentialValue >= 500)
                 return false;
 
-            if (exponentialValue < 0)
+            if (exponentialValue <= 0)
                 exponentialValue = 1;
 
             Random random = entity.getWorld().getRandom();
@@ -107,7 +108,7 @@ public class RecallEffect extends StatusEffect implements Portal {
                             // speed
                             3.0d
                     );
-            entity.tryUsePortal(this, entity.getBlockPos());
+            //entity.tryUsePortal(this, entity.getBlockPos());
         }
         return true;
     }
