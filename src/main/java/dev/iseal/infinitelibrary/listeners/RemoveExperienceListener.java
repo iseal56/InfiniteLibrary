@@ -1,12 +1,9 @@
 package dev.iseal.infinitelibrary.listeners;
 
-import com.sun.jna.platform.win32.OaIdl;
-import dev.iseal.infinitelibrary.IL;
 import dev.iseal.infinitelibrary.registry.DamageSourceRegistry;
 import dev.iseal.infinitelibrary.registry.DimensionRegistry;
-import dev.iseal.infinitelibrary.registry.EffectRegistry;
+import dev.iseal.infinitelibrary.registry.StatusEffectRegistry;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
-import net.minecraft.nbt.NbtCompound;
 import net.minecraft.registry.entry.RegistryEntry;
 
 public class RemoveExperienceListener {
@@ -27,7 +24,7 @@ public class RemoveExperienceListener {
                     return;
                 }
                 // if the player has the knowledge effect, don't remove experience
-                if (player.hasStatusEffect(RegistryEntry.of(EffectRegistry.KNOWLEDGE))) {
+                if (player.hasStatusEffect(StatusEffectRegistry.KNOWLEDGE)) {
                     return;
                 }
 

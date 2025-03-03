@@ -1,28 +1,23 @@
 package dev.iseal.infinitelibrary.mixin;
 
-import dev.iseal.infinitelibrary.IL;
-import dev.iseal.infinitelibrary.registry.EffectRegistry;
+import dev.iseal.infinitelibrary.registry.StatusEffectRegistry;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.registry.entry.RegistryEntry;
-import net.minecraft.util.math.MathHelper;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(PlayerEntity.class)
 public class MixinPlayerEntityClass {
 
+    // level 1 = 1.25, level 2 = 1.5, level 3 = 1.75, etc.
     @Unique
-    private final float KNOWLEDGE_EXPERIENCE_MULTIPLIER = 1.5f;
+    private final float KNOWLEDGE_EXPERIENCE_MULTIPLIER_PER_LEVEL = .25f;
+
+    // level 1 = 0.5, level 2 = 0.25, level 3 = 0.166, etc.
     @Unique
-    private final float HUBRIS_EXPERIENCE_MULTIPLIER = 0.5f;
+    private final float HUBRIS_EXPERIENCE_MULTIPLIER_PER_LEVEL = 0.5f;
 
     @ModifyVariable(
             method = "addExperience",
@@ -34,10 +29,13 @@ public class MixinPlayerEntityClass {
         // Cast to the superclass - why is this necessary? sifhsdlguhsdasd
         LivingEntity livingEntity = (LivingEntity) (Object) this;
         float experienceFloat = experience;
-        if (livingEntity.hasStatusEffect(RegistryEntry.of(EffectRegistry.KNOWLEDGE)))
-            experienceFloat*=KNOWLEDGE_EXPERIENCE_MULTIPLIER;
-        if (livingEntity.hasStatusEffect(RegistryEntry.of(EffectRegistry.HUBRIS)))
-            experienceFloat*=HUBRIS_EXPERIENCE_MULTIPLIER;
+        if (livingEntity.hasStatusEffect(StatusEffectRegistry.KNOWLEDGE))
+            experienceFloat *= KNOWLEDGE_EXPERIENCE_MULTIPLIER_PER_LEVEL
+                    * (livingEntity.getStatusEffect(StatusEffectRegistry.KNOWLEDGE).getAmplifier()+1)
+                    + 1f;
+        if (livingEntity.hasStatusEffect(StatusEffectRegistry.HUBRIS))
+            experienceFloat *= HUBRIS_EXPERIENCE_MULTIPLIER_PER_LEVEL
+                    / (livingEntity.getStatusEffect(StatusEffectRegistry.HUBRIS).getAmplifier()+1);
 
         return (int) experienceFloat;
     }

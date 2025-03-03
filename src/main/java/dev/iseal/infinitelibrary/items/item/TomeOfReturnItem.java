@@ -2,14 +2,12 @@ package dev.iseal.infinitelibrary.items.item;
 
 import dev.iseal.infinitelibrary.IL;
 import dev.iseal.infinitelibrary.registry.BlockRegistry;
-import dev.iseal.infinitelibrary.registry.EffectRegistry;
+import dev.iseal.infinitelibrary.registry.StatusEffectRegistry;
 import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemUsageContext;
 import net.minecraft.item.Items;
 import net.minecraft.registry.Registries;
-import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.ActionResult;
 
@@ -42,7 +40,7 @@ public class TomeOfReturnItem extends Item {
         context.getPlayer().setStackInHand(context.getHand(), Items.AIR.getDefaultStack());
 
         // add the status effect that will teleport the player later - 5 seconds
-        serverPlayerEntity.addStatusEffect(new StatusEffectInstance(Registries.STATUS_EFFECT.getEntry(EffectRegistry.RECALL), 5*20));
+        serverPlayerEntity.addStatusEffect(new StatusEffectInstance(Registries.STATUS_EFFECT.getEntry(StatusEffectRegistry.RECALL.value()), 5*20));
         return ActionResult.SUCCESS;
     }
 }
