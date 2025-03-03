@@ -41,4 +41,8 @@ public class DistributedRandomNumberGenerator {
         return 0;
     }
 
+    public void setSeed(long seed) {
+        random.setSeed(seed);
+    }
+
 }

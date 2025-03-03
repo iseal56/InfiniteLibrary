@@ -243,7 +243,7 @@ public class LibraryGenerator extends ChunkGenerator {
 
     @Override
     public void appendDebugHudText(List<String> text, NoiseConfig noiseConfig, BlockPos pos) {
-        text.add("Access Points: "+Arrays.toString(generateAccessPoints(zeroMapDRNG, firstZeroMap)));
+
     }
 
     private int[] generateAccessPoints(DistributedRandomNumberGenerator randomGenerator, int[] zeroMap) {
