@@ -5,18 +5,26 @@ import dev.iseal.infinitelibrary.items.item.PaleSwordItem;
 import dev.iseal.infinitelibrary.items.item.SpellBookItem;
 import dev.iseal.infinitelibrary.items.item.TomeOfReturnItem;
 import dev.iseal.infinitelibrary.items.item_groups.InfiniteLibraryGroups;
+import net.minecraft.component.type.ConsumableComponent;
+import net.minecraft.component.type.FoodComponent;
+import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ToolMaterial;
+import net.minecraft.item.consume.ApplyEffectsConsumeEffect;
+import net.minecraft.item.consume.UseAction;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.registry.tag.ItemTags;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Rarity;
 
+import java.util.List;
 import java.util.function.Function;
 
 public class ItemRegistry {
@@ -59,6 +67,34 @@ public class ItemRegistry {
     public static final Item SCRAPS_OF_WISDOM = register(
             new Item.Settings().maxCount(64).rarity(Rarity.COMMON),
             IL.identifier("scraps_of_wisdom"),
+            true,
+            InfiniteLibraryGroups.ITEMS_GROUP_KEY
+    );
+
+    public static final Item ARCHIVIST_APPLE = register(
+            new Item.Settings().rarity(Rarity.RARE).food(
+                    new FoodComponent.Builder()
+                            .nutrition(4)
+                            .alwaysEdible()
+                            .saturationModifier(4.0f)
+                            .build(),
+                    ConsumableComponent.builder()
+                            .consumeSeconds(1.6F)
+                            .useAction(UseAction.EAT)
+                            .sound(SoundEvents.ENTITY_GENERIC_EAT)
+                            .consumeParticles(true)
+                            .consumeEffect(
+                                    new ApplyEffectsConsumeEffect(
+                                            List.of(
+                                                    new StatusEffectInstance(StatusEffects.REGENERATION, 100, 1),
+                                                    new StatusEffectInstance(StatusEffects.ABSORPTION, 2400, 0),
+                                                    new StatusEffectInstance(StatusEffectRegistry.KNOWLEDGE, 2400, 0)
+                                            )
+                                    )
+                            )
+                            .build()
+            ),
+            IL.identifier("archivist_apple"),
             true,
             InfiniteLibraryGroups.ITEMS_GROUP_KEY
     );

@@ -104,6 +104,7 @@ public class BlockModelProvider extends FabricModelProvider {
         generator.register(ItemRegistry.IVORY_BRICK, Models.GENERATED);
         generator.register(ItemRegistry.SCRAPS_OF_WISDOM, Models.GENERATED);
         generator.register(ItemRegistry.TOME_OF_RETURN, Models.GENERATED);
+        generator.register(ItemRegistry.ARCHIVIST_APPLE, Models.GENERATED);
     }
 
     private JsonObject createOverride(String predicate, float value, Identifier model) {

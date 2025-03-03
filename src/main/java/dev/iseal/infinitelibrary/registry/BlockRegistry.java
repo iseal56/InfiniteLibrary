@@ -1,6 +1,7 @@
 package dev.iseal.infinitelibrary.registry;
 
 import dev.iseal.infinitelibrary.IL;
+import dev.iseal.infinitelibrary.items.block.IvoryAltarBlock;
 import dev.iseal.infinitelibrary.items.block.IvoryBookshelfBlock;
 import dev.iseal.infinitelibrary.items.block.LibraryPortalBlock;
 import dev.iseal.infinitelibrary.items.block.chiseled_ivory.DullChiseledIvoryBlock;
@@ -22,7 +23,7 @@ import java.util.function.Function;
 public class BlockRegistry {
 
     public static final Block IVORY_ALTAR = register(
-            new Block(AbstractBlock.Settings.create().registryKey(blockKey("ivory_altar"))),
+            new IvoryAltarBlock(),
             blockKey("ivory_altar"),
             true,
             InfiniteLibraryGroups.BLOCKS_GROUP_KEY
