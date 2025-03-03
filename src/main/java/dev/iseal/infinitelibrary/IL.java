@@ -47,7 +47,7 @@ public class IL implements ModInitializer {
     }
 
     private void registerRegistries() {
-        EffectRegistry.getInstance().initialize();
+        StatusEffectRegistry.getInstance().initialize();
         EnchantmentEffectRegistry.getInstance().initialize();
         BiomeRegistry.getInstance().initialize();
         StructureRegistry.getInstance().initialize();
