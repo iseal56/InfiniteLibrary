@@ -4,6 +4,7 @@ import dev.iseal.infinitelibrary.IL;
 import dev.iseal.infinitelibrary.registry.BlockRegistry;
 import dev.iseal.infinitelibrary.registry.EffectRegistry;
 import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemUsageContext;
 import net.minecraft.item.Items;
@@ -29,8 +30,9 @@ public class TomeOfReturnItem extends Item {
         if (context.getWorld().getRegistryKey() != IL.WORLD_KEY)
             return ActionResult.PASS;
 
-        if (context.getWorld().isClient)
+        if (context.getWorld().isClient) {
             return ActionResult.SUCCESS;
+        }
 
         // remove the item
         context.getPlayer().setStackInHand(context.getHand(), Items.AIR.getDefaultStack());

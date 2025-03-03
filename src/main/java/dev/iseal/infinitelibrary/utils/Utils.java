@@ -160,4 +160,27 @@ public class Utils {
         return points;
     }
 
+    public static ArrayList<Vec3d> getSphereLocations(Vec3d center, double radius, int numberOfPoints, Optional<Random> rand) {
+        ArrayList<Vec3d> points = new ArrayList<>();
+        Random random = rand.orElseGet(Random::create);
+
+        for (int i = 0; i < numberOfPoints; i++) {
+            double theta = random.nextDouble() * 2 * Math.PI; // Random angle in the xy-plane
+            double phi = random.nextDouble() * Math.PI; // Random angle from the z-axis
+
+            double x = center.x + radius * Math.sin(phi) * Math.cos(theta);
+            double y = center.y + radius * Math.sin(phi) * Math.sin(theta);
+            double z = center.z + radius * Math.cos(phi);
+
+            points.add(new Vec3d(x, y, z));
+        }
+
+        return points;
+    }
+
+    public static Vec3d calculateVelocityToCenter(Vec3d centerPos, Vec3d startPos) {
+        Vec3d direction = centerPos.subtract(startPos);
+        return direction.normalize();
+    }
+
 }

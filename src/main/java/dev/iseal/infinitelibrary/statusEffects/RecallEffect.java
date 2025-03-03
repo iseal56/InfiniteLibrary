@@ -2,10 +2,16 @@ package dev.iseal.infinitelibrary.statusEffects;
 
 import dev.iseal.infinitelibrary.registry.EffectRegistry;
 import dev.iseal.infinitelibrary.utils.Utils;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.Portal;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
 import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.effect.StatusEffects;
+import net.minecraft.entity.projectile.thrown.EnderPearlEntity;
+import net.minecraft.network.packet.s2c.play.PositionFlag;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.registry.RegistryKey;
@@ -15,13 +21,15 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.random.Random;
+import net.minecraft.world.TeleportTarget;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.Set;
 
-public class RecallEffect extends StatusEffect {
+public class RecallEffect extends StatusEffect implements Portal {
     public RecallEffect() {
         super(StatusEffectCategory.NEUTRAL, 0x00FF00);
     }
@@ -38,24 +46,69 @@ public class RecallEffect extends StatusEffect {
     @Override
     public boolean applyUpdateEffect(ServerWorld world, LivingEntity entity, int amplifier) {
         super.applyUpdateEffect(world, entity, amplifier);
-        if (!(entity instanceof ServerPlayerEntity serverPlayerEntity))
+        // this runs only on server for SOME REASON, so I don't need to check if its client
+
+        // Get the smallest remaining duration of this effect.
+        int minimumRemainingDuration = entity.getStatusEffects()
+                .stream()
+                .filter(statusEffectInstance -> (statusEffectInstance.getEffectType().value() == this))
+                .mapToInt(StatusEffectInstance::getDuration)
+                .min()
+                .orElse(Integer.MAX_VALUE);
+        if (minimumRemainingDuration == Integer.MAX_VALUE) {
             return false;
+        }
 
-        Random random = entity.getWorld().getRandom();
-        ArrayList<Vec3d> list = Utils.getCylinderLocations(entity.getPos(), 2,
-                15, 0.25,
-                Optional.of(random));
-        list.forEach(pos ->
-                ((ServerWorld)entity.getWorld()).spawnParticles(ParticleTypes.ENCHANT, pos.getX(), pos.getY(), pos.getZ(), 1, random.nextFloat(), random.nextFloat(), random.nextFloat(), 3.0d)
-        );
+        if (minimumRemainingDuration > 20) {
+            //double exponentialValue = 150 * Math.exp(-0.1 * (minimumRemainingDuration - 20));
 
-        if (entity.getStatusEffect(RegistryEntry.of(EffectRegistry.RECALL)).getDuration() > 1)
-            return true;
+            double normalizedTime = 1 - (minimumRemainingDuration) / 100.0;
+            double quadOutExponentialValue = 1 - Math.pow(1 - normalizedTime, 2);
+            double exponentialValue = 150 * quadOutExponentialValue;
 
-        RegistryKey<World> spawnDimension = serverPlayerEntity.getSpawnPointDimension();
-        ServerWorld teleportToWorld = world.getServer().getWorld(spawnDimension);
-        BlockPos spawnLocation = (serverPlayerEntity.getSpawnPointPosition() == null) ? teleportToWorld.getSpawnPos() : serverPlayerEntity.getSpawnPointPosition();
-        serverPlayerEntity.teleport(teleportToWorld, spawnLocation.getX(), spawnLocation.getY(), spawnLocation.getZ(), Set.of(), serverPlayerEntity.getYaw(), serverPlayerEntity.getPitch(), false);
+            System.out.println("minimumRemainingDuration = " + minimumRemainingDuration);
+            System.out.println("expo = " + exponentialValue);
+            // try to not make the server explode
+            if (exponentialValue >= 500)
+                return false;
+
+            if (exponentialValue < 0)
+                exponentialValue = 1;
+
+            Random random = entity.getWorld().getRandom();
+            ArrayList<Vec3d> list = Utils.getSphereLocations(entity.getPos(), 2,
+                    (int) exponentialValue,
+                    Optional.of(random));
+            list.forEach(pos ->
+                    ((ServerWorld) entity.getWorld()).spawnParticles(
+                            ParticleTypes.ENCHANT,
+                            // pos
+                            pos.getX(), pos.getY(), pos.getZ(),
+                            // count
+                            1,
+                            // offset
+                            random.nextFloat(), random.nextFloat(), random.nextFloat(),
+                            // speed
+                            3.0d
+                    ));
+        }
+
+        if (minimumRemainingDuration == 1) {
+            Random random = entity.getWorld().getRandom();
+
+            ((ServerWorld) entity.getWorld()).spawnParticles(
+                            ParticleTypes.PORTAL,
+                            // pos
+                            entity.getPos().getX(), entity.getPos().getY(), entity.getPos().getZ(),
+                            // count
+                            500,
+                            // offset
+                            random.nextFloat(), random.nextFloat(), random.nextFloat(),
+                            // speed
+                            3.0d
+                    );
+            entity.tryUsePortal(this, entity.getBlockPos());
+        }
         return true;
     }
 
@@ -66,6 +119,40 @@ public class RecallEffect extends StatusEffect {
 
     @Override
     public ParticleEffect createParticle(StatusEffectInstance effect) {
-        return ParticleTypes.ENCHANT;
+        return null;
+    }
+
+    //FIXME: darkness effect before leaving, the rest of the effect seems nice
+    @Override
+    public int getFadeTicks() {
+        return 10;
+    }
+
+    @Override
+    public @Nullable TeleportTarget createTeleportTarget(ServerWorld world, Entity entity, BlockPos pos) {
+        ServerWorld targetLevel = world.getServer().getWorld(World.OVERWORLD);
+        if (targetLevel == null) {
+            return null;
+        } else {
+            if (entity instanceof ServerPlayerEntity serverPlayer) {
+                return serverPlayer.getRespawnTarget(false, TeleportTarget.NO_OP);
+            }
+
+            BlockPos blockpos = targetLevel.getSpawnPos();
+            float facing = 0.0F;
+            Set<PositionFlag> set = PositionFlag.combine(PositionFlag.DELTA, PositionFlag.ROT);
+            Vec3d vec3 = entity.getWorldSpawnPos(targetLevel, blockpos).toBottomCenterPos();
+
+            return new TeleportTarget(
+                    targetLevel,
+                    vec3,
+                    Vec3d.ZERO,
+                    facing,
+                    0.0F,
+                    set,
+                    TeleportTarget.NO_OP
+            );
+        }
     }
 }
+
