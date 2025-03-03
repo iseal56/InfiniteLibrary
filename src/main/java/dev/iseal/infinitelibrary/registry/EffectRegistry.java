@@ -21,7 +21,7 @@ public class EffectRegistry {
 
     public static final StatusEffect HUBRIS = register("hubris", new HubrisEffect());
     public static final StatusEffect KNOWLEDGE = register("knowledge", new KnowledgeEffect());
-    public static final StatusEffect RECALL = register("recall", new RecallEffect());
+    public static final StatusEffect RECALL = register("recall", new RecallEffect(0x00FF00));
 
     private static StatusEffect register(String id, StatusEffect entry) {
         return Registry.register(Registries.STATUS_EFFECT, IL.identifier(id), entry);
