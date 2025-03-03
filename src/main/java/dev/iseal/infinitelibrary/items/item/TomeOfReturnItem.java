@@ -1,17 +1,15 @@
 package dev.iseal.infinitelibrary.items.item;
 
-import dev.iseal.infinitelibrary.utils.Utils;
+import dev.iseal.infinitelibrary.IL;
+import dev.iseal.infinitelibrary.registry.BlockRegistry;
+import dev.iseal.infinitelibrary.registry.EffectRegistry;
+import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
 import net.minecraft.item.Items;
-import net.minecraft.particle.ParticleTypes;
+import net.minecraft.registry.entry.RegistryEntry;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.ActionResult;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.math.random.Random;
-
-import java.util.ArrayList;
-import java.util.Optional;
 
 public class TomeOfReturnItem extends Item {
     public TomeOfReturnItem(Settings settings) {
@@ -20,18 +18,26 @@ public class TomeOfReturnItem extends Item {
 
     @Override
     public ActionResult useOnBlock(ItemUsageContext context) {
-        Random random = context.getWorld().getRandom();
+        // check if the block is an altar
+        if (!context.getWorld().getBlockState(context.getBlockPos()).isOf(BlockRegistry.IVORY_ALTAR))
+            return ActionResult.PASS;
 
-        ArrayList<Vec3d> list = Utils.getCylinderLocations(context.getPlayer().getPos(), 2,
-                15, 0.25,
-                Optional.of(random));
-        list.forEach(pos ->
-                context.getWorld().addParticle(ParticleTypes.ENCHANT, pos.getX(), pos.getY(), pos.getZ(), random.nextFloat(), random.nextFloat(), random.nextFloat())
-        );
+        // check so intellij stops screaming at me
+        if (context.getPlayer() == null)
+            return ActionResult.PASS;
 
-        // and remove the item
+        if (context.getWorld().getRegistryKey() != IL.WORLD_KEY)
+            return ActionResult.PASS;
+
+        if (context.getWorld().isClient)
+            return ActionResult.SUCCESS;
+
+        // remove the item
         context.getPlayer().setStackInHand(context.getHand(), Items.AIR.getDefaultStack());
 
+        // add the status effect that will teleport the player later - 5 seconds
+        ServerPlayerEntity serverPlayerEntity = (ServerPlayerEntity) context.getPlayer();
+        serverPlayerEntity.addStatusEffect(new StatusEffectInstance(RegistryEntry.of(EffectRegistry.RECALL), 5*20));
         return ActionResult.SUCCESS;
     }
 }

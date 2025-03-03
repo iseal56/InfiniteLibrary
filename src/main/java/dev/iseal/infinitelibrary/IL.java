@@ -25,7 +25,7 @@ public class IL implements ModInitializer {
             RegistryKeys.DIMENSION,
             Identifier.of(MOD_ID, "library")
     );
-    private static RegistryKey<World> WORLD_KEY = RegistryKey.of(RegistryKeys.WORLD, DIMENSION_KEY.getValue());
+    public static RegistryKey<World> WORLD_KEY = RegistryKey.of(RegistryKeys.WORLD, DIMENSION_KEY.getValue());
     public static MinecraftServer server;
 
     public static Identifier identifier(String path) {
