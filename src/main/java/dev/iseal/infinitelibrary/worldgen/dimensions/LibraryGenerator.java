@@ -38,8 +38,6 @@ public class LibraryGenerator extends ChunkGenerator {
 
     private static final ThreadLocal<Boolean> activatedChiseledQuartzPlaced = ThreadLocal.withInitial(() -> false);
     private static final ThreadLocal<Integer> activatedChiseledQuartzAttempts = ThreadLocal.withInitial(() -> 0);
-    public static final ThreadLocal<RegistryEntryLookup<Biome>> biomeRegistry = new ThreadLocal<>();
-    private static final Logger log = LoggerFactory.getLogger(LibraryGenerator.class);
 
     private final Random random = new Random();
     private DistributedRandomNumberGenerator zeroMapDRNG = new DistributedRandomNumberGenerator();
