@@ -21,7 +21,7 @@ import net.minecraft.world.dimension.DimensionOptions;
 public class IL implements ModInitializer {
 
     public static final String MOD_ID = "infinitelibrary";
-    private static final RegistryKey<DimensionOptions> DIMENSION_KEY = RegistryKey.of(
+    public static final RegistryKey<DimensionOptions> DIMENSION_KEY = RegistryKey.of(
             RegistryKeys.DIMENSION,
             Identifier.of(MOD_ID, "library")
     );
