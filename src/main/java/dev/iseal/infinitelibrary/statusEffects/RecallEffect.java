@@ -12,6 +12,7 @@ import net.minecraft.particle.EntityEffectParticleEffect;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ColorHelper;
 import net.minecraft.util.math.Vec3d;
@@ -120,9 +121,9 @@ public class RecallEffect extends StatusEffect implements Portal {
             float facing = 0.0F;
             Set<PositionFlag> set = PositionFlag.combine(PositionFlag.DELTA, PositionFlag.ROT);
             Vec3d vec3 = entity.getWorldSpawnPos(targetLevel, blockpos).toBottomCenterPos();
+            world.playSound(entity, entity.getBlockPos(), SoundEvents.BLOCK_PORTAL_TRAVEL, entity.getSoundCategory(), 1.0F, 1.0F);
 
             return new TeleportTarget(targetLevel, vec3, Vec3d.ZERO, facing, 0.0F, set, TeleportTarget.NO_OP);
         }
     }
 }
-

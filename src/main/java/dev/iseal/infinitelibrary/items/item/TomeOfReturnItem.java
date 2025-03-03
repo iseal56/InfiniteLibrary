@@ -35,8 +35,6 @@ public class TomeOfReturnItem extends Item {
             return ActionResult.SUCCESS;
         }
 
-        System.out.println(context.getPlayer() instanceof ServerPlayerEntity ? "Client" : "Server");
-
         if (!(context.getPlayer() instanceof ServerPlayerEntity serverPlayerEntity))
             return ActionResult.PASS;
 
