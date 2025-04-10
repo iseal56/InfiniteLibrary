@@ -53,6 +53,7 @@ public class ExperienceOrbProjectileEntity extends ProjectileEntity {
     public ExperienceOrbProjectileEntity(EntityType<? extends ExperienceOrbProjectileEntity> entityType, World world) {
         super(entityType, world);
         this.noClip = true;
+        //TODO: change this from a shulker to a direct projectile. plz help :sob: -ISeal
     }
 
     public ExperienceOrbProjectileEntity(World world, LivingEntity owner, Entity target) {
