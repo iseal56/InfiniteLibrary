@@ -7,6 +7,10 @@
     {
       "structure": "infinitelibrary:portal_room",
       "weight": 1
+    },
+    {
+      "structure": "infinitelibrary:altar_room",
+      "weight": 1
     }
   ],
   "placement": {

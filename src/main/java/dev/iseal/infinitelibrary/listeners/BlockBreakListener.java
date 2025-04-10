@@ -1,15 +1,11 @@
 package dev.iseal.infinitelibrary.listeners;
 
-import dev.iseal.infinitelibrary.registry.DimensionRegistry;
+import dev.iseal.infinitelibrary.registry.worldgen.DimensionRegistry;
 import dev.iseal.infinitelibrary.utils.PortalHelper;
-import net.fabricmc.fabric.api.event.lifecycle.v1.ServerChunkEvents;
-import net.fabricmc.fabric.api.event.lifecycle.v1.ServerWorldEvents;
-import net.fabricmc.fabric.api.event.player.AttackBlockCallback;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 import net.minecraft.block.Blocks;
 import net.minecraft.util.ActionResult;
-import net.minecraft.util.hit.HitResult;
 
 public class BlockBreakListener {
 

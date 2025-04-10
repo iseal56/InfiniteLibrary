@@ -22,7 +22,7 @@ public abstract class MixinDebugHud {
             at = @At("HEAD"),
             cancellable = true
     )
-    public void render(DrawContext context, CallbackInfo ci) {
+    private void render(DrawContext context, CallbackInfo ci) {
         if (MinecraftClient.getInstance().world == null) return;
         if (MinecraftClient.getInstance().world.getRegistryKey() != IL.WORLD_KEY) return;
         drawText(context, List.of("No lmao"), true);

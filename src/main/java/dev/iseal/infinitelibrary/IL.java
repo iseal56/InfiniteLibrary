@@ -5,6 +5,10 @@ import dev.iseal.infinitelibrary.listeners.AddCodesToLootTables;
 import dev.iseal.infinitelibrary.listeners.RemoveExperienceListener;
 import dev.iseal.infinitelibrary.listeners.SwordEnchantListener;
 import dev.iseal.infinitelibrary.registry.*;
+import dev.iseal.infinitelibrary.registry.loot.LootTableRegistry;
+import dev.iseal.infinitelibrary.registry.worldgen.BiomeRegistry;
+import dev.iseal.infinitelibrary.registry.worldgen.DimensionRegistry;
+import dev.iseal.infinitelibrary.registry.worldgen.StructureRegistry;
 import dev.iseal.infinitelibrary.worldgen.dimensions.LibraryGenerator;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
@@ -48,6 +52,7 @@ public class IL implements ModInitializer {
 
     private void registerRegistries() {
         StatusEffectRegistry.getInstance().initialize();
+        EntityRegistry.getInstance().initialize();
         EnchantmentEffectRegistry.getInstance().initialize();
         BiomeRegistry.getInstance().initialize();
         StructureRegistry.getInstance().initialize();

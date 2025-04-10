@@ -1,8 +1,7 @@
 package dev.iseal.infinitelibrary.worldgen.structures;
 
-import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
-import dev.iseal.infinitelibrary.registry.StructureRegistry;
+import dev.iseal.infinitelibrary.registry.worldgen.StructureRegistry;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.structure.StructureLiquidSettings;
 import net.minecraft.structure.pool.StructurePoolBasedGenerator;
@@ -19,7 +18,7 @@ import java.util.Optional;
 public class PortalRoomStructure extends Structure {
     public static final MapCodec<PortalRoomStructure> CODEC = PortalRoomStructure.createCodec(PortalRoomStructure::new);
 
-    protected PortalRoomStructure(Config config) {
+    public PortalRoomStructure(Config config) {
         super(config);
     }
 
@@ -29,7 +28,7 @@ public class PortalRoomStructure extends Structure {
         BlockPos blockPos = new BlockPos(chunkPos.getStartX(), 40, chunkPos.getStartZ()-1);
         return StructurePoolBasedGenerator.generate(
                 context, RegistryEntry.of(StructureRegistry.LIBRARY_STRUCTURES_POOL),
-                Optional.of(StructureRegistry.CORE_ROOM_ID), 1,
+                Optional.of(StructureRegistry.PORTAL_ROOM_ID), 1,
                 blockPos, false,
                 Optional.empty(), 16,
                 StructurePoolAliasLookup.create(List.of(), blockPos, context.seed()),

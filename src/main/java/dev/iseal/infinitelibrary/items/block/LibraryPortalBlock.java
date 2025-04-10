@@ -2,8 +2,8 @@ package dev.iseal.infinitelibrary.items.block;
 
 import com.mojang.datafixers.util.Pair;
 import dev.iseal.infinitelibrary.IL;
-import dev.iseal.infinitelibrary.registry.DimensionRegistry;
-import dev.iseal.infinitelibrary.registry.StructureRegistry;
+import dev.iseal.infinitelibrary.registry.worldgen.DimensionRegistry;
+import dev.iseal.infinitelibrary.registry.worldgen.StructureRegistry;
 import net.minecraft.block.*;
 import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.entity.Entity;

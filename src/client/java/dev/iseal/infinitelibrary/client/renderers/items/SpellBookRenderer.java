@@ -1,4 +1,4 @@
-package dev.iseal.infinitelibrary.client.renderers;
+package dev.iseal.infinitelibrary.client.renderers.items;
 
 import net.minecraft.client.model.*;
 import net.minecraft.client.render.RenderLayer;

@@ -8,7 +8,7 @@ import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import dev.iseal.infinitelibrary.IL;
-import dev.iseal.infinitelibrary.registry.BiomeRegistry;
+import dev.iseal.infinitelibrary.registry.worldgen.BiomeRegistry;
 import dev.iseal.infinitelibrary.registry.BlockRegistry;
 import dev.iseal.infinitelibrary.utils.DistributedRandomNumberGenerator;
 import dev.iseal.infinitelibrary.utils.Utils;
@@ -26,8 +26,6 @@ import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.gen.StructureAccessor;
 import net.minecraft.world.gen.chunk.*;
 import net.minecraft.world.gen.noise.NoiseConfig;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class LibraryGenerator extends ChunkGenerator {
     public static final MapCodec<LibraryGenerator> CODEC = RecordCodecBuilder.mapCodec((instance) ->

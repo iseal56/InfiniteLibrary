@@ -1,7 +1,7 @@
 package dev.iseal.infinitelibrary.client.datagen;
 
-import dev.iseal.infinitelibrary.registry.BiomeRegistry;
-import dev.iseal.infinitelibrary.registry.StructureRegistry;
+import dev.iseal.infinitelibrary.registry.worldgen.BiomeRegistry;
+import dev.iseal.infinitelibrary.registry.worldgen.StructureRegistry;
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.minecraft.registry.RegistryBuilder;
@@ -16,6 +16,7 @@ public class ILDatagen implements DataGeneratorEntrypoint {
         pack.addProvider(BlockModelProvider::new);
         pack.addProvider(RecipeProvider::new);
         pack.addProvider(ILBlockTagProvider::new);
+        pack.addProvider(ILItemTagProvider::new);
     }
 
     @Override

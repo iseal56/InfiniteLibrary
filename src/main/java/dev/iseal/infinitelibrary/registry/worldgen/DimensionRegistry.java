@@ -1,4 +1,4 @@
-package dev.iseal.infinitelibrary.registry;
+package dev.iseal.infinitelibrary.registry.worldgen;
 
 import dev.iseal.infinitelibrary.IL;
 import net.minecraft.util.Identifier;

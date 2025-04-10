@@ -1,7 +1,6 @@
-package dev.iseal.infinitelibrary.registry;
+package dev.iseal.infinitelibrary.registry.worldgen;
 
 import dev.iseal.infinitelibrary.IL;
-import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.registry.Registerable;
 import net.minecraft.registry.RegistryKey;

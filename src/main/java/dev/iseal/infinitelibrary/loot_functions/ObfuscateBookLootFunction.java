@@ -1,24 +1,17 @@
 package dev.iseal.infinitelibrary.loot_functions;
 
-import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonSerializationContext;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import dev.iseal.infinitelibrary.registry.LootFunctionTypeRegistry;
+import dev.iseal.infinitelibrary.registry.loot.LootFunctionTypeRegistry;
 import dev.iseal.infinitelibrary.utils.DistributedRandomNumberGenerator;
 import dev.iseal.infinitelibrary.utils.PortalHelper;
 import dev.iseal.infinitelibrary.utils.Utils;
-import jdk.jshell.execution.Util;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.loot.condition.LootCondition;
 import net.minecraft.loot.context.LootContext;
 import net.minecraft.loot.function.ConditionalLootFunction;
-import net.minecraft.loot.function.FurnaceSmeltLootFunction;
 import net.minecraft.loot.function.LootFunctionType;
-import net.minecraft.loot.function.LootFunctionTypes;
-import net.minecraft.text.Text;
 
 import java.util.ArrayList;
 import java.util.Arrays;

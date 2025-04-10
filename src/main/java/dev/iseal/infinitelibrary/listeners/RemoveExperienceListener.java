@@ -1,10 +1,9 @@
 package dev.iseal.infinitelibrary.listeners;
 
 import dev.iseal.infinitelibrary.registry.DamageSourceRegistry;
-import dev.iseal.infinitelibrary.registry.DimensionRegistry;
+import dev.iseal.infinitelibrary.registry.worldgen.DimensionRegistry;
 import dev.iseal.infinitelibrary.registry.StatusEffectRegistry;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
-import net.minecraft.registry.entry.RegistryEntry;
 
 public class RemoveExperienceListener {
 

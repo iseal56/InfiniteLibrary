@@ -35,6 +35,7 @@ public class ItemRegistry {
             true,
             InfiniteLibraryGroups.ITEMS_GROUP_KEY
     );
+    
     // TODO: Create own tags and TagBuilder in datagen - using ivory brick to repair later
     public static final ToolMaterial IVORY_TOOL_MATERIAL = new ToolMaterial(
             BlockTags.INCORRECT_FOR_NETHERITE_TOOL,
@@ -42,7 +43,7 @@ public class ItemRegistry {
             4.0f,
             4,
             1,
-            ItemTags.GOLD_TOOL_MATERIALS
+            TagRegistry.IVORY_REPAIR_MATERIALS
     );
 
     public static final Item PALE_SWORD = register(
@@ -86,9 +87,16 @@ public class ItemRegistry {
                             .consumeEffect(
                                     new ApplyEffectsConsumeEffect(
                                             List.of(
-                                                    new StatusEffectInstance(StatusEffects.REGENERATION, 100, 1),
-                                                    new StatusEffectInstance(StatusEffects.ABSORPTION, 2400, 0),
-                                                    new StatusEffectInstance(StatusEffectRegistry.KNOWLEDGE, 2400, 0)
+                                                    // 16 seconds regen 2
+                                                    new StatusEffectInstance(StatusEffects.REGENERATION, 16*20, 1),
+                                                    // 1 min 30 seconds absorption 2
+                                                    new StatusEffectInstance(StatusEffects.ABSORPTION, 90*20, 3),
+                                                    // 3 minutes knowledge
+                                                    new StatusEffectInstance(StatusEffectRegistry.KNOWLEDGE, 180*20, 0),
+                                                    // 3 minutes resistance
+                                                    new StatusEffectInstance(StatusEffects.RESISTANCE, 180*20, 0),
+                                                    // 5 minutes fire resistance
+                                                    new StatusEffectInstance(StatusEffects.FIRE_RESISTANCE, 300*20, 0)
                                             )
                                     )
                             )

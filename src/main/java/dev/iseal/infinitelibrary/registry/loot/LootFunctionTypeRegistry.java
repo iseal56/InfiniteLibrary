@@ -1,12 +1,10 @@
-package dev.iseal.infinitelibrary.registry;
+package dev.iseal.infinitelibrary.registry.loot;
 
 import com.mojang.serialization.MapCodec;
 import dev.iseal.infinitelibrary.IL;
 import dev.iseal.infinitelibrary.loot_functions.ObfuscateBookLootFunction;
-import net.minecraft.loot.function.ConditionalLootFunction;
 import net.minecraft.loot.function.LootFunction;
 import net.minecraft.loot.function.LootFunctionType;
-import net.minecraft.loot.function.LootFunctionTypes;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;

@@ -21,7 +21,8 @@ public record AddChargesEnchantmentEffect(EnchantmentLevelBasedValue multiplier)
             ).apply(instance, AddChargesEnchantmentEffect::new)
     );
 
-    private static final Float EXPERIENCE_MULTIPLIER = 0.2f;
+    private static final float EXPERIENCE_MULTIPLIER = 0.2f;
+    private static final int MAX_CHARGES = 10;
 
     @Override
     public void apply(ServerWorld world, int level, EnchantmentEffectContext context, Entity target, Vec3d pos) {
@@ -44,7 +45,9 @@ public record AddChargesEnchantmentEffect(EnchantmentLevelBasedValue multiplier)
             }
             float charges = entity.getExperienceToDrop(world, owner) * EXPERIENCE_MULTIPLIER * multiplier.getValue(level);
             System.out.println("Adding " + charges + " charges");
-            item.set(ComponentTypeRegistry.CHARGES_AMOUNT, new ChargesAmountComponent(item.get(ComponentTypeRegistry.CHARGES_AMOUNT).amount() + charges));
+            item.set(ComponentTypeRegistry.CHARGES_AMOUNT,
+                    new ChargesAmountComponent(Math.min(item.get(ComponentTypeRegistry.CHARGES_AMOUNT).amount() + charges, MAX_CHARGES))
+            );
             System.out.println("Charges now " + item.get(ComponentTypeRegistry.CHARGES_AMOUNT));
         }
     }
